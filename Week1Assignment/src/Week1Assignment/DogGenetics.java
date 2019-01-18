@@ -28,11 +28,12 @@ public class DogGenetics {
         System.out.println("Well then, I have this highly reliable report on " + name + "'s prestigious background right here.");
         
         for (int i = 0; i < 5; i++) {
-            random = rng.nextInt(pointsLeft);
+            random = rng.nextInt(pointsLeft) + 1;
             pointsLeft -= random;
             scores[i] = random;
         }
         
+        // Make sure to use up any remaining points to hit 100% total
         scores[4] += pointsLeft;
         
         System.out.println("\n" + name + " is: \n");
