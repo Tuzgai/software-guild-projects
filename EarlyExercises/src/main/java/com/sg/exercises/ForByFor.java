@@ -9,7 +9,7 @@ package com.sg.exercises;
  *
  * @author Stuart
  */
-public class ForByFoR {
+public class ForByFor {
     public static void main(String[] args) {
         for (int i = 0; i < 3; i++) {
             System.out.print("|");
