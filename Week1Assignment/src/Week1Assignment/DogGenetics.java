@@ -14,7 +14,8 @@ public class DogGenetics {
         String name;
         String [] breeds = { "St. Bernard", "Chihuahua", "Dramatic Red Nosed Asian Pug", "Common Cur", "King Doberman"};
         int [] scores = new int[5];
-        int pointsLeft = 100;
+        // We will add 1% to every category to ensure no 0% results
+        int pointsLeft = 95;
         int random;
         
         System.out.print("What is your dog's name? ");
@@ -23,7 +24,12 @@ public class DogGenetics {
         System.out.println("Well then, I have this highly reliable report on " + name + "'s prestigious background right here.");
         
         for (int i = 0; i < 5; i++) {
-            random = rng.nextInt(pointsLeft) + 1;
+            // zero the rest out if we ran out of points early
+            if(pointsLeft == 0){
+                scores[i] = 0;
+                continue;
+            }
+            random = rng.nextInt(pointsLeft)+1;
             pointsLeft -= random;
             scores[i] = random;
         }
@@ -33,6 +39,8 @@ public class DogGenetics {
         
         System.out.println("\n" + name + " is: \n");
         for (int i = 0; i < 5; i++) {
+            // Cheat to make sure there are no 0s
+            scores[i] += 1;
             System.out.println(scores[i] + "%\t" + breeds[i]);
         }
         
