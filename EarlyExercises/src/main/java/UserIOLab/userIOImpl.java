@@ -17,7 +17,7 @@ public class userIOImpl implements UserIO {
     userIOImpl(Scanner scan) {
         scn = scan;
     }
-    
+
     @Override
     public void print(String message) {
         System.out.print(message);
@@ -41,18 +41,11 @@ public class userIOImpl implements UserIO {
 
     @Override
     public double readDouble(String prompt, double min, double max) {
-        double input;
-        do {
-            print(prompt);
-            while (true) {
-                try {
-                    input = Double.parseDouble(scn.nextLine());
-                    break;
-                } catch (NumberFormatException e) {
-                    println("Please enter a valid number - " + e);
-                }
-            }
-        } while (!(input >= min && input <= max));
+        double input = readDouble(prompt);
+        while (!(min <= input && input <= max)) {
+            print("Error: number out of range.");
+            input = readDouble(prompt);
+        }
 
         return input;
     }
@@ -71,18 +64,11 @@ public class userIOImpl implements UserIO {
 
     @Override
     public float readFloat(String prompt, float min, float max) {
-        float input;
-        do {
-            print(prompt);
-            while (true) {
-                try {
-                    input = Float.parseFloat(scn.nextLine());
-                    break;
-                } catch (NumberFormatException e) {
-                    println("Please enter a valid number - " + e);
-                }
-            }
-        } while (!(input >= min && input <= max));
+        Float input = readFloat(prompt);
+        while (!(min <= input && input <= max)) {
+            print("Error: number out of range.");
+            input = readFloat(prompt);
+        }
 
         return input;
     }
@@ -101,18 +87,11 @@ public class userIOImpl implements UserIO {
 
     @Override
     public int readInt(String prompt, int min, int max) {
-        int input;
-        do {
-            print(prompt);
-            while (true) {
-                try {
-                    input = Integer.parseInt(scn.nextLine());
-                    break;
-                } catch (NumberFormatException e) {
-                    println("Please enter a valid number - " + e);
-                }
-            }
-        } while (!(input >= min && input <= max));
+        int input = readInt(prompt);
+        while (!(min <= input && input <= max)) {
+            print("Error: number out of range.");
+            input = readInt(prompt);
+        }
 
         return input;
     }
@@ -131,18 +110,11 @@ public class userIOImpl implements UserIO {
 
     @Override
     public long readLong(String prompt, long min, long max) {
-        long input;
-        do {
-            print(prompt);
-            while (true) {
-                try {
-                    input = Long.parseLong(scn.nextLine());
-                    break;
-                } catch (NumberFormatException e) {
-                    println("Please enter a valid number - " + e);
-                }
-            }
-        } while (!(input >= min && input <= max));
+        long input = readLong(prompt);
+        while (!(min <= input && input <= max)) {
+            print("Error: number out of range.");
+            input = readLong(prompt);
+        }
 
         return input;
     }
