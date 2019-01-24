@@ -52,3 +52,6 @@ nbdist/
 
 # End of https://www.gitignore.io/api/java,maven,macos,netbeans
 /Week1Assignment/nbproject/private/
+/ClassModelling/nbproject/private/
+/InterestCalculator/nbproject/private/
+/SimpleCalculator/nbproject/private/
