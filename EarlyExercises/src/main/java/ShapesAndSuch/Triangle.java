@@ -6,48 +6,42 @@ package ShapesAndSuch;
  */
 public class Triangle extends Shape {
 
-    double height, base, sideB, sideC;
+    double a, b, c;
 
+    // User Heron's formula - https://www.mathopenref.com/heronsformula.html
     @Override
     public double getArea() {
-        return (base * height) / 2;
+        double p = getPerimeter();
+        return Math.sqrt(p * (p - a) * (p - b) * (b - c));
     }
 
     @Override
     public double getPerimeter() {
-        return base + sideB + sideC;
+        return a + b + c;
     }
 
-    public double getHeight() {
-        return height;
+    public double getA() {
+        return a;
     }
 
-    public void setHeight(double height) {
-        this.height = height;
+    public void setA(double a) {
+        this.a = a;
     }
 
-    public double getBase() {
-        return base;
+    public double getB() {
+        return b;
     }
 
-    public void setBase(double base) {
-        this.base = base;
+    public void setB(double b) {
+        this.b = b;
     }
 
-    public double getSideB() {
-        return sideB;
+    public double getC() {
+        return c;
     }
 
-    public void setSideB(double sideB) {
-        this.sideB = sideB;
-    }
-
-    public double getSideC() {
-        return sideC;
-    }
-
-    public void setSideC(double sideC) {
-        this.sideC = sideC;
+    public void setC(double c) {
+        this.c = c;
     }
 
 }
