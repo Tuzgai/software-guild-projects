@@ -1,7 +1,5 @@
 package UserIOLab;
 
-import java.util.Scanner;
-
 /**
  *
  * @author Stuart
@@ -15,7 +13,6 @@ public class App {
     public static void runApp() {
         String operator;
         double operand1, operand2;
-        Scanner scn = new Scanner(System.in);
         userIOImpl io = new userIOImpl();
         
         io.println("Hello! Let's do some math.");
@@ -33,16 +30,16 @@ public class App {
             
             switch (operator) {
                 case "+":
-                    System.out.println(operand1 + " + " + operand2 + " = " + SimpleCalculator.add(operand1,operand2));
+                    io.println(operand1 + " + " + operand2 + " = " + SimpleCalculator.add(operand1,operand2));
                     break;
                 case "-":
-                    System.out.println(operand1 + " - " + operand2 + " = " + SimpleCalculator.subtract(operand1,operand2));
+                    io.println(operand1 + " - " + operand2 + " = " + SimpleCalculator.subtract(operand1,operand2));
                     break;
                 case "*":
-                    System.out.println(operand1 + " * " + operand2 + " = " + SimpleCalculator.multiply(operand1,operand2));
+                    io.println(operand1 + " * " + operand2 + " = " + SimpleCalculator.multiply(operand1,operand2));
                     break;
                 case "/":
-                    System.out.println(operand1 + " / " + operand2 + " = " + SimpleCalculator.divide(operand1,operand2));
+                    io.println(operand1 + " / " + operand2 + " = " + SimpleCalculator.divide(operand1,operand2));
                     break;
                 default:
                     break;
