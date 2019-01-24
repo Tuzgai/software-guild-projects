@@ -1,4 +1,4 @@
-package simplecalculator;
+package UserIOLab;
 
 import java.util.Scanner;
 
@@ -8,25 +8,28 @@ import java.util.Scanner;
  */
 public class App {
     public static void main(String[] args) {
+        runApp();
+    }
+    
+    
+    public static void runApp() {
         String operator;
         double operand1, operand2;
         Scanner scn = new Scanner(System.in);
+        userIOImpl io = new userIOImpl();
         
-        System.out.println("Hello! Let's do some math.");
+        io.println("Hello! Let's do some math.");
         while(true){
-            System.out.print("Choose an operator (+,-,*,/, anything else to exit): ");
-            operator = scn.nextLine();
+            operator = io.readString("Choose an operator (+,-,*,/, anything else to exit): ");
             
             if(!(operator.equals("+") || operator.equals("-") || operator.equals("*") || operator.equals("/"))) {
-                System.out.println("Thanks for calculating with us!");
+                io.println("Thanks for calculating with us!");
                 break;
             }
             
-            System.out.print("X: ");
-            operand1 = Double.parseDouble(scn.nextLine());
+            operand1 = io.readDouble("X: ");
             
-            System.out.print("Y: ");
-            operand2 = Double.parseDouble(scn.nextLine());
+            operand2 = io.readDouble("Y: ");
             
             switch (operator) {
                 case "+":
