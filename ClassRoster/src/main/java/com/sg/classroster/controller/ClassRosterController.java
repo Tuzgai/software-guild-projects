@@ -2,7 +2,6 @@ package com.sg.classroster.controller;
 
 import com.sg.classroster.dao.ClassRosterDao;
 import com.sg.classroster.dao.ClassRosterDaoException;
-import com.sg.classroster.dao.ClassRosterDaoFileImpl;
 import com.sg.classroster.dto.Student;
 import com.sg.classroster.ui.ClassRosterView;
 import java.util.List;
@@ -51,7 +50,7 @@ public class ClassRosterController {
             }
             exitMessage();
         } catch (ClassRosterDaoException e) {
-            view.displayErrormessage(e.getMessage());
+            view.displayErrorMessage(e.getMessage());
         }
     }
 

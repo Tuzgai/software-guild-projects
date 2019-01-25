@@ -135,7 +135,7 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao {
         // get the Collection of Students and iterate over them but we've
         // already created a method that gets a List of Students so
         // we'll reuse it.
-        List<Student> studentList = this.getAllStudents();
+        List<Student> studentList = new ArrayList(students.values());
         for (Student currentStudent : studentList) {
             // write the Student object to the file
             out.println(currentStudent.getStudentId() + DELIMITER
