@@ -27,7 +27,7 @@ public class UserIOConsoleImpl implements UserIO {
             try {
                 return Double.parseDouble(scn.nextLine());
             } catch (NumberFormatException e) {
-                println("Please enter a valid number - " + e);
+                println("Please enter a valid number. ");
             }
         }
     }
@@ -50,7 +50,7 @@ public class UserIOConsoleImpl implements UserIO {
             try {
                 return Float.parseFloat(scn.nextLine());
             } catch (NumberFormatException e) {
-                println("Please enter a valid number - " + e);
+                println("Please enter a valid number.");
             }
         }
     }
@@ -73,7 +73,7 @@ public class UserIOConsoleImpl implements UserIO {
             try {
                 return Integer.parseInt(scn.nextLine());
             } catch (NumberFormatException e) {
-                println("Please enter a valid number - " + e);
+                println("Please enter a valid number.");
             }
         }
     }
@@ -96,7 +96,7 @@ public class UserIOConsoleImpl implements UserIO {
             try {
                 return Long.parseLong(scn.nextLine());
             } catch (NumberFormatException e) {
-                println("Please enter a valid number - " + e);
+                println("Please enter a valid number.");
             }
         }
     }

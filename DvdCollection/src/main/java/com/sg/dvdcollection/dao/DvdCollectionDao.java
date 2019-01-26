@@ -14,28 +14,28 @@ public interface DvdCollectionDao {
      * null.
      * 
      * @param title - title of DVD
-     * @param dvd - dvd object to be added
+     * @param dvd - DVD object to be added
      * @return the DVD object previously stored if it exists, otherwise null.
      */
-    DVD addDvd(String title, DVD dvd);
+    DVD addDvd(String title, DVD dvd) throws DvdCollectionDaoException;
     
     /**
      * Returns a List of all DVDs in the collection.
      * @return List of all DVDs in the collection
      */
-    List<DVD> getAllDvds();
+    List<DVD> getAllDvds() throws DvdCollectionDaoException;
     
     /**
      * Returns the DVD objection associated with the title String.
      * @param title - title of DVD to look up
      * @return 
      */
-    DVD getDvd(String title);
+    DVD getDvd(String title) throws DvdCollectionDaoException;
     
     /**
-     * Removes a Dvd from the collection
+     * Removes a DVD from the collection
      * @param title - title of DVD to be removed
      * @return Removed DVD object or null if DVD not found
      */
-    DVD removeDvd(String title);
+    DVD removeDvd(String title) throws DvdCollectionDaoException;
 }

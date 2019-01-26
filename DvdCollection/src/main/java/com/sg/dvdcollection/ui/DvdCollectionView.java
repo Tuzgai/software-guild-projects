@@ -1,6 +1,7 @@
 package com.sg.dvdcollection.ui;
 
 import com.sg.dvdcollection.dto.DVD;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 
@@ -10,7 +11,11 @@ import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
  */
 public class DvdCollectionView {
 
-    UserIO io = new UserIOConsoleImpl();
+    private UserIO io;
+
+    public DvdCollectionView(UserIO io) {
+        this.io = io;
+    }
 
     public int displayMenuAndGetSelection() {
         io.println("=== Main Menu ===");
@@ -37,27 +42,55 @@ public class DvdCollectionView {
     }
 
     public String getTitle() {
-        return io.readString("Enter title: ");
+        String input = io.readString("Enter Title: ");
+        if (input.isEmpty()) {
+            input = "- No Data -";
+        }
+        return input;
     }
 
     public LocalDate getReleaseDate() {
-        int year = io.readInt("Enter Release Year: ");
-        int month = io.readInt("Enter Release Month (1-12): ");
-        int day = io.readInt("Enter Release Day (1-31): ");
-        LocalDate date = LocalDate.of(year, month, day);
+        int year, month, day;
+        boolean retry = false;
+        LocalDate date = LocalDate.of(1900, 1, 1);
+
+        do {
+            try {
+                year = io.readInt("Enter Release Year: ");
+                month = io.readInt("Enter Release Month (1-12): ");
+                day = io.readInt("Enter Release Day (1-31): ");
+                date = LocalDate.of(year, month, day);
+                retry = false;
+            } catch (DateTimeException e) {
+                io.println("Invalid date, please try again.");
+                retry = true;
+            }
+        } while (retry);
         return date;
     }
 
     public String getRating() {
-        return io.readString("Enter MPAA Rating: ");
+        String input = io.readString("Enter MPAA Rating: ");
+        if (input.isEmpty()) {
+            input = "- No Data -";
+        }
+        return input;
     }
 
     public String getStudio() {
-        return io.readString("Enter Studio Name: ");
+        String input = io.readString("Enter Studio Name: ");
+        if (input.isEmpty()) {
+            input = "- No Data -";
+        }
+        return input;
     }
 
     public String getNote() {
-        return io.readString("Enter Notes: ");
+        String input = io.readString("Enter Notes: ");
+        if (input.isEmpty()) {
+            input = "- No Data -";
+        }
+        return input;
     }
 
     public void displayDvd(DVD dvd) {
@@ -137,5 +170,10 @@ public class DvdCollectionView {
         }
 
         return false;
+    }
+
+    public void displayErrorMessage(String errorMsg) {
+        io.println("=== Error ===");
+        io.println(errorMsg);
     }
 }

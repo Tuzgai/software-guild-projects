@@ -1,7 +1,7 @@
 package com.sg.dvdcollection.controller;
 
 import com.sg.dvdcollection.dao.DvdCollectionDao;
-import com.sg.dvdcollection.dao.DvdCollectionDaoFileImpl;
+import com.sg.dvdcollection.dao.DvdCollectionDaoException;
 import com.sg.dvdcollection.dto.DVD;
 import com.sg.dvdcollection.ui.DvdCollectionView;
 
@@ -14,52 +14,55 @@ public class DvdCollectionController {
     DvdCollectionView view;
     DvdCollectionDao dao;
 
-    public DvdCollectionController() {
-        this.dao = new DvdCollectionDaoFileImpl();
-        this.view = new DvdCollectionView();
+    public DvdCollectionController(DvdCollectionDao dao, DvdCollectionView view) {
+        this.dao = dao;
+        this.view = view;
     }
 
     public void run() {
         int choice;
         boolean notDone = true;
+        try {
+            while (notDone) {
+                choice = view.displayMenuAndGetSelection();
 
-        while (notDone) {
-            choice = view.displayMenuAndGetSelection();
-
-            switch (choice) {
-                case 1:
-                    addDvd();
-                    break;
-                case 2:
-                    removeDvd();
-                    break;
-                case 3:
-                    editDvd();
-                    break;
-                case 4:
-                    displayAllDvds();
-                    break;
-                case 5:
-                    displayDvd();
-                    break;
-                case 6:
-                    view.displayGoodbyeMessage();
-                    notDone = false;
-                    break;
-                default:
-                    view.displayUnknownCommandMessage();
-                    break;
+                switch (choice) {
+                    case 1:
+                        addDvd();
+                        break;
+                    case 2:
+                        removeDvd();
+                        break;
+                    case 3:
+                        editDvd();
+                        break;
+                    case 4:
+                        displayAllDvds();
+                        break;
+                    case 5:
+                        displayDvd();
+                        break;
+                    case 6:
+                        view.displayGoodbyeMessage();
+                        notDone = false;
+                        break;
+                    default:
+                        view.displayUnknownCommandMessage();
+                        break;
+                }
             }
+        } catch (DvdCollectionDaoException e) {
+            view.displayErrorMessage(e.getMessage());
         }
     }
 
-    private void addDvd() {
+    private void addDvd() throws DvdCollectionDaoException {
         DVD newDvd = view.getNewDvdInfo();
         dao.addDvd(newDvd.getTitle(), newDvd);
         view.continuePrompt();
     }
 
-    private void displayDvd() {
+    private void displayDvd() throws DvdCollectionDaoException {
         String title = view.getTitle();
         DVD dvd = dao.getDvd(title);
 
@@ -71,7 +74,7 @@ public class DvdCollectionController {
         view.continuePrompt();
     }
 
-    private void displayAllDvds() {
+    private void displayAllDvds() throws DvdCollectionDaoException {
         view.displayDvdListBanner();
 
         for (DVD dvd : dao.getAllDvds()) {
@@ -81,7 +84,7 @@ public class DvdCollectionController {
         view.continuePrompt();
     }
 
-    private void removeDvd() {
+    private void removeDvd() throws DvdCollectionDaoException {
         view.displayRemoveDvdBanner();
         String title = view.getTitle();
         DVD dvd = dao.getDvd(title);
@@ -100,7 +103,7 @@ public class DvdCollectionController {
         }
     }
 
-    private void editDvd() {
+    private void editDvd() throws DvdCollectionDaoException {
         String title = view.getTitle();
         DVD dvd = dao.getDvd(title);
         boolean notDone = true;
