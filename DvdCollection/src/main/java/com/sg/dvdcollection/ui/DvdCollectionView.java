@@ -152,15 +152,17 @@ public class DvdCollectionView {
 
     public int displayEditMenuAndGetChoice(DVD dvd) {
         io.println("=== Edit A DVD ===");
-        io.println("---Field---\t---Current Entry---");
-        io.println("1. Title\t" + dvd.getTitle());
-        io.println("2. Date\t" + dvd.getReleaseDate().format(ISO_LOCAL_DATE));
-        io.println("3. Rating\t" + dvd.getRating());
-        io.println("4. Studio\t" + dvd.getStudio());
-        io.println("5. Notes\t" + dvd.getNote());
-        io.println("6. Edit All");
-        io.println("7. Exit Editor");
-        return io.readInt("Select an option: ");
+        io.println("-----Field-----|---Current Entry---");
+        io.println("1. Title       |   " + dvd.getTitle());
+        io.println("2. Date        |   " + dvd.getReleaseDate().format(ISO_LOCAL_DATE));
+        io.println("3. Rating      |   " + dvd.getRating());
+        io.println("4. Studio      |   " + dvd.getStudio());
+        io.println("5. Notes       |   " + dvd.getNote());
+        io.println("---------------|");
+        io.println("6. Edit All    |");
+        io.println("7. Exit Editor |");
+        io.println("|--------------|");
+        return io.readInt("Select An Option: ");
     }
 
     public boolean promptEditContinue() {
