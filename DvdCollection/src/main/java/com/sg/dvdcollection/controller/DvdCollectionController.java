@@ -4,8 +4,6 @@ import com.sg.dvdcollection.dao.DvdCollectionDao;
 import com.sg.dvdcollection.dao.DvdCollectionDaoFileImpl;
 import com.sg.dvdcollection.dto.DVD;
 import com.sg.dvdcollection.ui.DvdCollectionView;
-import com.sg.dvdcollection.ui.UserIO;
-import com.sg.dvdcollection.ui.UserIOConsoleImpl;
 
 /**
  *
@@ -13,7 +11,6 @@ import com.sg.dvdcollection.ui.UserIOConsoleImpl;
  */
 public class DvdCollectionController {
 
-    UserIO io = new UserIOConsoleImpl();
     DvdCollectionView view;
     DvdCollectionDao dao;
 
@@ -34,10 +31,10 @@ public class DvdCollectionController {
                     addDvd();
                     break;
                 case 2:
-                    io.println("REMOVE DVD");
+                    removeDvd();
                     break;
                 case 3:
-                    io.println("EDIT DVD");
+                    editDvd();
                     break;
                 case 4:
                     displayAllDvds();
@@ -46,37 +43,103 @@ public class DvdCollectionController {
                     displayDvd();
                     break;
                 case 6:
-                    io.println("EXIT");
+                    view.displayGoodbyeMessage();
                     notDone = false;
+                    break;
                 default:
-                    io.println("UNKNOWN COMMAND");
+                    view.displayUnknownCommandMessage();
                     break;
             }
         }
     }
 
     private void addDvd() {
-        DVD newDvd = view.getNewDvdInfo(); // not sure why view isn't found w/o this
+        DVD newDvd = view.getNewDvdInfo();
         dao.addDvd(newDvd.getTitle(), newDvd);
+        view.continuePrompt();
     }
-    
+
     private void displayDvd() {
         String title = view.getTitle();
         DVD dvd = dao.getDvd(title);
-        
-        if(dvd != null) {
+
+        if (dvd != null) {
             view.displayDvd(dvd);
         } else {
             view.displayMissingDvdError();
         }
+        view.continuePrompt();
     }
-    
+
     private void displayAllDvds() {
         view.displayDvdListBanner();
-        
-        for(DVD dvd : dao.getAllDvds()) {
+
+        for (DVD dvd : dao.getAllDvds()) {
             view.displaySectionBreak();
             view.displayDvd(dvd);
+        }
+        view.continuePrompt();
+    }
+
+    private void removeDvd() {
+        view.displayRemoveDvdBanner();
+        String title = view.getTitle();
+        DVD dvd = dao.getDvd(title);
+        boolean confirm;
+
+        if (dvd != null) {
+            confirm = view.getDeleteConfirmation(dvd);
+
+            if (confirm == true) {
+                dao.removeDvd(title);
+            } else {
+                view.displayDeleteCancelled();
+            }
+        } else {
+            view.displayMissingDvdError();
+        }
+    }
+
+    private void editDvd() {
+        String title = view.getTitle();
+        DVD dvd = dao.getDvd(title);
+        boolean notDone = true;
+        int choice;
+        if (dvd != null) {
+            while (notDone) {
+                choice = view.displayEditMenuAndGetChoice(dvd);
+
+                switch (choice) {
+                    case 1:
+                        dvd.setTitle(view.getTitle());
+                        break;
+                    case 2:
+                        dvd.setReleaseDate(view.getReleaseDate());
+                        break;
+                    case 3:
+                        dvd.setRating(view.getRating());
+                        break;
+                    case 4:
+                        dvd.setStudio(view.getStudio());
+                        break;
+                    case 5:
+                        dvd.setNote(view.getNote());
+                        break;
+                    case 6:
+                        addDvd();
+                        break;
+                    default:
+                        notDone = false;
+                        break;
+                }
+                dao.addDvd(dvd.getTitle(), dvd);
+                if (notDone == true) {
+                    notDone = view.promptEditContinue();
+                }
+            }
+        } else {
+            view.displayMissingDvdError();
+            return;
         }
     }
 }

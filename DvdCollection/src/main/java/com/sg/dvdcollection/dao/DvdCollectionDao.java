@@ -38,13 +38,4 @@ public interface DvdCollectionDao {
      * @return Removed DVD object or null if DVD not found
      */
     DVD removeDvd(String title);
-    
-    /**
-     * Replaces the DVD specified by title with a new DVD object.
-     * 
-     * @param title - title of the DVD to be edited
-     * @param dvd - new dvd object
-     * @return 
-     */
-    DVD editDvd(String title, DVD dvd);
 }

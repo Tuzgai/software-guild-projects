@@ -1,6 +1,7 @@
 package com.sg.dvdcollection.dao;
 
 import com.sg.dvdcollection.dto.DVD;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,22 +21,16 @@ public class DvdCollectionDaoFileImpl implements DvdCollectionDao{
 
     @Override
     public List<DVD> getAllDvds() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new ArrayList<DVD>(dvdCollection.values());
     }
 
     @Override
     public DVD getDvd(String title) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return dvdCollection.get(title);
     }
 
     @Override
     public DVD removeDvd(String title) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return dvdCollection.remove(title);
     }
-
-    @Override
-    public DVD editDvd(String title, DVD dvd) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }
