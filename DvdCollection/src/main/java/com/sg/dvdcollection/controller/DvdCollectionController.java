@@ -101,6 +101,8 @@ public class DvdCollectionController {
         } else {
             view.displayMissingDvdError();
         }
+        view.displayDeleteSuccessfulBanner();
+        view.continuePrompt();
     }
 
     private void editDvd() throws DvdCollectionDaoException {

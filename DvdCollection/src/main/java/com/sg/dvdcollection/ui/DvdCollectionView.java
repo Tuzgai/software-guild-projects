@@ -51,7 +51,7 @@ public class DvdCollectionView {
 
     public LocalDate getReleaseDate() {
         int year, month, day;
-        boolean retry = false;
+        boolean retry;
         LocalDate date = LocalDate.of(1900, 1, 1);
 
         do {
@@ -131,11 +131,7 @@ public class DvdCollectionView {
     public boolean getDeleteConfirmation(DVD dvd) {
         displayDvd(dvd);
         String response = io.readString("Are you sure you want to delete this? (Y/N) ");
-        if (response.toLowerCase().contains("y")) {
-            return true;
-        }
-
-        return false;
+        return response.toLowerCase().contains("y");
     }
 
     public void displayDeleteCancelled() {
@@ -161,21 +157,21 @@ public class DvdCollectionView {
         io.println("---------------|");
         io.println("6. Edit All    |");
         io.println("7. Exit Editor |");
-        io.println("|--------------|");
+        io.println("---------------|");
         return io.readInt("Select An Option: ");
     }
 
     public boolean promptEditContinue() {
         String choice = io.readString("Changes complete. Continue editing? (Y/N) ");
-        if (choice.toLowerCase().contains("y")) {
-            return true;
-        }
-
-        return false;
+        return choice.toLowerCase().contains("y");
     }
 
     public void displayErrorMessage(String errorMsg) {
         io.println("=== Error ===");
         io.println(errorMsg);
     }
+    
+   public void displayDeleteSuccessfulBanner() {
+       io.println("=== File Deleted Successfully ===");
+   }
 }
