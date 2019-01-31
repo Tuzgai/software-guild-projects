@@ -1,6 +1,7 @@
 package com.sg.dvdcollection.dto;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  *
@@ -55,6 +56,32 @@ public class DVD {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.title);
+        hash = 59 * hash + Objects.hashCode(this.releaseDate);
+        hash = 59 * hash + Objects.hashCode(this.rating);
+        hash = 59 * hash + Objects.hashCode(this.studio);
+        hash = 59 * hash + Objects.hashCode(this.note);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final DVD other = (DVD) obj;
+        return true;
     }
     
     
