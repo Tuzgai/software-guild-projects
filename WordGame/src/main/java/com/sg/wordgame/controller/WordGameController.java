@@ -25,7 +25,8 @@ public class WordGameController {
     public void run() {
         int choice;
         boolean keepGoing = true;
-
+        this.service = new WordGameServiceImpl(dao);
+        
         while (keepGoing) {
             choice = view.displayMenuAndGetChoice();
 
@@ -42,7 +43,7 @@ public class WordGameController {
 
     public void playGame() {
         try {
-            this.service = new WordGameServiceImpl(dao);
+            service.startGame();
         } catch (FileNotFoundException e) {
             view.displayError("Error: could not open words file, please make sure words.txt is present");
         }

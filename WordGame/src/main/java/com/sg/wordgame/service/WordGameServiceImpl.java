@@ -19,8 +19,11 @@ public class WordGameServiceImpl implements WordGameService {
     int correctGuesses;
     boolean winner;
 
-    public WordGameServiceImpl(WordGameDao dao) throws FileNotFoundException {
+    public WordGameServiceImpl(WordGameDao dao) {
         this.dao = dao;
+    }
+
+    public void startGame() throws FileNotFoundException {
         guessesLeft = 5;
         word = dao.getWord().toCharArray();
         wordStatus = new char[word.length];
@@ -36,28 +39,25 @@ public class WordGameServiceImpl implements WordGameService {
     @Override
     public void addGuess(char guess) throws InvalidGuessException {
         guess = Character.toLowerCase(guess);
-        
+
         if (guessList.contains(guess)) {
             throw new InvalidGuessException(guess + " has already been guessed, try again.");
         } else if (!Character.toString(guess).matches("[a-z]")) {
             throw new InvalidGuessException(guess + " is not a letter, try again.");
         }
 
-        boolean bonusGuess = false;
-        guessesLeft--;
-
-        guessList.add(guess);
-
+        boolean guessedCorrectly = false;
         for (int i = 0; i < word.length; i++) {
             if (guess == word[i]) {
                 wordStatus[i] = guess;
                 correctGuesses++;
-                bonusGuess = true;
+                guessedCorrectly = true;
             }
         }
 
-        if (bonusGuess) {
-            guessesLeft++;
+        guessList.add(guess);
+        if (!guessedCorrectly) {
+            guessesLeft--;
         }
     }
 

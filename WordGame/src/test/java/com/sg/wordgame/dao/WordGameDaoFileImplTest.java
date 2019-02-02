@@ -42,8 +42,9 @@ public class WordGameDaoFileImplTest {
         System.out.print("getWord: ");
         String expResult = "";
         String result = instance.getWord();
-        System.out.print(result);
+        System.out.println(result);
         assertNotEquals(expResult, result);
+        assertNotNull(result);
     }
     
 }
