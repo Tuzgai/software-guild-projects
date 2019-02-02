@@ -10,18 +10,19 @@ import java.util.List;
  *
  * @author Stuart
  */
-public class VendingMachineDaoStubImpl implements VendingMachineDao{
+public class VendingMachineDaoStubImpl implements VendingMachineDao {
+
     InventoryItem onlyItem;
     HashSet<InventoryItem> itemList = new HashSet<>();
-    
+
     public VendingMachineDaoStubImpl() {
         onlyItem = new InventoryItem("Only Item");
-        onlyItem.setPrice(new BigDecimal("1"));
+        onlyItem.setPrice(new BigDecimal("1.00"));
         onlyItem.setStockLevel(1);
-        
+
         itemList.add(onlyItem);
     }
-    
+
     @Override
     public List<InventoryItem> getAllItems() {
         List<InventoryItem> list = new ArrayList<>();
@@ -29,19 +30,10 @@ public class VendingMachineDaoStubImpl implements VendingMachineDao{
         return list;
     }
 
-    @Override
-    public void updateItem(InventoryItem item) {
-        onlyItem = item;
-    }
-
+    // Needed for testing
     @Override
     public void addItem(InventoryItem item) {
         // do nothing
-    }
-
-    @Override
-    public InventoryItem getItem(String name) {
-        return onlyItem;
     }
 
     @Override
@@ -56,7 +48,6 @@ public class VendingMachineDaoStubImpl implements VendingMachineDao{
 
     @Override
     public void clearInventory() {
-        // do nothing
+        itemList.clear();
     }
-    
 }

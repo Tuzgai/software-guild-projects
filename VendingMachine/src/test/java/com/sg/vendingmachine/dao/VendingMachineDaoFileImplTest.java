@@ -46,7 +46,7 @@ public class VendingMachineDaoFileImplTest {
     @After
     public void tearDown() {
     }
-
+    
     /**
      * Test of getAllItems method, of class VendingMachineDaoFileImpl.
      */
@@ -55,59 +55,6 @@ public class VendingMachineDaoFileImplTest {
         assertEquals(2, instance.getAllItems().size());
     }
     
-    /**
-     * Test of getItem method, of class VendingMachineDaoFileImpl.
-     */
-    @Test
-    public void testGetItem() {
-        InventoryItem item = new InventoryItem("Test Item 3");
-        item.setPrice(new BigDecimal("3.50"));
-        item.setStockLevel(3);
-        instance.addItem(item);
-
-        assertEquals(item, instance.getItem("Test Item 3"));
-    }
-
-    /**
-     * Test of updateItem method, of class VendingMachineDaoFileImpl.
-     */
-    @Test
-    public void testUpdateItem() {
-        InventoryItem item = instance.getItem("Test Item 1");
-
-        item.setPrice(new BigDecimal("5"));
-        instance.updateItem(item);
-
-        item = instance.getItem("Test Item 1");
-        assertEquals(new BigDecimal("5"), item.getPrice());
-    }
-
-    /**
-     * Test of addItem method, of class VendingMachineDaoFileImpl.
-     */
-    @Test
-    public void testAddItem() {
-        InventoryItem item = new InventoryItem("Test Item 3");
-        item.setPrice(new BigDecimal("4.50"));
-        item.setStockLevel(4);
-        instance.addItem(item);
-
-        assertEquals(3, instance.getAllItems().size());
-    }
-
-    /**
-     * Test of clearInventory method, of class VendingMachineDaoFileImpl.
-     */
-    @Test
-    public void testclearInventory() {
-        instance.clearInventory();
-        assertEquals(0, instance.getAllItems().size());
-    }
-
-    /**
-     * Test of loadItems method, of class VendingMachineDaoFileImpl.
-     * @throws java.lang.Exception
-     */
     @Test
     public void testSaveAndLoadItems() throws Exception {
         instance.saveItems();

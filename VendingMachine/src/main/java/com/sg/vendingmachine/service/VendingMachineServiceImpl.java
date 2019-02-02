@@ -2,6 +2,7 @@ package com.sg.vendingmachine.service;
 
 import com.sg.vendingmachine.dto.Change;
 import com.sg.vendingmachine.dao.VendingMachineDao;
+import com.sg.vendingmachine.dao.VendingMachineDaoException;
 import com.sg.vendingmachine.dto.InventoryItem;
 import java.math.BigDecimal;
 import java.util.List;
@@ -14,31 +15,56 @@ public class VendingMachineServiceImpl implements VendingMachineService {
 
     VendingMachineDao dao;
     BigDecimal balance;
-    List items;
+    List<InventoryItem> itemList;
 
-    public VendingMachineServiceImpl(VendingMachineDao dao) {
+    public VendingMachineServiceImpl(VendingMachineDao dao) throws VendingMachineDaoException {
         this.dao = dao;
-        balance = new BigDecimal("0");
-        items = dao.getAllItems().sort();
+        balance = new BigDecimal("0.00");
+        try {
+            dao.loadItems();
+        } catch (VendingMachineDaoException e) {
+            throw e;
+        }
+        itemList = dao.getAllItems();
     }
 
     @Override
     public BigDecimal getBalance() {
         return balance;
     }
-    
+
+    // Presently adding / updating are the same thing but they might not always be,
+    // so two methods are needed to make future changes easier.
+    @Override
+    public void updateItem(InventoryItem item) {
+        for (int i = 0; i < itemList.size(); i++) {
+            if(item.getName().equals(itemList.get(i).getName())) {
+                itemList.remove(i);
+                itemList.add(i, item);
+            }
+        }
+    }
+
+    // Needed for testing
+    @Override
+    public void addItem(InventoryItem item) {
+        itemList.add(item);
+    }
+
     @Override
     public InventoryItem getItem(String name) throws ItemNotFoundException {
-        InventoryItem item = dao.getItem(name);
-        if (item == null) {
-            throw new ItemNotFoundException("Item does not exist: " + name);
+        for (InventoryItem item : itemList) {
+            if (name.equals(item.getName())) {
+                return item;
+            }
         }
-        return item;
+
+        throw new ItemNotFoundException("Item does not exist.");
     }
 
     @Override
     public List<InventoryItem> getAllItems() {
-        return dao.getAllItems();
+        return itemList;
     }
 
     @Override
@@ -51,23 +77,31 @@ public class VendingMachineServiceImpl implements VendingMachineService {
     public void vendItem(String name) throws ItemNotFoundException, InsufficientFundsException, ZeroInventoryException {
         try {
             InventoryItem item = getItem(name);
-            if (balance.compareTo(item.getPrice()) < 0) throw new InsufficientFundsException("Insufficient funds, please add more and try again.");
-            
-            if (item.getStockLevel() <= 0) throw new ZeroInventoryException("Item out of stock.");
-            
+            if (balance.compareTo(item.getPrice()) < 0) {
+                throw new InsufficientFundsException("Insufficient funds, please add more and try again.");
+            }
+
+            if (item.getStockLevel() <= 0) {
+                throw new ZeroInventoryException("Item out of stock.");
+            }
+
             balance = balance.subtract(item.getPrice());
             item.setStockLevel(item.getStockLevel() - 1);
-            dao.updateItem(item);
+            updateItem(item);
         } catch (ItemNotFoundException e) {
             throw e;
-        }     
+        }
     }
-    
+
     @Override
     public Change coinReturn() {
         Change change = new Change(balance);
-        balance = new BigDecimal("0");
+        balance = new BigDecimal("0.00");
         return change;
     }
 
+    @Override
+    public void clearInventory() {
+        itemList.clear();
+    }
 }

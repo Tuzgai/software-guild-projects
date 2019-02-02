@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,42 +17,26 @@ import java.util.Scanner;
  */
 public class VendingMachineDaoFileImpl implements VendingMachineDao {
 
-    HashSet<InventoryItem> itemSet;
+    ArrayList<InventoryItem> itemList;
     final static String FILE = "items.txt";
     final static String DELIMITER = "::";
 
     public VendingMachineDaoFileImpl() {
-        this.itemSet = new HashSet<>();
-    }
-
-    @Override
-    public List<InventoryItem> getAllItems() {
-        List<InventoryItem> list = new ArrayList<>();
-        itemSet.forEach(item -> list.add(item));
-
-        return list;
-    }
-
-    @Override
-    public InventoryItem getItem(String name) {
-        for (InventoryItem item : itemSet) {
-            if(name.equals(item.getName())) return item;
-        }
-        
-        return null;
-    }
-
-    // Presently adding / updating are the same thing but they might not always be,
-    // so two methods are needed to make future changes easier.
-    @Override
-    public void updateItem(InventoryItem item) {
-        addItem(item);
+        this.itemList = new ArrayList<>();
     }
 
     // Needed for testing
     @Override
     public void addItem(InventoryItem item) {
-        itemSet.add(item);
+        itemList.add(item);
+    }
+
+    @Override
+    public List<InventoryItem> getAllItems() {
+        List<InventoryItem> list = new ArrayList<>();
+        itemList.forEach(item -> list.add(item));
+
+        return list;
     }
 
     @Override
@@ -77,7 +60,7 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
                 item = new InventoryItem(currentTokens[0]);
                 item.setPrice(new BigDecimal(currentTokens[1]));
                 item.setStockLevel(Integer.parseInt(currentTokens[2]));
-                itemSet.add(item);
+                itemList.add(item);
             }
 
         }
@@ -94,7 +77,7 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
             throw new VendingMachineDaoException("Could not save inventory data.", e);
         }
 
-        itemSet.forEach(item -> out.println(
+        itemList.forEach(item -> out.println(
                 item.getName() + DELIMITER
                 + item.getPrice() + DELIMITER
                 + item.getStockLevel() + DELIMITER));
@@ -104,6 +87,6 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
 
     @Override
     public void clearInventory() {
-        itemSet.clear();
+        itemList.clear();
     }
 }

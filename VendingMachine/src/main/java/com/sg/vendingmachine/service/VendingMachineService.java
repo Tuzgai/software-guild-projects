@@ -13,8 +13,12 @@ public interface VendingMachineService {
 
     BigDecimal getBalance();
 
+    void updateItem(InventoryItem item);
+
+    void addItem(InventoryItem item);
+
     InventoryItem getItem(String name) throws ItemNotFoundException;
-    
+
     List<InventoryItem> getAllItems();
 
     BigDecimal addMoney(BigDecimal money);
@@ -22,4 +26,6 @@ public interface VendingMachineService {
     void vendItem(String name) throws ItemNotFoundException, InsufficientFundsException, ZeroInventoryException;
     
     Change coinReturn();
+    
+    void clearInventory();
 }

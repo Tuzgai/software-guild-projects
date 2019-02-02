@@ -8,11 +8,14 @@ import java.util.List;
  * @author Stuart
  */
 public interface VendingMachineDao {
-    List<InventoryItem> getAllItems(); 
-    void updateItem(InventoryItem item);
-    void addItem(InventoryItem item); 
-    InventoryItem getItem(String name);
+
+    List<InventoryItem> getAllItems();
+
+    void addItem(InventoryItem item);
+
     void loadItems() throws VendingMachineDaoException;
+
     void saveItems() throws VendingMachineDaoException;
+    
     void clearInventory();
 }
