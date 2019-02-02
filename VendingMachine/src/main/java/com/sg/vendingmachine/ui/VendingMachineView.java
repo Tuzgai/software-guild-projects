@@ -10,7 +10,8 @@ import java.util.List;
  * @author Stuart
  */
 public class VendingMachineView {
-
+    UserIO io = new UserIOConsoleImpl();
+    
     public void displayMachine(List<InventoryItem> items) {
 
     }
@@ -25,5 +26,9 @@ public class VendingMachineView {
     
     public BigDecimal getFunds() {
         return new BigDecimal("0");
+    }
+    
+    public void displayError(Exception e) {
+        
     }
 }

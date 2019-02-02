@@ -5,6 +5,7 @@ import com.sg.vendingmachine.dao.VendingMachineDao;
 import com.sg.vendingmachine.dao.VendingMachineDaoException;
 import com.sg.vendingmachine.dto.InventoryItem;
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -26,6 +27,7 @@ public class VendingMachineServiceImpl implements VendingMachineService {
             throw e;
         }
         itemList = dao.getAllItems();
+        itemList.sort(Comparator.comparing(InventoryItem::getName));
     }
 
     @Override
