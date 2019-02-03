@@ -1,2 +1,4 @@
-Test Item 1::2.50::2::
-Test Item 2::0::0::
+A Nice Hot Dog::3.99::2::
+Bag of Doritos::0.61::2::
+Sody Pop::1.13::2::
+Tasty Fruit::3.33::2::

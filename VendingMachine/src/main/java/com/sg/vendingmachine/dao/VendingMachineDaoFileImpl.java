@@ -69,6 +69,15 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
 
     @Override
     public void saveItems() throws VendingMachineDaoException {
+        try {
+            saveItems(itemList);
+        } catch (VendingMachineDaoException e) {
+            throw e;
+        }
+    }
+
+    @Override
+    public void saveItems(List<InventoryItem> items) throws VendingMachineDaoException {
         PrintWriter out;
 
         try {
@@ -77,7 +86,7 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
             throw new VendingMachineDaoException("Could not save inventory data.", e);
         }
 
-        itemList.forEach(item -> out.println(
+        items.forEach(item -> out.println(
                 item.getName() + DELIMITER
                 + item.getPrice() + DELIMITER
                 + item.getStockLevel() + DELIMITER));

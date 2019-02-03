@@ -50,4 +50,10 @@ public class VendingMachineDaoStubImpl implements VendingMachineDao {
     public void clearInventory() {
         itemList.clear();
     }
+
+    @Override
+    public void saveItems(List<InventoryItem> items) throws VendingMachineDaoException {
+        // Do nothing
+    }
+    
 }

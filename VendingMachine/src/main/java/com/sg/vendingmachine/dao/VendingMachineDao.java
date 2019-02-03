@@ -17,5 +17,9 @@ public interface VendingMachineDao {
 
     void saveItems() throws VendingMachineDaoException;
     
+    void saveItems(List<InventoryItem> items) throws VendingMachineDaoException;
+    
     void clearInventory();
+    
+    
 }

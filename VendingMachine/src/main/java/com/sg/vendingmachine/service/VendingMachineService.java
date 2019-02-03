@@ -1,5 +1,6 @@
 package com.sg.vendingmachine.service;
 
+import com.sg.vendingmachine.dao.VendingMachineDaoException;
 import com.sg.vendingmachine.dto.Change;
 import com.sg.vendingmachine.dto.InventoryItem;
 import java.math.BigDecimal;
@@ -28,4 +29,6 @@ public interface VendingMachineService {
     Change coinReturn();
     
     void clearInventory();
+    
+    void quit() throws VendingMachineDaoException;
 }

@@ -1,5 +1,6 @@
 package com.sg.vendingmachine.controller;
 
+import com.sg.vendingmachine.dao.VendingMachineDaoException;
 import com.sg.vendingmachine.service.InsufficientFundsException;
 import com.sg.vendingmachine.service.ItemNotFoundException;
 import com.sg.vendingmachine.service.VendingMachineService;
@@ -25,12 +26,17 @@ public class VendingMachineController {
     public void run() {
         int choice;
         boolean notDone = true;
-        
+
         while (notDone) {
             choice = view.displayMainMenuAndGetChoice(service.getAllItems(), service.getBalance());
 
             switch (choice) {
                 case (COIN_RETURN):
+                    try {
+                        service.quit();
+                    } catch (VendingMachineDaoException e) {
+                        view.displayError(e);
+                    }
                     view.displayGoodByeMessage(service.coinReturn());
                     notDone = false;
                     break;
@@ -39,7 +45,9 @@ public class VendingMachineController {
                     break;
                 default:
                     try {
-                        service.vendItem(service.getAllItems().get(choice).getName());
+                        String itemName = service.getAllItems().get(choice-1).getName();
+                        service.vendItem(itemName);
+                        view.displayPurchase(itemName);
                     } catch (ItemNotFoundException
                             | ZeroInventoryException
                             | InsufficientFundsException e) {

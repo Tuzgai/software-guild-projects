@@ -40,7 +40,7 @@ public class VendingMachineServiceImpl implements VendingMachineService {
     @Override
     public void updateItem(InventoryItem item) {
         for (int i = 0; i < itemList.size(); i++) {
-            if(item.getName().equals(itemList.get(i).getName())) {
+            if (item.getName().equals(itemList.get(i).getName())) {
                 itemList.remove(i);
                 itemList.add(i, item);
             }
@@ -79,12 +79,12 @@ public class VendingMachineServiceImpl implements VendingMachineService {
     public void vendItem(String name) throws ItemNotFoundException, InsufficientFundsException, ZeroInventoryException {
         try {
             InventoryItem item = getItem(name);
-            if (balance.compareTo(item.getPrice()) < 0) {
-                throw new InsufficientFundsException("Insufficient funds, please add more and try again.");
-            }
-
             if (item.getStockLevel() <= 0) {
                 throw new ZeroInventoryException("Item out of stock.");
+            }
+
+            if (balance.compareTo(item.getPrice()) < 0) {
+                throw new InsufficientFundsException("Insufficient funds, please add more and try again.");
             }
 
             balance = balance.subtract(item.getPrice());
@@ -105,5 +105,14 @@ public class VendingMachineServiceImpl implements VendingMachineService {
     @Override
     public void clearInventory() {
         itemList.clear();
+    }
+
+    @Override
+    public void quit() throws VendingMachineDaoException {
+        try {
+            dao.saveItems(itemList);
+        } catch (VendingMachineDaoException e) {
+            throw e;
+        }
     }
 }

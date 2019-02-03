@@ -15,29 +15,38 @@ public class VendingMachineView {
     public static final int MARGIN = 15;
 
     public void displayMachine(List<InventoryItem> items, BigDecimal balance) {
-        StringBuilder s = new StringBuilder();
+        StringBuilder s;
         io.println("+----------------------------+");
         io.println("|           SNACKS           |");
         io.println("|                            |");
-        
-        // Print lines of inventory
-        for (int i = 1; i < items.size()+1; i++) {
-            int printMargin = MARGIN - items.get(i - 1).getName().length();
-            s.append("| ").append(i).append(" ");
-            s.append(items.get(i - 1).getName());
-            for (int j = 0; j < printMargin; j++) {
-                s.append(" ");
+
+        // Print lines of inventory if there's any stock left
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getStockLevel() != 0) {
+                s = new StringBuilder();
+                int printMargin = MARGIN - items.get(i).getName().length();
+                s.append("| ").append(i + 1).append("| ");
+                s.append(items.get(i).getName());
+                for (int j = 0; j < printMargin; j++) {
+                    s.append(" ");
+                }
+                s.append("$").append(items.get(i).getPrice());
+                s.append("    |");
+                io.println(s.toString());
             }
-            s.append("$").append(items.get(i - 1).getPrice());
-            s.append("     |");
-            io.println(s.toString());
         }
 
         io.println("|                            |");
         io.println("| 0 - Coin Return            |");
         io.println("| 400 - Add Funds            |");
         io.println("|                            |");
-        io.println("| " + "Current Balance: $" + balance + "     |");
+
+        if (balance.compareTo(new BigDecimal("10.00")) >= 0) {
+            io.println("| " + "Current Balance: $" + balance + "    |");
+        } else {
+            io.println("| " + "Current Balance: $" + balance + "     |");
+        }
+
         io.println("|          +-------+         |");
         io.println("|          |       |         |");
         io.println("+----------+-------+---------+");
@@ -47,15 +56,17 @@ public class VendingMachineView {
     public int displayMainMenuAndGetChoice(List<InventoryItem> items, BigDecimal balance) {
         displayMachine(items, balance);
         int i;
-        do {
-        i = io.readInt("Please enter your selection: ");
-        } while(!(i >= 0 && (i <= items.size()+1 || i == 400)));
-        
-        return i;
+        while (true) {
+            i = io.readInt("Please enter your selection: ");
+            if ((0 <= i && i <= items.size()) || i == 400) {
+                return i;
+            }
+            io.println("Invalid selection, please try again.");
+        }
     }
 
     public void displayGoodByeMessage(Change change) {
-        io.println("Change returned: ");
+        io.println("=== Change returned ===");
         io.println("Quarters: " + change.getQuarters());
         io.println("Dimes: " + change.getDimes());
         io.println("Nickels: " + change.getNickels());
@@ -64,11 +75,16 @@ public class VendingMachineView {
     }
 
     public BigDecimal getDeposit() {
-        return io.readCurrency("Enter your deposit (dd.cc): ");
+        return io.readCurrency("Enter your deposit (dollars.cents): ");
     }
 
     public void displayError(Exception e) {
         io.println(e.getMessage());
+        io.readString("Press enter to continue.");
+    }
+
+    public void displayPurchase(String itemName) {
+        io.println("Ker-CHUNK! You now have a " + itemName + "!");
         io.readString("Press enter to continue.");
     }
 }
