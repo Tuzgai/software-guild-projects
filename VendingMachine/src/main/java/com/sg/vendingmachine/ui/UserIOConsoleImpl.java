@@ -1,5 +1,6 @@
 package com.sg.vendingmachine.ui;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 /**
@@ -138,6 +139,19 @@ public class UserIOConsoleImpl implements UserIO {
     public String readString(String prompt) {
         print(prompt);
         return scn.nextLine();
+    }
+    
+    @Override
+    public BigDecimal readCurrency(String prompt) {
+        String str;
+        print(prompt);
+        
+        while(true) {
+            str = scn.nextLine();
+            
+            if(str.matches("\\d*\\.\\d{0,2}")) return new BigDecimal(str);
+            print("Please enter currency in the form 'dd.cc'");
+        }
     }
 
 }

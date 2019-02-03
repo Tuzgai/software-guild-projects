@@ -14,8 +14,8 @@ public class VendingMachineController {
 
     VendingMachineView view;
     VendingMachineService service;
-    final int COIN_RETURN = -1;
-    final int ADD_FUNDS = 0;
+    final int COIN_RETURN = 0;
+    final int ADD_FUNDS = 400;
 
     public VendingMachineController(VendingMachineView view, VendingMachineService service) {
         this.view = view;
@@ -24,12 +24,10 @@ public class VendingMachineController {
 
     public void run() {
         int choice;
-        view.displayMachine(service.getAllItems());
         boolean notDone = true;
         
         while (notDone) {
-            // Subtract 2 to make our display and switch play nicely
-            choice = view.displayMainMenuAndGetChoice(service.getAllItems()) - 2;
+            choice = view.displayMainMenuAndGetChoice(service.getAllItems(), service.getBalance());
 
             switch (choice) {
                 case (COIN_RETURN):
@@ -37,7 +35,7 @@ public class VendingMachineController {
                     notDone = false;
                     break;
                 case (ADD_FUNDS):
-                    service.addMoney(view.getFunds());
+                    service.addMoney(view.getDeposit());
                     break;
                 default:
                     try {

@@ -1,5 +1,7 @@
 package com.sg.vendingmachine.ui;
 
+import java.math.BigDecimal;
+
 /**
  *
  * @author Stuart
@@ -29,4 +31,6 @@ public interface UserIO {
     char readChar(String prompt);
     
     String readString(String prompt);
+    
+    BigDecimal readCurrency(String prompt);
 }
