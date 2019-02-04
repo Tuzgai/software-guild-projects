@@ -23,6 +23,7 @@ public class WordGameServiceImpl implements WordGameService {
         this.dao = dao;
     }
 
+    @Override
     public void startGame() throws FileNotFoundException {
         guessesLeft = 5;
         word = dao.getWord().toCharArray();

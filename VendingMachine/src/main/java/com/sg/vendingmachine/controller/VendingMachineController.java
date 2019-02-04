@@ -13,10 +13,10 @@ import com.sg.vendingmachine.ui.VendingMachineView;
  */
 public class VendingMachineController {
 
-    VendingMachineView view;
-    VendingMachineService service;
-    final int COIN_RETURN = 0;
-    final int ADD_FUNDS = 400;
+    private VendingMachineView view;
+    private VendingMachineService service;
+    private final int COIN_RETURN = 0;
+    private final int ADD_FUNDS = 400;
 
     public VendingMachineController(VendingMachineView view, VendingMachineService service) {
         this.view = view;

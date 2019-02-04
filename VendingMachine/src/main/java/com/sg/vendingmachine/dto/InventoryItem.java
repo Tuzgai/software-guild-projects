@@ -1,6 +1,8 @@
 package com.sg.vendingmachine.dto;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 /**
@@ -11,10 +13,12 @@ public class InventoryItem {
     private String name;
     private BigDecimal price;
     private int stockLevel;
-
+    private final MathContext mc;
+    
     public InventoryItem(String name) {
+        this.mc = new MathContext(2, RoundingMode.HALF_UP);
         this.name = name;
-        this.price = new BigDecimal("0");
+        this.price = new BigDecimal("0", mc);
         this.stockLevel = 0;
     }
     

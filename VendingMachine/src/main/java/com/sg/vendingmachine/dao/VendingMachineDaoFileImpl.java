@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -17,9 +19,10 @@ import java.util.Scanner;
  */
 public class VendingMachineDaoFileImpl implements VendingMachineDao {
 
-    ArrayList<InventoryItem> itemList;
-    final static String FILE = "items.txt";
-    final static String DELIMITER = "::";
+    private ArrayList<InventoryItem> itemList;
+    private final static String FILE = "items.txt";
+    private final static String DELIMITER = "::";
+    private final MathContext mc = new MathContext(3, RoundingMode.HALF_UP);
 
     public VendingMachineDaoFileImpl() {
         this.itemList = new ArrayList<>();
@@ -58,7 +61,7 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
             // Skip malformed lines
             if (currentTokens.length == 3) {
                 item = new InventoryItem(currentTokens[0]);
-                item.setPrice(new BigDecimal(currentTokens[1]));
+                item.setPrice(new BigDecimal(currentTokens[1], mc));
                 item.setStockLevel(Integer.parseInt(currentTokens[2]));
                 itemList.add(item);
             }

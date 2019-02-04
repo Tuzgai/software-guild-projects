@@ -3,6 +3,8 @@ package com.sg.vendingmachine.ui;
 import com.sg.vendingmachine.dto.Change;
 import com.sg.vendingmachine.dto.InventoryItem;
 import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.List;
 
 /**
@@ -11,9 +13,14 @@ import java.util.List;
  */
 public class VendingMachineView {
 
-    UserIO io = new UserIOConsoleImpl();
-    public static final int MARGIN = 15;
+    private UserIO io = new UserIOConsoleImpl();
+    private static final int MARGIN = 15;
+    private final MathContext mc;
 
+    public VendingMachineView() {
+        this.mc = new MathContext(3, RoundingMode.HALF_UP);
+    }
+    
     public void displayMachine(List<InventoryItem> items, BigDecimal balance) {
         StringBuilder s;
         io.println("+----------------------------+");
