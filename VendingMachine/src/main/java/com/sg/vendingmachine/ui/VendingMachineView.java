@@ -25,11 +25,19 @@ public class VendingMachineView {
             if (items.get(i).getStockLevel() != 0) {
                 s = new StringBuilder();
                 int printMargin = MARGIN - items.get(i).getName().length();
+                
+                // Left margin
                 s.append("| ").append(i + 1).append("| ");
+                
+                // Name
                 s.append(items.get(i).getName());
+                
+                // Internal margin (variable length)
                 for (int j = 0; j < printMargin; j++) {
                     s.append(" ");
                 }
+                
+                // Price + right margin
                 s.append("$").append(items.get(i).getPrice());
                 s.append("    |");
                 io.println(s.toString());
@@ -41,6 +49,7 @@ public class VendingMachineView {
         io.println("| 400 - Add Funds            |");
         io.println("|                            |");
 
+        // One space adjustment for shorter/longer prices
         if (balance.compareTo(new BigDecimal("10.00")) >= 0) {
             io.println("| " + "Current Balance: $" + balance + "    |");
         } else {

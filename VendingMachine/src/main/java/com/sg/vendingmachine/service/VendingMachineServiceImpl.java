@@ -17,7 +17,7 @@ public class VendingMachineServiceImpl implements VendingMachineService {
     private VendingMachineDao dao;
     private BigDecimal balance;
     private List<InventoryItem> itemList;
-    
+
     public VendingMachineServiceImpl(VendingMachineDao dao) throws VendingMachineDaoException {
         this.dao = dao;
         balance = new BigDecimal("0.00");
@@ -35,8 +35,7 @@ public class VendingMachineServiceImpl implements VendingMachineService {
         return balance;
     }
 
-    // Presently adding / updating are the same thing but they might not always be,
-    // so two methods are needed to make future changes easier.
+    // Don't worry about which property changed, just replace the item
     @Override
     public void updateItem(InventoryItem item) {
         for (int i = 0; i < itemList.size(); i++) {
@@ -77,22 +76,18 @@ public class VendingMachineServiceImpl implements VendingMachineService {
 
     @Override
     public void vendItem(String name) throws ItemNotFoundException, InsufficientFundsException, ZeroInventoryException {
-        try {
-            InventoryItem item = getItem(name);
-            if (item.getStockLevel() <= 0) {
-                throw new ZeroInventoryException("Item out of stock.");
-            }
-
-            if (balance.compareTo(item.getPrice()) < 0) {
-                throw new InsufficientFundsException("Insufficient funds, please add more and try again.");
-            }
-
-            balance = balance.subtract(item.getPrice());
-            item.setStockLevel(item.getStockLevel() - 1);
-            updateItem(item);
-        } catch (ItemNotFoundException e) {
-            throw e;
+        InventoryItem item = getItem(name);
+        if (item.getStockLevel() <= 0) {
+            throw new ZeroInventoryException("Item out of stock.");
         }
+
+        if (balance.compareTo(item.getPrice()) < 0) {
+            throw new InsufficientFundsException("Insufficient funds, please add more and try again.");
+        }
+
+        balance = balance.subtract(item.getPrice());
+        item.setStockLevel(item.getStockLevel() - 1);
+        updateItem(item);
     }
 
     @Override
@@ -102,6 +97,7 @@ public class VendingMachineServiceImpl implements VendingMachineService {
         return change;
     }
 
+    // Needed for testing
     @Override
     public void clearInventory() {
         itemList.clear();
@@ -109,10 +105,8 @@ public class VendingMachineServiceImpl implements VendingMachineService {
 
     @Override
     public void quit() throws VendingMachineDaoException {
-        try {
-            dao.saveItems(itemList);
-        } catch (VendingMachineDaoException e) {
-            throw e;
-        }
+
+        dao.saveItems(itemList);
+
     }
 }

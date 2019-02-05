@@ -1,4 +1,4 @@
-A Nice Hot Dog::4.00::2::
-A Tasty Fruit::3.35::1::
-Bag of Doritos::0.61::2::
-Sody Pop::1.10::2::
+Apples::1.15::0::
+DOn't display::1.00::0::
+Orange Juice::3.24::22::
+Test Item 1::2.50::2::

@@ -1,6 +1,5 @@
-package com.sg.vendingmachine.service;
+package com.sg.vendingmachine.dto;
 
-import com.sg.vendingmachine.dto.Change;
 import java.math.BigDecimal;
 import org.junit.After;
 import org.junit.AfterClass;

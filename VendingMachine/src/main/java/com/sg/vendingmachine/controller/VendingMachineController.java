@@ -43,6 +43,9 @@ public class VendingMachineController {
                 case (ADD_FUNDS):
                     service.addMoney(view.getDeposit());
                     break;
+                    
+                // If we aren't adding/returning money, we're vending an item
+                // Choice-1 because the item list is 0-indexed
                 default:
                     try {
                         String itemName = service.getAllItems().get(choice-1).getName();
