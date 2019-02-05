@@ -1,4 +1,4 @@
-A Nice Hot Dog::4.0::1::
-A Tasty Fruit::3.3::2::
+A Nice Hot Dog::4.00::2::
+A Tasty Fruit::3.35::1::
 Bag of Doritos::0.61::2::
-Sody Pop::1.1::1::
+Sody Pop::1.10::2::

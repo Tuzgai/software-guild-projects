@@ -1,8 +1,6 @@
 package com.sg.vendingmachine.dto;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 
 /**
  *
@@ -12,28 +10,25 @@ public class Change {
 
     private BigDecimal balance;
     private int quarters, nickels, dimes, pennies;
-    private final MathContext mc;
     
     public Change() {
-        this.mc = new MathContext(2, RoundingMode.HALF_UP);
-        this.balance = new BigDecimal("0.0", mc);
+        this.balance = new BigDecimal("0.00");
         updateCoins();
     }
 
     public Change(BigDecimal balance) {
-        this.mc = new MathContext(3, RoundingMode.HALF_UP);
         this.balance = balance;
         updateCoins();
     }
 
     private void updateCoins() {
-        BigDecimal[] arr = balance.divideAndRemainder(new BigDecimal("0.25", mc));
+        BigDecimal[] arr = balance.divideAndRemainder(new BigDecimal("0.25"));
         quarters = arr[0].intValue();
-        arr = arr[1].divideAndRemainder(new BigDecimal("0.10", mc));
+        arr = arr[1].divideAndRemainder(new BigDecimal("0.10"));
         dimes = arr[0].intValue();
-        arr = arr[1].divideAndRemainder(new BigDecimal("0.05", mc));
+        arr = arr[1].divideAndRemainder(new BigDecimal("0.05"));
         nickels = arr[0].intValue();
-        arr = arr[1].divideAndRemainder(new BigDecimal("0.01", mc));
+        arr = arr[1].divideAndRemainder(new BigDecimal("0.01"));
         pennies = arr[0].intValue();
     }
 

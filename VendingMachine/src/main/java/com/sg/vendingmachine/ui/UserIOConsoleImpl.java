@@ -1,8 +1,6 @@
 package com.sg.vendingmachine.ui;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.Scanner;
 
 /**
@@ -12,7 +10,6 @@ import java.util.Scanner;
 public class UserIOConsoleImpl implements UserIO {
 
     Scanner scn = new Scanner(System.in);
-    final MathContext mc = new MathContext(2, RoundingMode.HALF_UP);
     
     @Override
     public void print(String message) {
@@ -152,7 +149,7 @@ public class UserIOConsoleImpl implements UserIO {
         while(true) {
             str = scn.nextLine();
             
-            if(str.matches("\\d*\\.\\d{0,2}")) return new BigDecimal(str, mc);
+            if(str.matches("\\d*\\.\\d{0,2}")) return new BigDecimal(str);
             print("Please enter currency in the form 'dollars.cents'");
         }
     }

@@ -5,8 +5,6 @@ import com.sg.vendingmachine.dao.VendingMachineDao;
 import com.sg.vendingmachine.dao.VendingMachineDaoException;
 import com.sg.vendingmachine.dto.InventoryItem;
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.Comparator;
 import java.util.List;
 
@@ -19,10 +17,8 @@ public class VendingMachineServiceImpl implements VendingMachineService {
     private VendingMachineDao dao;
     private BigDecimal balance;
     private List<InventoryItem> itemList;
-    private final MathContext mc;
     
     public VendingMachineServiceImpl(VendingMachineDao dao) throws VendingMachineDaoException {
-        this.mc = new MathContext(3, RoundingMode.HALF_UP);
         this.dao = dao;
         balance = new BigDecimal("0.00");
         try {
