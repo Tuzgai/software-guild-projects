@@ -127,4 +127,44 @@ public class FactorialTest {
         int n = 88;
         assertFalse(instance.isFactorion(n));
     }
+    
+    @Test
+    public void testAllFactorions() {
+        int count = 0;
+        for(int i = 0; i <= 1000000; i++) {
+            if(instance.isFactorion(i)) count++;
+        }
+        
+        assertEquals(4, count);
+    }
+    
+    @Test
+    public void testisFactoral1() {
+        int n = 1;
+        assertTrue(instance.isFactorial(n));
+    }
+    
+    @Test
+    public void testisFactoral2() {
+        int n = 2;
+        assertTrue(instance.isFactorial(n));
+    }
+    
+    @Test
+    public void testisFactoral5040() {
+        int n = 5040;
+        assertTrue(instance.isFactorial(n));
+    }
+    
+    @Test
+    public void testisFactoral10() {
+        int n = 10;
+        assertFalse(instance.isFactorial(n));
+    }
+    
+    @Test
+    public void testisFactoral0() {
+        int n = 0;
+        assertFalse(instance.isFactorial(n));
+    }
 }

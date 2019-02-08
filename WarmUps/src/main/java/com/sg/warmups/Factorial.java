@@ -22,6 +22,17 @@ public class Factorial {
         return total;
     }
     
+    public boolean isFactorial(int n) {
+        int i = 0;
+        int test = 0;
+        while(test < n) {
+            i++;
+            test = factorial(i);
+            if (test == n) return true;
+        }
+        return false;
+    }
+    
     public boolean isFactorion(int n) {
         int[] digits = Integer.toString(n).chars().map((c) -> Character.getNumericValue(c)).toArray();
         int total = 0;

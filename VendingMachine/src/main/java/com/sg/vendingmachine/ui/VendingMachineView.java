@@ -11,8 +11,14 @@ import java.util.List;
  */
 public class VendingMachineView {
 
-    private UserIO io = new UserIOConsoleImpl();
+    private UserIO io;
     private static final int MARGIN = 15;
+
+    public VendingMachineView(UserIO io) {
+        this.io = io;
+    }
+    
+    
     
     public void displayMachine(List<InventoryItem> items, BigDecimal balance) {
         StringBuilder s;
