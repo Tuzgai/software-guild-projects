@@ -18,11 +18,17 @@ import java.util.Scanner;
 public class VendingMachineDaoFileImpl implements VendingMachineDao {
 
     private ArrayList<InventoryItem> itemList;
-    private final static String FILE = "items.txt";
+    private static String FILE;
     private final static String DELIMITER = "::";
-
+    
+    public VendingMachineDaoFileImpl(String file) {
+        this.itemList = new ArrayList<>();
+        FILE = file;
+    }
+    
     public VendingMachineDaoFileImpl() {
         this.itemList = new ArrayList<>();
+        FILE = "items.txt";
     }
 
     // Needed for testing

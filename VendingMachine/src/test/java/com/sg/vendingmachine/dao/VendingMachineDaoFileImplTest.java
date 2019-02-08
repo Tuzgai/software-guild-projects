@@ -15,16 +15,7 @@ import static org.junit.Assert.*;
  */
 public class VendingMachineDaoFileImplTest {
 
-    VendingMachineDaoFileImpl instance = new VendingMachineDaoFileImpl();
-
-    public VendingMachineDaoFileImplTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
+    VendingMachineDaoFileImpl instance = new VendingMachineDaoFileImpl("TestItems.txt");
     public static void tearDownClass() {
     }
 

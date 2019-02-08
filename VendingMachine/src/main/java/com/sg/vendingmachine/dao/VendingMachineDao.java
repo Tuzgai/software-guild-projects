@@ -8,7 +8,7 @@ import java.util.List;
  * @author Stuart
  */
 public interface VendingMachineDao {
-
+    
     List<InventoryItem> getAllItems();
 
     void addItem(InventoryItem item);
