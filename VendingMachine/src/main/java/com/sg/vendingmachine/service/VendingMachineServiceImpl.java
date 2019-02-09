@@ -16,6 +16,7 @@ public class VendingMachineServiceImpl implements VendingMachineService {
 
     private VendingMachineDao dao;
     private BigDecimal balance;
+    private Change coinInventory;
     private List<InventoryItem> itemList;
 
     public VendingMachineServiceImpl(VendingMachineDao dao) throws VendingMachineDaoException {
@@ -28,6 +29,7 @@ public class VendingMachineServiceImpl implements VendingMachineService {
         }
         itemList = dao.getAllItems();
         itemList.sort(Comparator.comparing(InventoryItem::getName));
+        coinInventory = dao.getCoins();
     }  
     
     @Override

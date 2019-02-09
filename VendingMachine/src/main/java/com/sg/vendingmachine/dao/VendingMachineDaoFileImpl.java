@@ -1,5 +1,6 @@
 package com.sg.vendingmachine.dao;
 
+import com.sg.vendingmachine.dto.Change;
 import com.sg.vendingmachine.dto.InventoryItem;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,17 +19,23 @@ import java.util.Scanner;
 public class VendingMachineDaoFileImpl implements VendingMachineDao {
 
     private ArrayList<InventoryItem> itemList;
-    private static String FILE;
+    private Change coins;
+    private String itemFile;
+    private String coinFile;
     private final static String DELIMITER = "::";
-    
-    public VendingMachineDaoFileImpl(String file) {
+
+    public VendingMachineDaoFileImpl(String itemFile, String coinFile) {
         this.itemList = new ArrayList<>();
-        FILE = file;
+        this.itemFile = itemFile;
+        this.coinFile = coinFile;
+        coins = new Change(0,0,0,0);
     }
-    
+
     public VendingMachineDaoFileImpl() {
         this.itemList = new ArrayList<>();
-        FILE = "items.txt";
+        itemFile = "items.txt";
+        coinFile = "coins.txt";
+        coins = new Change(0,0,0,0);
     }
 
     // Needed for testing
@@ -49,10 +56,12 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
     public void loadItems() throws VendingMachineDaoException {
         Scanner scn;
         InventoryItem item;
+
+        // First load items
         try {
-            scn = new Scanner(new File(FILE));
+            scn = new Scanner(new File(itemFile));
         } catch (FileNotFoundException e) {
-            throw new VendingMachineDaoException("Could not open " + FILE, e);
+            throw new VendingMachineDaoException("Could not open " + itemFile, e);
         }
 
         String currentLine;
@@ -71,6 +80,30 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
 
         }
         scn.close();
+
+        // Then load coins
+        try {
+            scn = new Scanner(new File(coinFile));
+        } catch (FileNotFoundException e) {
+            throw new VendingMachineDaoException("Could not open " + itemFile, e);
+        }
+
+        currentLine = scn.nextLine();
+        currentTokens = currentLine.split(DELIMITER);
+
+        int q, d, n, p;
+        // Skip malformed lines
+        if (currentTokens.length == 4) {
+            q = Integer.parseInt(currentTokens[0]);
+            d = Integer.parseInt(currentTokens[1]);
+            n = Integer.parseInt(currentTokens[2]);
+            p = Integer.parseInt(currentTokens[3]);
+        } else {
+            throw new VendingMachineDaoException("Coin file malformed, please check " + coinFile);
+        }
+
+        coins = new Change(q, d, n, p);
+        scn.close();
     }
 
     @Override
@@ -84,20 +117,40 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
 
     @Override
     public void saveItems(List<InventoryItem> items) throws VendingMachineDaoException {
-        PrintWriter out;
+        PrintWriter itemWriter, coinWriter;
 
+        // First write items
         try {
-            out = new PrintWriter(new FileWriter(FILE));
+            itemWriter = new PrintWriter(new FileWriter(itemFile));
         } catch (IOException e) {
             throw new VendingMachineDaoException("Could not save inventory data.", e);
         }
 
-        items.forEach(item -> out.println(
+        items.forEach(item -> itemWriter.println(
                 item.getName() + DELIMITER
                 + item.getPrice() + DELIMITER
                 + item.getStockLevel() + DELIMITER));
 
-        out.close();
+        itemWriter.close();
+
+        // Then write coins
+        try {
+            coinWriter = new PrintWriter(new FileWriter(coinFile));
+        } catch (IOException e) {
+            throw new VendingMachineDaoException("Could not save coin data.", e);
+        }
+
+        coinWriter.println(
+                coins.getQuarters() + DELIMITER
+                + coins.getDimes() + DELIMITER
+                + coins.getNickels() + DELIMITER
+                + coins.getPennies() + DELIMITER);
+        coinWriter.close();
+    }
+
+    @Override
+    public Change getCoins() {
+        return coins;
     }
 
     @Override

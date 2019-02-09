@@ -1,5 +1,6 @@
 package com.sg.vendingmachine.dao;
 
+import com.sg.vendingmachine.dto.Change;
 import com.sg.vendingmachine.dto.InventoryItem;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -54,6 +55,11 @@ public class VendingMachineDaoStubImpl implements VendingMachineDao {
     @Override
     public void saveItems(List<InventoryItem> items) throws VendingMachineDaoException {
         // Do nothing
+    }
+    
+    @Override
+    public Change getCoins() {
+        return new Change(10,10,10,10);
     }
     
 }

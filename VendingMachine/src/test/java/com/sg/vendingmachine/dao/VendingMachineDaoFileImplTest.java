@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
  */
 public class VendingMachineDaoFileImplTest {
 
-    VendingMachineDaoFileImpl instance = new VendingMachineDaoFileImpl("TestItems.txt");
+    VendingMachineDaoFileImpl instance = new VendingMachineDaoFileImpl("testItems.txt", "testCoins.txt");
     public static void tearDownClass() {
     }
 
@@ -52,5 +52,6 @@ public class VendingMachineDaoFileImplTest {
         instance.clearInventory();
         instance.loadItems();
         assertNotEquals(0, instance.getAllItems().size());
+        assertNotEquals(null, instance.getCoins());
     }
 }

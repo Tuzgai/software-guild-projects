@@ -1,5 +1,6 @@
 package com.sg.vendingmachine.dao;
 
+import com.sg.vendingmachine.dto.Change;
 import com.sg.vendingmachine.dto.InventoryItem;
 import java.util.List;
 
@@ -21,5 +22,5 @@ public interface VendingMachineDao {
     
     void clearInventory();
     
-    
+    Change getCoins();
 }
