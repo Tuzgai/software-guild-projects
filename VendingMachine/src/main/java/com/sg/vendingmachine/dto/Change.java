@@ -2,6 +2,7 @@ package com.sg.vendingmachine.dto;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Objects;
 
 /**
  *
@@ -10,7 +11,7 @@ import java.math.RoundingMode;
 public class Change {
 
     private BigDecimal balance;
-    private int quarters, nickels, dimes, pennies;
+    private int quarters, dimes, nickels, pennies;
     
     public Change() {
         this.balance = new BigDecimal("0.00");
@@ -46,7 +47,7 @@ public class Change {
         balance = balance.setScale(2, RoundingMode.HALF_UP);
     }
     
-    public void addCoins(int quarters, int dimes, int nickels, int pennies) {
+    public void adjustBy(int quarters, int dimes, int nickels, int pennies) {
         this.quarters += quarters;
         this.dimes += dimes;
         this.nickels += nickels;
@@ -54,8 +55,12 @@ public class Change {
         updateBalance();
     }
     
-    // TODO: add error handling for out of money
-    public Change subtract(Change changeNeeded) {
+    public void adjustBy(Change change) {
+        Change.this.adjustBy(change.getQuarters(), change.getDimes(), change.getNickels(), change.getPennies());
+    }
+    
+    // TODO: adjustBy error handling for out of money
+    public Change subtractRespectingPositiveCoinTotals(Change changeNeeded) {
         int quartersNeeded = changeNeeded.getQuarters();
         int dimesNeeded = changeNeeded.getDimes();
         int nickelsNeeded = changeNeeded.getNickels();
@@ -129,4 +134,50 @@ public class Change {
     public int getPennies() {
         return pennies;
     }
+    
+    @Override
+    public String toString() {
+        return "Q: " + this.quarters 
+                + " D: " + this.dimes 
+                + " N: " + this.nickels
+                + " P: " + this.pennies;
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Change other = (Change) obj;
+        if (this.quarters != other.quarters) {
+            return false;
+        }
+        if (this.nickels != other.nickels) {
+            return false;
+        }
+        if (this.dimes != other.dimes) {
+            return false;
+        }
+        if (this.pennies != other.pennies) {
+            return false;
+        }
+        if (!Objects.equals(this.balance, other.balance)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }

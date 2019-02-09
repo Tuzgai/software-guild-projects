@@ -46,6 +46,7 @@ public class VendingMachineServiceImplTest {
         item2.setStockLevel(2);
         instance.addItem(item2);
 
+        instance.setCoins(new Change(10,10,10,10));
     }
 
     @After
@@ -124,6 +125,16 @@ public class VendingMachineServiceImplTest {
     }
 
     /**
+     * Test of addMoney and getBalance methods, of class
+     * VendingMachineServiceImpl.
+     */
+    @Test
+    public void testAddChangeAndGetBalance() {
+        instance.addMoney(new Change(20, 0, 0, 0));
+        assertEquals(new BigDecimal("5.00"), instance.getBalance());
+    }
+
+    /**
      * Test of vendItem method, of class VendingMachineServiceImpl.
      *
      * @throws java.lang.Exception
@@ -177,6 +188,21 @@ public class VendingMachineServiceImplTest {
     public void testRemoveItem() throws Exception {
         instance.removeItem(1);
         assertEquals(1, instance.getAllItems().size());
-        assertEquals("Test Item 1",instance.getAllItems().get(0).getName());
+        assertEquals("Test Item 1", instance.getAllItems().get(0).getName());
+    }
+
+    @Test
+    public void testAdjustCoinInventory() throws Exception {
+        instance.adjustCoinInventory(new Change(1, 1, 1, 1));
+        Change coins = instance.getCoinInventory();
+
+        assertEquals(new Change(11, 11, 11, 11), coins);
+        instance.adjustCoinInventory(new Change(-5, 4, -5, 4));
+        assertEquals(new Change(6, 15, 6, 15), coins);
+    }
+
+    @Test(expected = OutOfMoneyException.class)
+    public void testAdjustCoinInventoryException() throws Exception {
+        instance.adjustCoinInventory(new Change(-15,0,0,0));
     }
 }

@@ -1,4 +1,4 @@
-package com.sg.vendingmachine.dto;
+package com.sg.vendingmachine.service;
 
 /**
  *

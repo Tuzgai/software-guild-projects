@@ -137,22 +137,30 @@ public class ChangeTest {
     
     @Test
     public void testAddCoins() {
-        instance.addCoins(1, 1, 1, 1);
+        instance.adjustBy(1, 1, 1, 1);
         assertEquals(new BigDecimal("0.41"), instance.getBalance());
     }
     
     @Test
     public void testAddCoinsTwice() {
-        instance.addCoins(1, 1, 1, 1);
-        instance.addCoins(1, 1, 1, 1);
+        instance.adjustBy(1, 1, 1, 1);
+        instance.adjustBy(1, 1, 1, 1);
         assertEquals(new BigDecimal("0.82"), instance.getBalance());
+    }
+    
+    @Test
+    public void testAdjustNegativeCoins() {
+        instance.setBalance(new BigDecimal("0.00"));
+        instance.adjustBy(new Change(-5,-5,-5,-5));
+        assertEquals(new Change(-5,-5,-5,-5), instance);
+        assertEquals(new BigDecimal("-2.05"),instance.getBalance());
     }
     
     @Test
     public void testSubtract() {
         Change c1 = new Change(1,1,1,1);
         Change c2 = new Change(1,1,1,1);
-        assertEquals(new BigDecimal("0.41"), c1.subtract(c2).getBalance());
+        assertEquals(new BigDecimal("0.41"), c1.subtractRespectingPositiveCoinTotals(c2).getBalance());
         assertEquals(new BigDecimal("0.00"), c1.getBalance());
         assertEquals(0, c1.getQuarters());
         assertEquals(0, c1.getDimes());
@@ -164,7 +172,7 @@ public class ChangeTest {
     public void testSubtractBig() {
         Change c1 = new Change(1,1,1,1);
         Change c2 = new Change(5,5,5,5);
-        assertEquals(new BigDecimal("0.41"), c1.subtract(c2).getBalance());
+        assertEquals(new BigDecimal("0.41"), c1.subtractRespectingPositiveCoinTotals(c2).getBalance());
         assertEquals(new BigDecimal("0.00"), c1.getBalance());
         assertEquals(0, c1.getQuarters());
         assertEquals(0, c1.getDimes());
@@ -176,7 +184,7 @@ public class ChangeTest {
     public void testSubtractNoQuarters() {
         Change c1 = new Change(0,10,10,10); // 1.60
         Change c2 = new Change(2,5,5,5);    // 1.30
-        Change result = c1.subtract(c2);
+        Change result = c1.subtractRespectingPositiveCoinTotals(c2);
         assertEquals(new BigDecimal("1.30"), result.getBalance());
         assertEquals(new BigDecimal("0.30"), c1.getBalance());
         assertEquals(0, result.getQuarters());

@@ -33,10 +33,32 @@ public class VendingMachineServiceImpl implements VendingMachineService {
     }  
     
     @Override
+    public void setCoins(Change coins) {
+        coinInventory = coins;
+    }
+    
+    @Override
     public BigDecimal getBalance() {
         return balance;
     }
+    
+    @Override
+    public Change getCoinInventory() {
+        return coinInventory;
+    }
 
+    @Override
+    public void adjustCoinInventory(Change coinAdjustments) throws OutOfMoneyException {
+        if(((coinAdjustments.getQuarters() < 0) && (coinAdjustments.getQuarters() * -1 > coinInventory.getQuarters()))
+                || ((coinAdjustments.getDimes() < 0) && (coinAdjustments.getDimes() * -1 > coinInventory.getDimes()))
+                || ((coinAdjustments.getNickels() < 0) && (coinAdjustments.getNickels() * -1 > coinInventory.getNickels()))
+                || ((coinAdjustments.getPennies() < 0) && (coinAdjustments.getPennies() * -1 > coinInventory.getPennies()))) {
+            throw new OutOfMoneyException("You requested more coins than are available. No changes were made.");
+        }
+        
+        coinInventory.adjustBy(coinAdjustments);
+    }
+    
     // Don't worry about which property changed, just replace the item
     @Override
     public void updateItem(InventoryItem item) {
@@ -45,7 +67,6 @@ public class VendingMachineServiceImpl implements VendingMachineService {
         itemList.add(i, item);
     }
 
-    // Needed for testing
     @Override
     public void addItem(InventoryItem item) {
         itemList.add(item);
@@ -68,9 +89,15 @@ public class VendingMachineServiceImpl implements VendingMachineService {
     }
 
     @Override
-    public BigDecimal addMoney(BigDecimal money) {
-        balance = balance.add(money);
+    public BigDecimal addMoney(Change coins) {
+        balance = balance.add(coins.getBalance());
+        coinInventory.adjustBy(coins);
         return balance;
+    }
+    
+    @Override 
+    public BigDecimal addMoney(BigDecimal money) {
+        return addMoney(new Change(money));
     }
 
     @Override
@@ -91,7 +118,7 @@ public class VendingMachineServiceImpl implements VendingMachineService {
 
     @Override
     public Change coinReturn() {
-        Change change = new Change(balance);
+        Change change = coinInventory.subtractRespectingPositiveCoinTotals(new Change(balance));
         balance = new BigDecimal("0.00");
         return change;
     }

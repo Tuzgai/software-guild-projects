@@ -6,6 +6,9 @@ import com.sg.vendingmachine.service.ItemNotFoundException;
 import com.sg.vendingmachine.service.VendingMachineService;
 import com.sg.vendingmachine.service.ZeroInventoryException;
 import com.sg.vendingmachine.ui.VendingMachineView;
+import com.sg.vendingmachine.dto.Change;
+import com.sg.vendingmachine.service.OutOfMoneyException;
+
 
 /**
  *
@@ -22,7 +25,7 @@ public class VendingMachineController {
     private final int ADD_ITEM = 2;
     private final int REMOVE_ITEM = 3;
     private final int EDIT_ITEM = 4;
-    private final int ADD_COINS = 5;
+    private final int EDIT_COINS = 5;
     private final int SHOW_STOCK = 6;
     private final int EXIT = 7;
 
@@ -111,7 +114,13 @@ public class VendingMachineController {
                     }
                     break;
 
-                case ADD_COINS:
+                case EDIT_COINS:
+                    Change coinAdjustments = view.getCoinAdjustments(service.getCoinInventory());
+                    try {
+                        service.adjustCoinInventory(coinAdjustments);
+                    } catch (OutOfMoneyException e) {
+                        view.displayError(e);
+                    }
                     break;
                     
                 case SHOW_STOCK:

@@ -11,9 +11,14 @@ import java.util.List;
  * @author Stuart
  */
 public interface VendingMachineService {
-
+    void setCoins(Change coins);
+            
     BigDecimal getBalance();
 
+    Change getCoinInventory();
+    
+    void adjustCoinInventory(Change coinAdjustments) throws OutOfMoneyException;
+    
     void updateItem(InventoryItem item);
 
     void addItem(InventoryItem item);
@@ -22,8 +27,10 @@ public interface VendingMachineService {
 
     List<InventoryItem> getAllItems();
 
-    BigDecimal addMoney(BigDecimal money);
+    BigDecimal addMoney(Change coins);
 
+    BigDecimal addMoney(BigDecimal money);
+    
     void vendItem(String name) throws ItemNotFoundException, InsufficientFundsException, ZeroInventoryException;
     
     Change coinReturn();

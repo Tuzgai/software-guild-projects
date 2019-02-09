@@ -88,8 +88,14 @@ public class VendingMachineView {
         io.println("Thanks for visiting, see you soon!");
     }
 
-    public BigDecimal getDeposit() {
-        return io.readCurrency("Enter your deposit (dollars.cents): ");
+    public Change getDeposit() {
+        int q, d, n, p;
+
+        q = io.readInt("Enter number of quarters: ", 0, Integer.MAX_VALUE);
+        d = io.readInt("Enter number of dimes: ", 0, Integer.MAX_VALUE);
+        n = io.readInt("Enter number of nickels: ", 0, Integer.MAX_VALUE);
+        p = io.readInt("Enter number of pennies: ", 0, Integer.MAX_VALUE);
+        return new Change(q, d, n, p);
     }
 
     public void displayError(Exception e) {
@@ -109,8 +115,9 @@ public class VendingMachineView {
         io.println("2. Add a new item to inventory.");
         io.println("3. Remove an item from inventory.");
         io.println("4. Edit an item's price or inventory level.");
-        io.println("5. Add coins to stock.");
-        io.println("6. Save and exit.");
+        io.println("5. Add or remove coins.");
+        io.println("6. Show machine inventory levels.");
+        io.println("7. Save and exit.");
         return io.readInt("Enter your selection: ", 1, numberOfOptions);
     }
 
@@ -135,12 +142,33 @@ public class VendingMachineView {
         int displayIndex = 0;
         for (int i = 0; i < itemList.size(); i++) {
             InventoryItem item = itemList.get(i);
-            displayIndex = i+1;
+            displayIndex = i + 1;
             io.println(displayIndex + ". " + item.getName() + " $"
                     + item.getPrice() + " Stock: "
                     + item.getStockLevel());
         }
         io.println("======================");
+    }
+    
+    public void displayCoinInventory(Change coins) {
+        io.println("=== Coin Inventory ===");
+        io.println("Quarters:\t" + coins.getQuarters());
+        io.println("Dimes:\t" + coins.getDimes());
+        io.println("Nickels:\t" + coins.getNickels());
+        io.println("Pennies:\t" + coins.getPennies());
+        io.println("Balance: $" + coins.getBalance());
+    }
+    
+    public Change getCoinAdjustments(Change coins) {
+        displayCoinInventory(coins);
+        int q,d,n,p;
+        q = io.readInt("Set new quarter inventory: ");
+        d = io.readInt("Set new dime inventory: ");
+        n = io.readInt("Set new nickel inventory: ");
+        p = io.readInt("Set new penny inventory: ");
+        Change change = new Change(q,d,n,p);
+        io.println("Ok, adjusting inventory by: $" + change.getBalance() + " ...");
+        return change;
     }
 
     public int getItemToDelete(List<InventoryItem> itemList) {
@@ -159,7 +187,7 @@ public class VendingMachineView {
         } else {
             throw new ItemNotFoundException("Item not found.");
         }
-        
+
         return newItem;
     }
 }
