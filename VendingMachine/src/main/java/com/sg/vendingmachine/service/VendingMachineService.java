@@ -31,4 +31,8 @@ public interface VendingMachineService {
     void clearInventory();
     
     void quit() throws VendingMachineDaoException;
+    
+    void refill(int restockLevel);
+    
+    void removeItem(int item) throws ItemNotFoundException;
 }

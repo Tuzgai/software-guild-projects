@@ -28,8 +28,8 @@ public class VendingMachineServiceImpl implements VendingMachineService {
         }
         itemList = dao.getAllItems();
         itemList.sort(Comparator.comparing(InventoryItem::getName));
-    }
-
+    }  
+    
     @Override
     public BigDecimal getBalance() {
         return balance;
@@ -38,12 +38,9 @@ public class VendingMachineServiceImpl implements VendingMachineService {
     // Don't worry about which property changed, just replace the item
     @Override
     public void updateItem(InventoryItem item) {
-        for (int i = 0; i < itemList.size(); i++) {
-            if (item.getName().equals(itemList.get(i).getName())) {
-                itemList.remove(i);
-                itemList.add(i, item);
-            }
-        }
+        int i = itemList.indexOf(item);
+        itemList.remove(i);
+        itemList.add(i, item);
     }
 
     // Needed for testing
@@ -105,8 +102,17 @@ public class VendingMachineServiceImpl implements VendingMachineService {
 
     @Override
     public void quit() throws VendingMachineDaoException {
-
         dao.saveItems(itemList);
-
+    }
+    
+    @Override
+    public void refill(int restockLevel) {
+        itemList.forEach((item) -> item.setStockLevel(restockLevel));
+    }
+    
+    @Override
+    public void removeItem(int item) throws ItemNotFoundException {
+        if(-1 < item && item < itemList.size()) itemList.remove(item);
+        else throw new ItemNotFoundException("Item not found.");
     }
 }

@@ -161,4 +161,22 @@ public class VendingMachineServiceImplTest {
         assertEquals(20, change.getQuarters());
     }
 
+    @Test
+    public void testRefill() {
+        instance.refill(1);
+        instance.getAllItems().forEach((item)
+                -> assertEquals(1, item.getStockLevel()));
+    }
+
+    @Test(expected = ItemNotFoundException.class)
+    public void testRemoveItemException() throws Exception {
+        instance.removeItem(10000);
+    }
+
+    @Test
+    public void testRemoveItem() throws Exception {
+        instance.removeItem(1);
+        assertEquals(1, instance.getAllItems().size());
+        assertEquals("Test Item 1",instance.getAllItems().get(0).getName());
+    }
 }

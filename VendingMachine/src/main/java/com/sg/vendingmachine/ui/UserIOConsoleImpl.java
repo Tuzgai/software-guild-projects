@@ -83,7 +83,7 @@ public class UserIOConsoleImpl implements UserIO {
     public int readInt(String prompt, int min, int max) {
         int input = readInt(prompt);
         while (!(min <= input && input <= max)) {
-            print("Error: number out of range.");
+            println("Error: number out of range.");
             input = readInt(prompt);
         }
 

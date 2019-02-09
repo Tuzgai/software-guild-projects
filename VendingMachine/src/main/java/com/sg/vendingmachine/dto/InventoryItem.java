@@ -43,7 +43,13 @@ public class InventoryItem {
         int hash = 7;
         return hash;
     }
-
+    
+    /**
+     * 
+     * @param obj
+     * @return Equality comparison. Note that ONLY the titles of items are compared
+     * for equality. This lets us use equality to find our items to replace or delete.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
