@@ -18,6 +18,7 @@ public class VendingMachineServiceImpl implements VendingMachineService {
     private BigDecimal balance;
     private Change coinInventory;
     private List<InventoryItem> itemList;
+    private Change returnedChange;
 
     public VendingMachineServiceImpl(VendingMachineDao dao) throws VendingMachineDaoException {
         this.dao = dao;
@@ -48,12 +49,12 @@ public class VendingMachineServiceImpl implements VendingMachineService {
     }
 
     @Override
-    public void adjustCoinInventory(Change coinAdjustments) throws OutOfMoneyException {
+    public void adjustCoinInventory(Change coinAdjustments) throws OutOfCoinsException {
         if (((coinAdjustments.getQuarters() < 0) && (coinAdjustments.getQuarters() * -1 > coinInventory.getQuarters()))
                 || ((coinAdjustments.getDimes() < 0) && (coinAdjustments.getDimes() * -1 > coinInventory.getDimes()))
                 || ((coinAdjustments.getNickels() < 0) && (coinAdjustments.getNickels() * -1 > coinInventory.getNickels()))
                 || ((coinAdjustments.getPennies() < 0) && (coinAdjustments.getPennies() * -1 > coinInventory.getPennies()))) {
-            throw new OutOfMoneyException("You requested more coins than are available. No changes were made.");
+            throw new OutOfCoinsException("You requested more coins than are available. No changes were made.");
         }
 
         coinInventory.adjustBy(coinAdjustments);
@@ -117,13 +118,13 @@ public class VendingMachineServiceImpl implements VendingMachineService {
     }
 
     @Override
-    public Change coinReturn() throws OutOfMoneyException {
-        Change returnedChange = coinInventory.subtractRespectingPositiveCoinTotals(new Change(balance));
-        balance = new BigDecimal("0.00");
+    public Change coinReturn() throws OutOfCoinsException {
+        returnedChange = coinInventory.subtractRespectingPositiveCoinTotals(new Change(balance));      
         
-        if(returnedChange != new Change(balance)) {
-            throw new OutOfMoneyException("This machine is out of money. Call us at 555-555-5555 for more information.");
+        if(coinInventory.getBalance().intValue() == 0) {
+            throw new OutOfCoinsException("This machine is out of change. Call us at 555-555-5555 for more information.");
         }
+        balance = new BigDecimal("0.00");
         return returnedChange;
     }
 
@@ -135,7 +136,7 @@ public class VendingMachineServiceImpl implements VendingMachineService {
 
     @Override
     public void quit() throws VendingMachineDaoException {
-        dao.saveItems(itemList);
+        dao.saveItems(itemList, coinInventory);
     }
 
     @Override
@@ -159,5 +160,10 @@ public class VendingMachineServiceImpl implements VendingMachineService {
                           adjustment.getDimes() - coinInventory.getDimes(),
                           adjustment.getNickels() - coinInventory.getNickels(),
                           adjustment.getPennies() - coinInventory.getPennies());
+    }
+    
+    @Override
+    public Change getErrorReturnedChange() {
+        return returnedChange;
     }
 }

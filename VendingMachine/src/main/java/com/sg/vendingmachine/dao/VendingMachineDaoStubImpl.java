@@ -53,7 +53,7 @@ public class VendingMachineDaoStubImpl implements VendingMachineDao {
     }
 
     @Override
-    public void saveItems(List<InventoryItem> items) throws VendingMachineDaoException {
+    public void saveItems(List<InventoryItem> items, Change coins) throws VendingMachineDaoException {
         // Do nothing
     }
     

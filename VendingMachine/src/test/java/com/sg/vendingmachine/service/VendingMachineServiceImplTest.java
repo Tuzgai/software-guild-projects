@@ -46,7 +46,7 @@ public class VendingMachineServiceImplTest {
         item2.setStockLevel(2);
         instance.addItem(item2);
 
-        instance.setCoins(new Change(10,10,10,10));
+        instance.setCoins(new Change(10, 10, 10, 10));
     }
 
     @After
@@ -166,10 +166,24 @@ public class VendingMachineServiceImplTest {
      */
     @Test
     public void testCoinReturn() {
+        instance.setCoins(new Change(50, 0, 0, 0));
         instance.addMoney(new BigDecimal("5.00"));
-        Change change = instance.coinReturn();
+        Change change = new Change();
+        try {
+            change = instance.coinReturn();
+        } catch (OutOfCoinsException e) {
+            fail();
+        }
         assertEquals(new BigDecimal("0.00"), instance.getBalance());
         assertEquals(20, change.getQuarters());
+    }
+
+    @Test(expected = OutOfCoinsException.class)
+    public void testCoinReturnException() throws Exception {
+        instance.setCoins(new Change(0, 0, 0, 0));
+        instance.addMoney(new BigDecimal("5.00"));
+
+        Change change = instance.coinReturn();
     }
 
     @Test
@@ -201,8 +215,8 @@ public class VendingMachineServiceImplTest {
         assertEquals(new Change(6, 15, 6, 15), coins);
     }
 
-    @Test(expected = OutOfMoneyException.class)
+    @Test(expected = OutOfCoinsException.class)
     public void testAdjustCoinInventoryException() throws Exception {
-        instance.adjustCoinInventory(new Change(-15,0,0,0));
+        instance.adjustCoinInventory(new Change(-15, 0, 0, 0));
     }
 }

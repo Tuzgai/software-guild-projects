@@ -17,7 +17,7 @@ public interface VendingMachineService {
 
     Change getCoinInventory();
     
-    void adjustCoinInventory(Change coinAdjustments) throws OutOfMoneyException;
+    void adjustCoinInventory(Change coinAdjustments) throws OutOfCoinsException;
     
     void updateItem(InventoryItem item);
 
@@ -33,7 +33,7 @@ public interface VendingMachineService {
     
     void vendItem(String name) throws ItemNotFoundException, InsufficientFundsException, ZeroInventoryException;
     
-    Change coinReturn() throws OutOfMoneyException;
+    Change coinReturn() throws OutOfCoinsException;
     
     void clearInventory();
     
@@ -44,4 +44,6 @@ public interface VendingMachineService {
     void removeItem(int item) throws ItemNotFoundException;
     
     Change createAdjustmentVector(Change adjustment);
+    
+    Change getErrorReturnedChange();
 }

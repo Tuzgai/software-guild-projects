@@ -4,6 +4,7 @@ import com.sg.vendingmachine.dto.Change;
 import com.sg.vendingmachine.dto.InventoryItem;
 import com.sg.vendingmachine.service.ItemNotFoundException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 /**
@@ -86,6 +87,7 @@ public class VendingMachineView {
         io.println("Nickels: " + change.getNickels());
         io.println("Pennies: " + change.getPennies());
         io.println("Thanks for visiting, see you soon!");
+        waitToContinue();
     }
 
     public Change getDeposit() {
@@ -209,7 +211,15 @@ public class VendingMachineView {
     }
     
     public void displayCoinDifference(Change coins) {
-        io.println("Ok, adjusting coin inventory by " + coins.getBalance());
+        io.println("Ok, adjusting coin inventory by $" + coins.getBalance());
+        waitToContinue();
+    }
+    
+    public void displayShortchangeError(int n) {
+        BigDecimal shortage = new BigDecimal(0.01 * n);
+        shortage = shortage.setScale(2, RoundingMode.HALF_UP);
+        io.println("This machine is out of change, you were shorted $" + shortage +".");
+        io.println("Please call us at 555-555-5555 for more details.");
         waitToContinue();
     }
 }

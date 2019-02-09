@@ -109,14 +109,14 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
     @Override
     public void saveItems() throws VendingMachineDaoException {
         try {
-            saveItems(itemList);
+            saveItems(itemList, coins);
         } catch (VendingMachineDaoException e) {
             throw e;
         }
     }
 
     @Override
-    public void saveItems(List<InventoryItem> items) throws VendingMachineDaoException {
+    public void saveItems(List<InventoryItem> items, Change coins) throws VendingMachineDaoException {
         PrintWriter itemWriter, coinWriter;
 
         // First write items
