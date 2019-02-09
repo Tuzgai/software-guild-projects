@@ -33,7 +33,7 @@ public interface VendingMachineService {
     
     void vendItem(String name) throws ItemNotFoundException, InsufficientFundsException, ZeroInventoryException;
     
-    Change coinReturn();
+    Change coinReturn() throws OutOfMoneyException;
     
     void clearInventory();
     
@@ -42,4 +42,6 @@ public interface VendingMachineService {
     void refill(int restockLevel);
     
     void removeItem(int item) throws ItemNotFoundException;
+    
+    Change createAdjustmentVector(Change adjustment);
 }

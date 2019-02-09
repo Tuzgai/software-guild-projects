@@ -25,9 +25,10 @@ public class VendingMachineController {
     private final int ADD_ITEM = 2;
     private final int REMOVE_ITEM = 3;
     private final int EDIT_ITEM = 4;
-    private final int EDIT_COINS = 5;
-    private final int SHOW_STOCK = 6;
-    private final int EXIT = 7;
+    private final int SET_COINS = 5;
+    private final int EDIT_COINS = 6;
+    private final int SHOW_STOCK = 7;
+    private final int EXIT = 8;
 
     public VendingMachineController(VendingMachineView view, VendingMachineService service) {
         this.view = view;
@@ -44,11 +45,11 @@ public class VendingMachineController {
             switch (choice) {
                 case (COIN_RETURN):
                     try {
+                        view.displayGoodByeMessage(service.coinReturn());
                         service.quit();
-                    } catch (VendingMachineDaoException e) {
+                    } catch (VendingMachineDaoException | OutOfMoneyException e) {
                         view.displayError(e);
-                    }
-                    view.displayGoodByeMessage(service.coinReturn());
+                    }   
                     notDone = false;
                     break;
                 case (ADD_FUNDS):
@@ -114,10 +115,17 @@ public class VendingMachineController {
                     }
                     break;
 
-                case EDIT_COINS:
+                case SET_COINS:
+                    Change coinSettings = view.getCoinSettings(service.getCoinInventory());
+                    view.displayCoinDifference(service.createAdjustmentVector(coinSettings));
+                    service.setCoins(coinSettings);
+                    break;
+                    
+                case EDIT_COINS:   
                     Change coinAdjustments = view.getCoinAdjustments(service.getCoinInventory());
+                    view.displayCoinDifference(coinAdjustments);
                     try {
-                        service.adjustCoinInventory(coinAdjustments);
+                    service.adjustCoinInventory(coinAdjustments);
                     } catch (OutOfMoneyException e) {
                         view.displayError(e);
                     }
@@ -125,14 +133,17 @@ public class VendingMachineController {
                     
                 case SHOW_STOCK:
                     view.displayItemList(service.getAllItems());
+                    view.displayCoinInventory(service.getCoinInventory());
+                    view.waitToContinue();
+                    break;
                 case EXIT:
                     notDone = false;
                     try {
+                        view.displayGoodByeMessage(service.coinReturn());
                         service.quit();
-                    } catch (VendingMachineDaoException e) {
+                    } catch (VendingMachineDaoException | OutOfMoneyException e) {
                         view.displayError(e);
                     }
-                    view.displayGoodByeMessage(service.coinReturn());
                     break;
 
                 default:

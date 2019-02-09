@@ -30,18 +30,18 @@ public class VendingMachineServiceImpl implements VendingMachineService {
         itemList = dao.getAllItems();
         itemList.sort(Comparator.comparing(InventoryItem::getName));
         coinInventory = dao.getCoins();
-    }  
-    
+    }
+
     @Override
     public void setCoins(Change coins) {
         coinInventory = coins;
     }
-    
+
     @Override
     public BigDecimal getBalance() {
         return balance;
     }
-    
+
     @Override
     public Change getCoinInventory() {
         return coinInventory;
@@ -49,16 +49,16 @@ public class VendingMachineServiceImpl implements VendingMachineService {
 
     @Override
     public void adjustCoinInventory(Change coinAdjustments) throws OutOfMoneyException {
-        if(((coinAdjustments.getQuarters() < 0) && (coinAdjustments.getQuarters() * -1 > coinInventory.getQuarters()))
+        if (((coinAdjustments.getQuarters() < 0) && (coinAdjustments.getQuarters() * -1 > coinInventory.getQuarters()))
                 || ((coinAdjustments.getDimes() < 0) && (coinAdjustments.getDimes() * -1 > coinInventory.getDimes()))
                 || ((coinAdjustments.getNickels() < 0) && (coinAdjustments.getNickels() * -1 > coinInventory.getNickels()))
                 || ((coinAdjustments.getPennies() < 0) && (coinAdjustments.getPennies() * -1 > coinInventory.getPennies()))) {
             throw new OutOfMoneyException("You requested more coins than are available. No changes were made.");
         }
-        
+
         coinInventory.adjustBy(coinAdjustments);
     }
-    
+
     // Don't worry about which property changed, just replace the item
     @Override
     public void updateItem(InventoryItem item) {
@@ -94,8 +94,8 @@ public class VendingMachineServiceImpl implements VendingMachineService {
         coinInventory.adjustBy(coins);
         return balance;
     }
-    
-    @Override 
+
+    @Override
     public BigDecimal addMoney(BigDecimal money) {
         return addMoney(new Change(money));
     }
@@ -117,10 +117,14 @@ public class VendingMachineServiceImpl implements VendingMachineService {
     }
 
     @Override
-    public Change coinReturn() {
-        Change change = coinInventory.subtractRespectingPositiveCoinTotals(new Change(balance));
+    public Change coinReturn() throws OutOfMoneyException {
+        Change returnedChange = coinInventory.subtractRespectingPositiveCoinTotals(new Change(balance));
         balance = new BigDecimal("0.00");
-        return change;
+        
+        if(returnedChange != new Change(balance)) {
+            throw new OutOfMoneyException("This machine is out of money. Call us at 555-555-5555 for more information.");
+        }
+        return returnedChange;
     }
 
     // Needed for testing
@@ -133,15 +137,27 @@ public class VendingMachineServiceImpl implements VendingMachineService {
     public void quit() throws VendingMachineDaoException {
         dao.saveItems(itemList);
     }
-    
+
     @Override
     public void refill(int restockLevel) {
         itemList.forEach((item) -> item.setStockLevel(restockLevel));
     }
-    
+
     @Override
     public void removeItem(int item) throws ItemNotFoundException {
-        if(-1 < item && item < itemList.size()) itemList.remove(item);
-        else throw new ItemNotFoundException("Item not found.");
+        if (-1 < item && item < itemList.size()) {
+            itemList.remove(item);
+        } else {
+            throw new ItemNotFoundException("Item not found.");
+        }
+    }
+
+    @Override
+    public Change createAdjustmentVector(Change adjustment) {
+
+        return new Change(adjustment.getQuarters() - coinInventory.getQuarters(),
+                          adjustment.getDimes() - coinInventory.getDimes(),
+                          adjustment.getNickels() - coinInventory.getNickels(),
+                          adjustment.getPennies() - coinInventory.getPennies());
     }
 }
