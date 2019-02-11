@@ -52,7 +52,7 @@ public class FlooringMasteryDaoFileImplTest {
 
     @Test(expected = FlooringMasteryDaoFileException.class)
     public void testLoadTaxesNoFile() {
-        instance.setPath("/testingEmptyDir/");
+        instance.setPath("/testing/emptyDir/");
         instance.loadTaxes();
     }
 
@@ -65,7 +65,7 @@ public class FlooringMasteryDaoFileImplTest {
 
     @Test(expected = FlooringMasteryDaoFileException.class)
     public void testLoadOrdersByDateNoneExist() {
-        instance.setPath("/testingEmptyDir/");
+        instance.setPath("/testing/emptyDir/");
         instance.loadOrdersByDate(LocalDate.of(12,12,1997));
     }
 
@@ -77,7 +77,7 @@ public class FlooringMasteryDaoFileImplTest {
 
     @Test(expected = FlooringMasteryDaoFileException.class)
     public void testLoadTrainingModeNoFile() {
-        instance.setPath("/testingEmptyDir/");
+        instance.setPath("/testing/emptyDir/");
         instance.loadTrainingMode();
     }
     
@@ -109,7 +109,7 @@ public class FlooringMasteryDaoFileImplTest {
     
     @Test
     public void testUpdateOrder() {
-        instance.setPath("/testingUpdate/");
+        instance.setPath("/testing/update/");
         ProductType product = new ProductType("TestProduct", new BigDecimal("5.00"), new BigDecimal("10.00"));
         Order order = new Order(1, LocalDate.of(1,1,1997), "TestCust", "MN", new BigDecimal("0.05"), product, new BigDecimal("25.00"));
         instance.saveOrder(order);
@@ -121,7 +121,7 @@ public class FlooringMasteryDaoFileImplTest {
         assertEquals("NewCust", list.get(0).getCustName());
         
         // Clean up
-        File file = new File("/testingUpdate/1_" + String.join("", LocalDate.of(1,1,1997).toString().split("-")) + ".txt");
+        File file = new File("/testing/update/1_" + String.join("", LocalDate.of(1,1,1997).toString().split("-")) + ".txt");
           
         if(file.exists()) {
             file.delete();
@@ -131,8 +131,7 @@ public class FlooringMasteryDaoFileImplTest {
     
     @Test(expected = FlooringMasteryDaoFileException.class) 
     public void testUpdateOrderFileDoesNotExist() {
-        instance.setPath("/testingEmptyDir/");
-        instance.setPath("/testing/");
+        instance.setPath("/testing/emptyDir/");
         ProductType product = new ProductType("TestProduct", new BigDecimal("5.00"), new BigDecimal("10.00"));
         Order order = new Order(1, LocalDate.now(), "TestCust", "MN", new BigDecimal("0.05"), product, new BigDecimal("25.00"));
         instance.updateOrder(order);
