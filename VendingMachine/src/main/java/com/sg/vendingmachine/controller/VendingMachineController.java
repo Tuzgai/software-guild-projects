@@ -148,6 +148,7 @@ public class VendingMachineController {
                     view.displayCoinInventory(service.getCoinInventory());
                     view.waitToContinue();
                     break;
+
                 case EXIT:
                     notDone = false;
                     try {
