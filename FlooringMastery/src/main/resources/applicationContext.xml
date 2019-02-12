@@ -22,13 +22,24 @@
         <constructor-arg ref="userIO"/>
     </bean>
    
-    <bean id="dao" 
-         class="com.sg.flooringmastery.dao.FlooringMasteryDaoFileImpl"/>
+    <bean id="configDao" 
+         class="com.sg.flooringmastery.dao.configdao.ConfigDaoFileImpl"/>
    
+    <bean id="ordersDao" 
+         class="com.sg.flooringmastery.dao.ordersdao.OrdersDaoFileImpl"/>
    
+    <bean id="productsDao" 
+         class="com.sg.flooringmastery.dao.productsdao.ProductsDaoFileImpl"/>
+    
+    <bean id="taxesDao" 
+         class="com.sg.flooringmastery.dao.taxesdao.TaxesDaoFileImpl"/>
+    
     <bean id="serviceLayer" 
          class="com.sg.flooringmastery.service.FlooringMasteryServiceImpl">
-        <constructor-arg ref="dao"/>           
+        <constructor-arg ref="configDao"/>
+        <constructor-arg ref="ordersDao"/>
+        <constructor-arg ref="productsDao"/>
+        <constructor-arg ref="taxesDao"/>           
     </bean>
    
     <bean id="controller" 

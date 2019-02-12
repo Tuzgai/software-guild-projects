@@ -15,9 +15,8 @@ import static org.junit.Assert.*;
  */
 public class OrderTest {
 
-    ProductType product = new ProductType("TestProduct", new BigDecimal("5.00"), new BigDecimal("10.00"));
-    Order instance = new Order(1, LocalDate.now(), "TestCust", "MN", new BigDecimal("0.05"), product, new BigDecimal("25.00"));
-    
+    Order instance;
+
     public OrderTest() {
     }
 
@@ -32,6 +31,20 @@ public class OrderTest {
 
     @Before
     public void setUp() {
+        ProductType product = new ProductType("TestProduct", new BigDecimal("5.00"), new BigDecimal("10.00"));
+
+        instance = new Order();
+        instance.setDate(LocalDate.now());
+        instance.setOrderNumber(1);
+        instance.setCustName("Test Cust");
+        instance.setState("MN");
+        instance.setTaxRate(new BigDecimal("0.05"));
+        instance.setProductType(product);
+        instance.setAreaSquareFeet(new BigDecimal("25.00"));
+        instance.setMaterialCost(new BigDecimal("0.00"));
+        instance.setLaborCost(new BigDecimal("0.00"));
+        instance.setTaxPaid(new BigDecimal("0.00"));
+        instance.setTotal(new BigDecimal("0.00"));
     }
 
     @After
@@ -39,27 +52,15 @@ public class OrderTest {
     }
 
     @Test
-    public void testGetMaterialCost() {
+    public void testUpdateDerivedFields() {
+        instance.updateDerivedFields();
         BigDecimal expectedValue = new BigDecimal("125.00");
         assertEquals(expectedValue, instance.getMaterialCost());
-    }
-
-    @Test
-    public void testGetLaborCost() {
-        BigDecimal expectedValue = new BigDecimal("250.00");
+        expectedValue = new BigDecimal("250.00");
         assertEquals(expectedValue, instance.getLaborCost());
-    }
-    
-    @Test
-    public void testGetTaxCharged() {
-        BigDecimal expectedValue = new BigDecimal("18.75");
-        assertEquals(expectedValue, instance.getTaxCharged());
-    }
-    
-    @Test
-    public void testGetTotal() {
-        BigDecimal expectedValue = new BigDecimal("393.75");
+        expectedValue = new BigDecimal("18.75");
+        assertEquals(expectedValue, instance.getTaxPaid());
+        expectedValue = new BigDecimal("393.75");
         assertEquals(expectedValue, instance.getTotal());
     }
-
 }

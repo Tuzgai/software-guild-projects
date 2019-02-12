@@ -11,55 +11,55 @@ import java.util.Objects;
  */
 public class Order {
 
-    final private int orderNumber;
     private LocalDate date;
+    private int orderNumber;
     private String custName;
     private String state;
     private BigDecimal taxRate;
     private ProductType productType;
     private BigDecimal areaSquareFeet;
+    private BigDecimal materialCost;
+    private BigDecimal laborCost;
+    private BigDecimal taxPaid;
+    private BigDecimal total;
 
-    public Order(int orderNumber, LocalDate date, String custName, String state, BigDecimal taxRate, ProductType productType, BigDecimal areaSquareFeet) {
-        this.orderNumber = orderNumber;
-        this.date = date;
-        this.custName = custName;
-        this.state = state;
-        this.taxRate = taxRate;
-        this.productType = productType;
-        this.areaSquareFeet = areaSquareFeet;
+    public void updateDerivedFields() {
+        materialCost = areaSquareFeet.multiply(productType.getMaterialCostPerSquareFoot());
+        materialCost = materialCost.setScale(2, RoundingMode.HALF_UP);
+
+        laborCost = areaSquareFeet.multiply(productType.getLaborCostPerSquareFoot());
+        laborCost = laborCost.setScale(2, RoundingMode.HALF_UP);
+
+        taxPaid = materialCost.add(laborCost).multiply(taxRate);
+        taxPaid = taxPaid.setScale(2, RoundingMode.HALF_UP);
+
+        total = materialCost.add(laborCost).add(taxPaid);
+        total = total.setScale(2, RoundingMode.HALF_UP);
+
     }
 
     public BigDecimal getMaterialCostPerSquareFoot() {
-        return productType.getMaterialCostPerSquareFoot().setScale(2, RoundingMode.HALF_UP);
+        return productType.getMaterialCostPerSquareFoot();
     }
 
     public BigDecimal getLaborCostPerSquareFoot() {
         return productType.getLaborCostPerSquareFoot();
     }
 
-    public BigDecimal getMaterialCost() {
-        BigDecimal output = areaSquareFeet.multiply(productType.getMaterialCostPerSquareFoot());
-        return output.setScale(2, RoundingMode.HALF_UP);
-
+    public LocalDate getDate() {
+        return date;
     }
 
-    public BigDecimal getLaborCost() {
-        BigDecimal output =  areaSquareFeet.multiply(productType.getLaborCostPerSquareFoot());
-        return output.setScale(2, RoundingMode.HALF_UP);
-    }
-
-    public BigDecimal getTaxCharged() {
-        BigDecimal output = getMaterialCost().add(getLaborCost()).multiply(taxRate);
-        return output.setScale(2, RoundingMode.HALF_UP);
-    }
-
-    public BigDecimal getTotal() {
-        BigDecimal output = getMaterialCost().add(getLaborCost()).add(getTaxCharged());
-        return output.setScale(2, RoundingMode.HALF_UP);
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public int getOrderNumber() {
         return orderNumber;
+    }
+
+    public void setOrderNumber(int orderNumber) {
+        this.orderNumber = orderNumber;
     }
 
     public String getCustName() {
@@ -102,24 +102,52 @@ public class Order {
         this.areaSquareFeet = areaSquareFeet;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public BigDecimal getMaterialCost() {
+        return materialCost;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setMaterialCost(BigDecimal materialCost) {
+        this.materialCost = materialCost;
+    }
+
+    public BigDecimal getLaborCost() {
+        return laborCost;
+    }
+
+    public void setLaborCost(BigDecimal laborCost) {
+        this.laborCost = laborCost;
+    }
+
+    public BigDecimal getTaxPaid() {
+        return taxPaid;
+    }
+
+    public void setTaxPaid(BigDecimal taxPaid) {
+        this.taxPaid = taxPaid;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 83 * hash + this.orderNumber;
-        hash = 83 * hash + Objects.hashCode(this.date);
-        hash = 83 * hash + Objects.hashCode(this.custName);
-        hash = 83 * hash + Objects.hashCode(this.state);
-        hash = 83 * hash + Objects.hashCode(this.taxRate);
-        hash = 83 * hash + Objects.hashCode(this.productType);
-        hash = 83 * hash + Objects.hashCode(this.areaSquareFeet);
+        hash = 23 * hash + Objects.hashCode(this.date);
+        hash = 23 * hash + this.orderNumber;
+        hash = 23 * hash + Objects.hashCode(this.custName);
+        hash = 23 * hash + Objects.hashCode(this.state);
+        hash = 23 * hash + Objects.hashCode(this.taxRate);
+        hash = 23 * hash + Objects.hashCode(this.productType);
+        hash = 23 * hash + Objects.hashCode(this.areaSquareFeet);
+        hash = 23 * hash + Objects.hashCode(this.materialCost);
+        hash = 23 * hash + Objects.hashCode(this.laborCost);
+        hash = 23 * hash + Objects.hashCode(this.taxPaid);
+        hash = 23 * hash + Objects.hashCode(this.total);
         return hash;
     }
 
@@ -135,8 +163,40 @@ public class Order {
             return false;
         }
         final Order other = (Order) obj;
+        if (this.orderNumber != other.orderNumber) {
+            return false;
+        }
+        if (!Objects.equals(this.custName, other.custName)) {
+            return false;
+        }
+        if (!Objects.equals(this.state, other.state)) {
+            return false;
+        }
+        if (!Objects.equals(this.date, other.date)) {
+            return false;
+        }
+        if (!Objects.equals(this.taxRate, other.taxRate)) {
+            return false;
+        }
+        if (!Objects.equals(this.productType, other.productType)) {
+            return false;
+        }
+        if (!Objects.equals(this.areaSquareFeet, other.areaSquareFeet)) {
+            return false;
+        }
+        if (!Objects.equals(this.materialCost, other.materialCost)) {
+            return false;
+        }
+        if (!Objects.equals(this.laborCost, other.laborCost)) {
+            return false;
+        }
+        if (!Objects.equals(this.taxPaid, other.taxPaid)) {
+            return false;
+        }
+        if (!Objects.equals(this.total, other.total)) {
+            return false;
+        }
         return true;
     }
-    
-    
+
 }
