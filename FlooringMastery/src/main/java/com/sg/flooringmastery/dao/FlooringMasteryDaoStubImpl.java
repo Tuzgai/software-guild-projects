@@ -13,32 +13,27 @@ import java.util.HashMap;
 public class FlooringMasteryDaoStubImpl implements FlooringMasteryDao {
 
     @Override
-    public HashMap<String, Integer> loadTaxes() {
+    public HashMap<String, Integer> loadTaxes() throws FlooringMasteryDaoFileException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ArrayList<ProductType> loadProducts() {
+    public ArrayList<ProductType> loadProducts() throws FlooringMasteryDaoFileException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ArrayList<Order> loadOrdersByDate(LocalDate date) {
+    public ArrayList<Order> loadOrdersByDate(LocalDate date) throws FlooringMasteryDaoFileException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean loadTrainingMode() {
+    public boolean loadTrainingMode() throws FlooringMasteryDaoFileException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void saveOrder(Order order) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void updateOrder(Order order) {
+    public void saveOrdersByDate(ArrayList<Order> orders) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -46,5 +41,4 @@ public class FlooringMasteryDaoStubImpl implements FlooringMasteryDao {
     public void setPath(String path) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 }

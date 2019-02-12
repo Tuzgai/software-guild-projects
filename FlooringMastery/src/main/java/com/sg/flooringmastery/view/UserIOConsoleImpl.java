@@ -1,6 +1,8 @@
 package com.sg.flooringmastery.view;
 
 import java.math.BigDecimal;
+import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 /**
@@ -10,7 +12,7 @@ import java.util.Scanner;
 public class UserIOConsoleImpl implements UserIO {
 
     Scanner scn = new Scanner(System.in);
-    
+
     @Override
     public void print(String message) {
         System.out.print(message);
@@ -140,18 +142,41 @@ public class UserIOConsoleImpl implements UserIO {
         print(prompt);
         return scn.nextLine();
     }
-    
+
     @Override
     public BigDecimal readCurrency(String prompt) {
         String str;
         print(prompt);
-        
-        while(true) {
+
+        while (true) {
             str = scn.nextLine();
-            
-            if(str.matches("\\d*\\.\\d{0,2}")) return new BigDecimal(str);
+
+            if (str.matches("\\d*\\.\\d{0,2}")) {
+                return new BigDecimal(str);
+            }
             print("Please enter currency in the form 'dollars.cents'");
         }
+    }
+
+   @Override
+    public LocalDate getLocalDate() {
+        int year, month, day;
+        boolean retry;
+        LocalDate date = LocalDate.of(1900, 1, 1);
+
+        do {
+            try {
+                year = readInt("Enter Year: ");
+                month = readInt("Enter Month (1-12): ");
+                day = readInt("Enter Day (1-31): ");
+                date = LocalDate.of(year, month, day);
+                retry = false;
+            } catch (DateTimeException e) {
+                println("Invalid date, please try again.");
+                retry = true;
+            }
+        } while (retry);
+        return date;
     }
 
 }

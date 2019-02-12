@@ -1,6 +1,7 @@
 package com.sg.flooringmastery.view;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  *
@@ -33,4 +34,6 @@ public interface UserIO {
     String readString(String prompt);
     
     BigDecimal readCurrency(String prompt);
+    
+    LocalDate getLocalDate();
 }

@@ -3,6 +3,7 @@ package com.sg.flooringmastery.dto;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  *
@@ -108,4 +109,34 @@ public class Order {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 83 * hash + this.orderNumber;
+        hash = 83 * hash + Objects.hashCode(this.date);
+        hash = 83 * hash + Objects.hashCode(this.custName);
+        hash = 83 * hash + Objects.hashCode(this.state);
+        hash = 83 * hash + Objects.hashCode(this.taxRate);
+        hash = 83 * hash + Objects.hashCode(this.productType);
+        hash = 83 * hash + Objects.hashCode(this.areaSquareFeet);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Order other = (Order) obj;
+        return true;
+    }
+    
+    
 }
