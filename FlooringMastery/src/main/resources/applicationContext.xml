@@ -23,27 +23,35 @@
     </bean>
    
     <bean id="configDao" 
-         class="com.sg.flooringmastery.dao.configdao.ConfigDaoFileImpl"/>
-   
-    <bean id="ordersDao" 
-         class="com.sg.flooringmastery.dao.ordersdao.OrdersDaoFileImpl"/>
-   
+          class="com.sg.flooringmastery.dao.configdao.ConfigDaoFileImpl">
+        <constructor-arg index = "0" value = ""/>
+    </bean>
+        
+    <bean id="orderDao" 
+          class="com.sg.flooringmastery.dao.orderdao.OrderDaoFileImpl">
+        <constructor-arg index = "0" value = ""/>
+    </bean>
+    
     <bean id="productsDao" 
-         class="com.sg.flooringmastery.dao.productsdao.ProductsDaoFileImpl"/>
+          class="com.sg.flooringmastery.dao.productsdao.ProductsDaoFileImpl">
+        <constructor-arg index = "0" value = ""/>
+    </bean>
     
     <bean id="taxesDao" 
-         class="com.sg.flooringmastery.dao.taxesdao.TaxesDaoFileImpl"/>
+          class="com.sg.flooringmastery.dao.taxesdao.TaxesDaoFileImpl">
+        <constructor-arg index = "0" value = ""/>
+    </bean>
     
     <bean id="serviceLayer" 
-         class="com.sg.flooringmastery.service.FlooringMasteryServiceImpl">
+          class="com.sg.flooringmastery.service.FlooringMasteryServiceImpl">
         <constructor-arg ref="configDao"/>
-        <constructor-arg ref="ordersDao"/>
+        <constructor-arg ref="orderDao"/>
         <constructor-arg ref="productsDao"/>
         <constructor-arg ref="taxesDao"/>           
     </bean>
    
     <bean id="controller" 
-         class="com.sg.flooringmastery.controller.FlooringMasteryController">
+          class="com.sg.flooringmastery.controller.FlooringMasteryController">
         <constructor-arg ref="view"/>
         <constructor-arg ref="serviceLayer"/>
     </bean>

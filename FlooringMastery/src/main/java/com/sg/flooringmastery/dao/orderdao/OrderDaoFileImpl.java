@@ -17,13 +17,13 @@ import java.util.Scanner;
  *
  * @author Stuart
  */
-public class OrdersDaoFileImpl implements OrdersDao {
+public class OrderDaoFileImpl implements OrderDao {
 
     private static final String DELIMITER = ",";
     private static final String ORDER_PREFIX = "Orders_";
     private String path;
 
-    public OrdersDaoFileImpl(String path) {
+    public OrderDaoFileImpl(String path) {
         this.path = path;
     }
 

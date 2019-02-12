@@ -9,7 +9,7 @@ import java.util.ArrayList;
  *
  * @author Stuart
  */
-public interface OrdersDao {
+public interface OrderDao {
 
     public ArrayList<Order> loadOrdersByDate(LocalDate date) throws FlooringMasteryDaoFileException;
 

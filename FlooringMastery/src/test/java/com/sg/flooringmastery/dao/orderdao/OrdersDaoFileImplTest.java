@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
  * @author Stuart
  */
 public class OrdersDaoFileImplTest {
-    OrdersDaoFileImpl instance = new OrdersDaoFileImpl("./testing/");
+    OrderDaoFileImpl instance = new OrderDaoFileImpl("./testing/");
     
     public OrdersDaoFileImplTest() {
     }
