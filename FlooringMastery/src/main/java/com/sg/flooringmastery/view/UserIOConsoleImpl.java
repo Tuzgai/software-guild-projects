@@ -144,7 +144,7 @@ public class UserIOConsoleImpl implements UserIO {
     }
 
     @Override
-    public BigDecimal readCurrency(String prompt) {
+    public BigDecimal readBigDecimal(String prompt) {
         String str;
         print(prompt);
 
@@ -154,12 +154,12 @@ public class UserIOConsoleImpl implements UserIO {
             if (str.matches("\\d*\\.\\d{0,2}")) {
                 return new BigDecimal(str);
             }
-            print("Please enter currency in the form 'dollars.cents'");
+            print("Please enter the number in the form ##.##: ");
         }
     }
 
    @Override
-    public LocalDate getLocalDate() {
+    public LocalDate readLocalDate() {
         int year, month, day;
         boolean retry;
         LocalDate date = LocalDate.of(1900, 1, 1);

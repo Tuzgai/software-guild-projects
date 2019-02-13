@@ -61,5 +61,11 @@ public interface Service {
      */
     void removeOrder(Order order) throws FlooringMasteryServiceException, FlooringMasteryDaoFileException;
     
+    /**
+     * 
+     * @return The date of the currently loaded orders. If none loaded, null.
+     */
+    LocalDate getCurrentDate();
+    
     void clearOrderList();
 }

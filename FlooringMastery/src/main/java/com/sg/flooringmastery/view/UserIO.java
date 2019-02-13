@@ -33,7 +33,7 @@ public interface UserIO {
     
     String readString(String prompt);
     
-    BigDecimal readCurrency(String prompt);
+    BigDecimal readBigDecimal(String prompt);
     
-    LocalDate getLocalDate();
+    LocalDate readLocalDate();
 }

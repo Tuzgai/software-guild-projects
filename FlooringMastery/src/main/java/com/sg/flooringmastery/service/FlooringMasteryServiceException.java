@@ -4,7 +4,7 @@ package com.sg.flooringmastery.service;
  *
  * @author Stuart
  */
-class FlooringMasteryServiceException extends Exception {
+public class FlooringMasteryServiceException extends Exception {
 
     public FlooringMasteryServiceException(String message) {
         super(message);

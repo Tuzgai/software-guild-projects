@@ -94,6 +94,23 @@ public class ServiceImpl implements Service {
         saveOrdersByDate();
     }
 
+    @Override
+    public LocalDate getCurrentDate() {
+        if(ordersForSelectedDate.isEmpty()) {
+            return null;
+        } else {
+            return ordersForSelectedDate.get(0).getDate();
+        }
+    }
+
+    public HashMap<String, BigDecimal> getTaxRates() {
+        return taxRates;
+    }
+
+    public ArrayList<ProductType> getProductList() {
+        return productList;
+    }
+    
     // For testing
     @Override
     public void clearOrderList() {
