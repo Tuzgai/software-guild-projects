@@ -29,8 +29,10 @@ public class Order {
 
         laborCost = areaSquareFeet.multiply(productType.getLaborCostPerSquareFoot());
         laborCost = laborCost.setScale(2, RoundingMode.HALF_UP);
-
-        taxPaid = materialCost.add(laborCost).multiply(taxRate);
+        
+        // Tax rate is stored and displayed as %, but needs to be decimal for math
+        BigDecimal decimalTaxRate = taxRate.divide(new BigDecimal("100.00"));
+        taxPaid = materialCost.add(laborCost).multiply(decimalTaxRate);
         taxPaid = taxPaid.setScale(2, RoundingMode.HALF_UP);
 
         total = materialCost.add(laborCost).add(taxPaid);

@@ -38,7 +38,7 @@ public class OrderTest {
         instance.setOrderNumber(1);
         instance.setCustName("Test Cust");
         instance.setState("MN");
-        instance.setTaxRate(new BigDecimal("0.05"));
+        instance.setTaxRate(new BigDecimal("5.00"));
         instance.setProductType(product);
         instance.setAreaSquareFeet(new BigDecimal("25.00"));
         instance.setMaterialCost(new BigDecimal("0.00"));
