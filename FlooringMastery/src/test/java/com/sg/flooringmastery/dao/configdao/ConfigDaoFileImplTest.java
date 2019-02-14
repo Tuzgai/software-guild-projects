@@ -37,12 +37,12 @@ public class ConfigDaoFileImplTest {
     @Test
     public void testLoadTrainingMode() throws FlooringMasteryDaoFileException {
         instance.setPath("./testing/");
-        assertTrue(instance.loadTrainingMode());
+        assertFalse(instance.loadTrainingMode());
     }
 
     public void testLoadTrainingModeNoFile() throws FlooringMasteryDaoFileException {
-        instance.setPath("./testing/emptyDir/");
-        assertFalse(instance.loadTrainingMode());
+        instance.setPath("./testing/training/");
+        assertTrue(instance.loadTrainingMode());
     }
     
 }
