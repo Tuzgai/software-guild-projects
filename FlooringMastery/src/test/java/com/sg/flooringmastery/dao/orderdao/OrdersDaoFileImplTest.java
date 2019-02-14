@@ -41,7 +41,7 @@ public class OrdersDaoFileImplTest {
     }
 
     @Test
-    public void testSaveOrdersByDateAndLoadOrders() throws FlooringMasteryDaoFileException {
+    public void testSaveOrdersByDateAndLoadOrders() throws FlooringMasteryDaoFileException, FlooringMasteryDaoDataException {
         LocalDate date = LocalDate.now();
         ProductType product = new ProductType("TestProduct", new BigDecimal("5.00"), new BigDecimal("10.00"));
         Order order = new Order();
@@ -77,6 +77,12 @@ public class OrdersDaoFileImplTest {
         if(file.exists()) {
             file.delete();
         }
+    }
+    
+    @Test(expected = FlooringMasteryDaoDataException.class)
+    public void testSaveOrdersByDateAndLoadOrdersNoData() throws FlooringMasteryDaoFileException, FlooringMasteryDaoDataException {
+        ArrayList<Order> orderList = new ArrayList<>();
+        instance.saveOrdersByDate(orderList);
     }
     
     @Test

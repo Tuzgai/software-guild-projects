@@ -82,7 +82,7 @@ public class FlooringMasteryController {
         } catch (FlooringMasteryDaoFileException e) {
             view.displayError(e);
         }
-
+        view.displaySaveSuccess();
         view.displayEnterToContinue();
     }
 
@@ -95,8 +95,9 @@ public class FlooringMasteryController {
 
             // 0 to cancel
             if (choice != 0) {
-                Order newOrder = view.getEditedOrder(service.getOrderByNumber(choice-1), service.getProductList(), service.getTaxRates());
-                
+                Order newOrder = view.getEditedOrder(service.getOrderByNumber(choice), service.getProductList(), service.getTaxRates());  
+                service.updateOrder(newOrder);
+                view.displayOrder(newOrder);
             }
         } catch (FlooringMasteryDaoFileException | FlooringMasteryServiceException e) {
             view.displayError(e);
@@ -113,7 +114,7 @@ public class FlooringMasteryController {
 
             // 0 to cancel
             if (choice != 0) {
-                service.removeOrder(service.getOrderByNumber(choice-1));
+                service.removeOrder(service.getOrderByNumber(choice));
             }
         } catch (FlooringMasteryDaoFileException | FlooringMasteryServiceException e) {
             view.displayError(e);

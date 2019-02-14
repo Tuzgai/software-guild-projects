@@ -43,10 +43,10 @@ public class OrderDaoFileImpl implements OrderDao {
         String currentLine;
         String[] currentTokens;
         Order order = new Order();
-        
+
         // Skip the heading line
         scn.nextLine();
-        
+
         while (scn.hasNextLine()) {
             currentLine = scn.nextLine();
             currentTokens = currentLine.split(DELIMITER);
@@ -75,7 +75,11 @@ public class OrderDaoFileImpl implements OrderDao {
     }
 
     @Override
-    public void saveOrdersByDate(ArrayList<Order> orders) throws FlooringMasteryDaoFileException {
+    public void saveOrdersByDate(ArrayList<Order> orders) throws FlooringMasteryDaoFileException, FlooringMasteryDaoDataException {
+        if (orders == null) {
+            throw new FlooringMasteryDaoDataException("No orders submitted to save.");
+        }
+
         LocalDate date = orders.get(0).getDate();
         String filename = path + ORDER_PREFIX + serializeDate(date) + ".txt";
         File file = new File(filename);
@@ -97,21 +101,21 @@ public class OrderDaoFileImpl implements OrderDao {
 
         writer.println("OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCost"
                 + "PerSquareFoot,MaterialCost,LaborCost,Tax,Total");
-
-        orders.forEach(order -> writer.println(
-                order.getOrderNumber() + DELIMITER
-                + order.getCustName() + DELIMITER
-                + order.getState() + DELIMITER
-                + order.getTaxRate() + DELIMITER
-                + order.getProductType().getName() + DELIMITER
-                + order.getAreaSquareFeet() + DELIMITER
-                + order.getMaterialCostPerSquareFoot() + DELIMITER
-                + order.getLaborCostPerSquareFoot() + DELIMITER
-                + order.getMaterialCost() + DELIMITER
-                + order.getLaborCost() + DELIMITER
-                + order.getTaxPaid() + DELIMITER
-                + order.getTotal()));
-
+        if (!orders.isEmpty()) {
+            orders.forEach(order -> writer.println(
+                    order.getOrderNumber() + DELIMITER
+                    + order.getCustName() + DELIMITER
+                    + order.getState() + DELIMITER
+                    + order.getTaxRate() + DELIMITER
+                    + order.getProductType().getName() + DELIMITER
+                    + order.getAreaSquareFeet() + DELIMITER
+                    + order.getMaterialCostPerSquareFoot() + DELIMITER
+                    + order.getLaborCostPerSquareFoot() + DELIMITER
+                    + order.getMaterialCost() + DELIMITER
+                    + order.getLaborCost() + DELIMITER
+                    + order.getTaxPaid() + DELIMITER
+                    + order.getTotal()));
+        }
         writer.close();
     }
 

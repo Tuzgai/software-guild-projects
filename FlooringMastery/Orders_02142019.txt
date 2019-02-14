@@ -1,0 +1,2 @@
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
+1,John,PA,6.75,Laminate,5.0,1.75,2.10,8.75,10.50,1.30,20.55

@@ -58,6 +58,7 @@ public interface Service {
      * Throws FlooringMasteryServiceException if orders not loaded or order does not exist.
      * @param order
      * @throws FlooringMasteryServiceException 
+     * @throws com.sg.flooringmastery.dao.FlooringMasteryDaoFileException  
      */
     void removeOrder(Order order) throws FlooringMasteryServiceException, FlooringMasteryDaoFileException;
     

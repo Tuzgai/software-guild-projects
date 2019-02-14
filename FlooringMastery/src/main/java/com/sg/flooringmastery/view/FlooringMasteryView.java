@@ -20,7 +20,7 @@ public class FlooringMasteryView {
     }
 
     public void displayEnterToContinue() {
-        io.println("Press enter to continue.");
+        io.readString("Press enter to continue.");
     }
 
     public void displayError(Exception e) {
@@ -84,8 +84,8 @@ public class FlooringMasteryView {
         order.updateDerivedFields();
 
         displayOrder(order);
-
-        String confirm = io.readString("Are you sure you want to save this entry? (Y/N):");
+        io.println("+-------------------------------------------------------------------------------------+");
+        String confirm = io.readString("Are you sure you want to save this entry? (Y/N): ");
         while (true) {
             if (confirm.toLowerCase().contains("y")) {
                 return order;
@@ -96,14 +96,19 @@ public class FlooringMasteryView {
         }
     }
 
-    public String displayStatesAndGetSelection(HashMap<String, BigDecimal> taxRates) {
+    public void displayStates(HashMap<String, BigDecimal> taxRates) {
         io.println("+----------------+");
         io.println("| State  Tax     |");
 
         taxRates.forEach((k, v) -> {
-            io.println("| " + k + "     " + v + "    ");
+            io.println("| " + k + "     " + v + "    |");
         });
+        io.println("+----------------+");
 
+    }
+
+    public String displayStatesAndGetSelection(HashMap<String, BigDecimal> taxRates) {
+        displayStates(taxRates);
         String choice = "";
         do {
             choice = io.readString("Select a state (two letter code): ");
@@ -112,38 +117,37 @@ public class FlooringMasteryView {
     }
 
     public String displayStatesAndGetSelectionEditMode(HashMap<String, BigDecimal> taxRates, String state) {
-        io.println("+----------------+");
-        io.println("| State  Tax     |");
-
-        taxRates.forEach((k, v) -> {
-            io.println("| " + k + "     " + v + "    ");
-        });
+        displayStates(taxRates);
 
         String choice = "";
         do {
-            choice = io.readString("Select a state " + "(" + state + "): " );
+            choice = io.readString("Select a state " + "(" + state + "): ");
         } while (!(taxRates.containsKey(choice) || choice.equals("\n")));
         return choice;
     }
 
-    public int displayProductsAndGetSelection(ArrayList<ProductType> productList) {
+    public void displayProducts(ArrayList<ProductType> productList) {
         io.println("+-------------------------------------------------------+");
-        io.println("|   Product    Material Cost (sqft)    Labor Cost (sqft)");
+        io.println("|  Product    Material Cost (sqft)    Labor Cost (sqft) |");
 
         productList.forEach(item -> {
-            io.println(productList.indexOf(item) + ". " + item.getName() + "\t" + item.getMaterialCostPerSquareFoot() + "\t" + item.getLaborCostPerSquareFoot());
+            io.println("| " + productList.indexOf(item) + ". " + item.getName() 
+                    + "\t$" + item.getMaterialCostPerSquareFoot() 
+                    + "\t\t\t$" + item.getLaborCostPerSquareFoot() + "           |");
         });
+
+        io.println("+-------------------------------------------------------+");
+
+    }
+
+    public int displayProductsAndGetSelection(ArrayList<ProductType> productList) {
+        displayProducts(productList);
 
         return io.readInt("Select a product: ", 1, productList.size()) - 1;
     }
 
     public int displayProductsAndGetSelectionEditMode(ArrayList<ProductType> productList, ProductType product) {
-        io.println("+-------------------------------------------------------+");
-        io.println("|   Product    Material Cost (sqft)    Labor Cost (sqft)");
-
-        productList.forEach(item -> {
-            io.println(productList.indexOf(item) + ". " + item.getName() + "\t" + item.getMaterialCostPerSquareFoot() + "\t" + item.getLaborCostPerSquareFoot());
-        });
+        displayProducts(productList);
 
         int choice;
         String input;
@@ -168,26 +172,28 @@ public class FlooringMasteryView {
 
     public void displayOrder(Order order) {
         io.println("+-------------------------------------------------------------------------------------+");
-        io.println("| Order Number: " + order.getOrderNumber() + "\tCustomer Name" + order.getCustName());
-        io.println("| State: " + order.getState() + "\tTax Rate: " + order.getTaxRate());
-        io.println("| Product Type: " + order.getProductType() + "\tMaterial Cost(sqft): $" + order.getMaterialCostPerSquareFoot()
-                + "\tLabor Cost(sqft): $" + order.getLaborCost());
-        io.println("| \t\t\tMaterial Cost: $" + order.getMaterialCost() + "\t\tLabor Cost: $" + order.getLaborCost());
+        io.println("| Order Number: " + order.getOrderNumber() + "\tCustomer Name: " + order.getCustName());
+        io.println("| State: " + order.getState() + "\tTax Rate: " + order.getTaxRate() + "%");
+        io.println("| Product Type: " + order.getProductType().getName() + "\tMaterial Cost(sqft): $" + order.getMaterialCostPerSquareFoot()
+                + "\tLabor Cost(sqft): $" + order.getLaborCostPerSquareFoot());
         io.println("| Area: " + order.getAreaSquareFeet() + " sqft");
-        io.println("| Tax: $" + order.getTaxPaid());
-        io.println("| Total: $" + order.getTotal());
+        io.println("| Material Cost: $" + order.getMaterialCost());  
+        io.println("| Labor Cost: \t $" + order.getLaborCost());
+        io.println("| Subtotal:\t $" + order.getMaterialCost().add(order.getLaborCost()));
+        io.println("| Tax: \t\t $" + order.getTaxPaid());
+        io.println("| Total:\t $" + order.getTotal());
     }
-    
+
     public Order getEditedOrder(Order order, ArrayList<ProductType> productList, HashMap<String, BigDecimal> taxRates) {
         io.println("=== EDIT AN ORDER ===");
         io.println("Enter new value or return to skip.");
 
-        String name = io.readString("Enter Customer Name: " + "(" + order.getCustName() + "):");
+        String name = io.readString("Enter Customer Name " + "(" + order.getCustName() + "): ");
         String taxState = displayStatesAndGetSelectionEditMode(taxRates, order.getState());
 
         int productChoice = displayProductsAndGetSelectionEditMode(productList, order.getProductType());
-        BigDecimal area = io.readBigDecimalOrNewline("Enter Area" + "("+ order.getAreaSquareFeet() + "):");
-        String recalculate = io.readString("Update calculated fields? (Y/N - default Y)");
+        BigDecimal area = io.readBigDecimalOrNewline("Enter Area" + "(" + order.getAreaSquareFeet() + "): ");
+        String recalculate = io.readString("Update calculated fields? (Y/N - default Y) ");
 
         if (!name.equals("\n")) {
             order.setCustName(name);
@@ -210,7 +216,11 @@ public class FlooringMasteryView {
         if (!recalculate.toLowerCase().contains("n")) {
             order.updateDerivedFields();
         }
-
+        
         return order;
+    }
+    
+    public void displaySaveSuccess() {
+        io.println("Order saved!");
     }
 }

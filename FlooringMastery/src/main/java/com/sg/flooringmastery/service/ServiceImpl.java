@@ -2,6 +2,7 @@ package com.sg.flooringmastery.service;
 
 import com.sg.flooringmastery.dao.FlooringMasteryDaoFileException;
 import com.sg.flooringmastery.dao.configdao.ConfigDao;
+import com.sg.flooringmastery.dao.orderdao.FlooringMasteryDaoDataException;
 import com.sg.flooringmastery.dao.productsdao.ProductsDao;
 import com.sg.flooringmastery.dao.taxesdao.TaxesDao;
 import com.sg.flooringmastery.dao.orderdao.OrderDao;
@@ -54,7 +55,12 @@ public class ServiceImpl implements Service {
 
     @Override
     public void saveNewOrder(Order order) throws FlooringMasteryDaoFileException {
-        getOrdersByDate(order.getDate());
+        try {
+            getOrdersByDate(order.getDate());
+        } catch (FlooringMasteryDaoFileException e) {
+            // If no file exists, our list is empty
+            ordersForSelectedDate = new ArrayList<>();
+        }
         order.setOrderNumber(ordersForSelectedDate.size() + 1);
         ordersForSelectedDate.add(order);
         saveOrdersByDate();
@@ -62,7 +68,13 @@ public class ServiceImpl implements Service {
 
     @Override
     public void saveOrdersByDate() throws FlooringMasteryDaoFileException {
-        orderDao.saveOrdersByDate(ordersForSelectedDate);
+        if (!(ordersForSelectedDate == null || ordersForSelectedDate.isEmpty())) {
+            try {
+                orderDao.saveOrdersByDate(ordersForSelectedDate);
+            } catch (FlooringMasteryDaoDataException e) {
+                // don't save anything
+            }
+        }
     }
 
     @Override
@@ -78,7 +90,7 @@ public class ServiceImpl implements Service {
         } else if (ordersForSelectedDate.size() < orderNumber) {
             throw new FlooringMasteryServiceException("Order does not exist.");
         }
-        return ordersForSelectedDate.get(orderNumber-1);
+        return ordersForSelectedDate.get(orderNumber - 1);
     }
 
     @Override
@@ -88,15 +100,15 @@ public class ServiceImpl implements Service {
         } else if (ordersForSelectedDate.size() < order.getOrderNumber()) {
             throw new FlooringMasteryServiceException("Order does not exist.");
         }
-        
-        ordersForSelectedDate.remove(order.getOrderNumber()-1);
-        
+
+        ordersForSelectedDate.remove(order.getOrderNumber() - 1);
+
         saveOrdersByDate();
     }
 
     @Override
     public LocalDate getCurrentDate() {
-        if(ordersForSelectedDate.isEmpty()) {
+        if (ordersForSelectedDate.isEmpty()) {
             return null;
         } else {
             return ordersForSelectedDate.get(0).getDate();
@@ -110,7 +122,7 @@ public class ServiceImpl implements Service {
     public ArrayList<ProductType> getProductList() {
         return productList;
     }
-    
+
     // For testing
     @Override
     public void clearOrderList() {

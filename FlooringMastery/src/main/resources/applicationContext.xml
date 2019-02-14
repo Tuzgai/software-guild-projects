@@ -43,7 +43,7 @@
     </bean>
     
     <bean id="serviceLayer" 
-          class="com.sg.flooringmastery.service.FlooringMasteryServiceImpl">
+          class="com.sg.flooringmastery.service.ServiceImpl">
         <constructor-arg ref="configDao"/>
         <constructor-arg ref="orderDao"/>
         <constructor-arg ref="productsDao"/>

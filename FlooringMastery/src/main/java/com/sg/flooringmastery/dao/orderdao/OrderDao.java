@@ -13,7 +13,7 @@ public interface OrderDao {
 
     public ArrayList<Order> loadOrdersByDate(LocalDate date) throws FlooringMasteryDaoFileException;
 
-    public void saveOrdersByDate(ArrayList<Order> orders) throws FlooringMasteryDaoFileException;
+    public void saveOrdersByDate(ArrayList<Order> orders) throws FlooringMasteryDaoFileException, FlooringMasteryDaoDataException;
     
     void setPath(String path);
     
