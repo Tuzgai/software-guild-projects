@@ -111,7 +111,7 @@ public class FlooringMasteryView {
         return choice;
     }
 
-    public String displayStatesAndGetSelectionEditMode(HashMap<String, BigDecimal> taxRates) {
+    public String displayStatesAndGetSelectionEditMode(HashMap<String, BigDecimal> taxRates, String state) {
         io.println("+----------------+");
         io.println("| State  Tax     |");
 
@@ -121,7 +121,7 @@ public class FlooringMasteryView {
 
         String choice = "";
         do {
-            choice = io.readString("Select a state (two letter code): ");
+            choice = io.readString("Select a state " + "(" + state + "): " );
         } while (!(taxRates.containsKey(choice) || choice.equals("\n")));
         return choice;
     }
@@ -137,7 +137,7 @@ public class FlooringMasteryView {
         return io.readInt("Select a product: ", 1, productList.size()) - 1;
     }
 
-    public int displayProductsAndGetSelectionEditMode(ArrayList<ProductType> productList) {
+    public int displayProductsAndGetSelectionEditMode(ArrayList<ProductType> productList, ProductType product) {
         io.println("+-------------------------------------------------------+");
         io.println("|   Product    Material Cost (sqft)    Labor Cost (sqft)");
 
@@ -148,7 +148,7 @@ public class FlooringMasteryView {
         int choice;
         String input;
         do {
-            input = io.readString("Select A Product: ");
+            input = io.readString("Select A Product" + "(" + product.getName() + "): ");
             try {
                 choice = Integer.parseInt(input);
 
@@ -183,10 +183,10 @@ public class FlooringMasteryView {
         io.println("Enter new value or return to skip.");
 
         String name = io.readString("Enter Customer Name: " + "(" + order.getCustName() + "):");
-        String taxState = displayStatesAndGetSelectionEditMode(taxRates);
+        String taxState = displayStatesAndGetSelectionEditMode(taxRates, order.getState());
 
-        int productChoice = displayProductsAndGetSelectionEditMode(productList);
-        BigDecimal area = io.readBigDecimalOrNewline(name);
+        int productChoice = displayProductsAndGetSelectionEditMode(productList, order.getProductType());
+        BigDecimal area = io.readBigDecimalOrNewline("Enter Area" + "("+ order.getAreaSquareFeet() + "):");
         String recalculate = io.readString("Update calculated fields? (Y/N - default Y)");
 
         if (!name.equals("\n")) {

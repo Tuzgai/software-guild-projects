@@ -88,7 +88,19 @@ public class FlooringMasteryController {
 
     public void editOrder() {
         LocalDate date = view.getDate();
-        // Implement this
+        try {
+            ArrayList<Order> orderList = service.getOrdersByDate(date);
+            view.displayOrderList(orderList);
+            int choice = view.getChoiceToEdit(orderList.size());
+
+            // 0 to cancel
+            if (choice != 0) {
+                Order newOrder = view.getEditedOrder(service.getOrderByNumber(choice-1), service.getProductList(), service.getTaxRates());
+                
+            }
+        } catch (FlooringMasteryDaoFileException | FlooringMasteryServiceException e) {
+            view.displayError(e);
+        }
         view.displayEnterToContinue();
     }
 
@@ -101,7 +113,7 @@ public class FlooringMasteryController {
 
             // 0 to cancel
             if (choice != 0) {
-                service.removeOrder(service.getOrderByNumber(choice));
+                service.removeOrder(service.getOrderByNumber(choice-1));
             }
         } catch (FlooringMasteryDaoFileException | FlooringMasteryServiceException e) {
             view.displayError(e);
