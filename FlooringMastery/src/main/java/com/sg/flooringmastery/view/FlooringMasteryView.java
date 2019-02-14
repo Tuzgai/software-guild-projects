@@ -85,8 +85,8 @@ public class FlooringMasteryView {
 
         displayOrder(order);
         io.println("+-------------------------------------------------------------------------------------+");
-        String confirm = io.readString("Are you sure you want to save this entry? (Y/N): ");
         while (true) {
+            String confirm = io.readString("Are you sure you want to save this entry? (Y/N): ");
             if (confirm.toLowerCase().contains("y")) {
                 io.println("Ok, saving order...");
                 return order;
@@ -131,8 +131,8 @@ public class FlooringMasteryView {
 
         productList.forEach(item -> {
             int index = productList.indexOf(item) + 1;
-            io.println("| " + index + ". " + item.getName() 
-                    + "\t$" + item.getMaterialCostPerSquareFoot() 
+            io.println("| " + index + ". " + item.getName()
+                    + "\t$" + item.getMaterialCostPerSquareFoot()
                     + "\t\t\t$" + item.getLaborCostPerSquareFoot() + "           |");
         });
 
@@ -177,7 +177,7 @@ public class FlooringMasteryView {
         io.println("| Product Type: " + order.getProductType().getName() + "\tMaterial Cost(sqft): $" + order.getMaterialCostPerSquareFoot()
                 + "\tLabor Cost(sqft): $" + order.getLaborCostPerSquareFoot());
         io.println("| Area: " + order.getAreaSquareFeet() + " sqft");
-        io.println("| Material Cost: $" + order.getMaterialCost());  
+        io.println("| Material Cost: $" + order.getMaterialCost());
         io.println("| Labor Cost: \t $" + order.getLaborCost());
         io.println("| Subtotal:\t $" + order.getMaterialCost().add(order.getLaborCost()));
         io.println("| Tax: \t\t $" + order.getTaxPaid());
@@ -216,11 +216,17 @@ public class FlooringMasteryView {
         if (!recalculate.toLowerCase().contains("n")) {
             order.updateDerivedFields();
         }
-        
+
         return order;
     }
-    
+
     public void displayDeleteSuccessful() {
         io.println("Order deleted!");
+    }
+
+    public void displayTrainingModeBanner() {
+        io.println("");
+        io.println("=== TRAINING MODE - Changes will not be saved. ===");
+        io.println("");
     }
 }

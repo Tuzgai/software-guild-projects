@@ -28,7 +28,7 @@ public class ServiceImpl implements Service {
     HashMap<String, BigDecimal> taxRates;
     ArrayList<ProductType> productList;
     ArrayList<Order> ordersForSelectedDate;
-    boolean traininMode;
+    boolean trainingMode;
 
     public ServiceImpl(ConfigDao configDao, OrderDao ordersDao, ProductsDao productsDao, TaxesDao taxesDao) throws FlooringMasteryDaoFileException {
         this.configDao = configDao;
@@ -38,21 +38,30 @@ public class ServiceImpl implements Service {
         taxRates = taxesDao.loadTaxes();
         productList = productsDao.loadProducts();
         ordersForSelectedDate = new ArrayList<>();
+        trainingMode = configDao.loadTrainingMode();
     }
 
     @Override
     public void updateOrder(Order order) throws FlooringMasteryDaoFileException, FlooringMasteryServiceException {
         if (ordersForSelectedDate.isEmpty()) {
             throw new FlooringMasteryServiceException("No orders loaded.");
-        } 
+        }
 
+        boolean updateSuccessful = false;
         for (int i = 1; i < ordersForSelectedDate.size(); i++) {
-            if(order.getOrderNumber() == ordersForSelectedDate.get(i).getOrderNumber()) {
+            if (order.getOrderNumber() == ordersForSelectedDate.get(i).getOrderNumber()) {
                 ordersForSelectedDate.remove(i);
                 ordersForSelectedDate.add(i, order);
+                updateSuccessful = true;
+                break;
             }
         }
-        saveOrdersByDate(order.getDate());
+        
+        if (updateSuccessful) {
+            saveOrdersByDate(order.getDate());
+        } else {
+            throw new FlooringMasteryServiceException("Order not found.");
+        }
     }
 
     @Override
@@ -73,7 +82,9 @@ public class ServiceImpl implements Service {
     @Override
     public void saveOrdersByDate(LocalDate date) throws FlooringMasteryDaoFileException {
         try {
-            orderDao.saveOrdersByDate(ordersForSelectedDate, date);
+            if (!trainingMode) {
+                orderDao.saveOrdersByDate(ordersForSelectedDate, date);
+            }
         } catch (FlooringMasteryDaoDataException e) {
             // don't save anything
         }
@@ -130,6 +141,10 @@ public class ServiceImpl implements Service {
 
     public ArrayList<ProductType> getProductList() {
         return productList;
+    }
+    
+    public boolean getTrainingMode() {
+        return trainingMode;
     }
 
     // For testing

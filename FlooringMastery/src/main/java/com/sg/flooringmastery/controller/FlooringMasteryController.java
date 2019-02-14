@@ -31,8 +31,12 @@ public class FlooringMasteryController {
         int choice;
         boolean notDone = true;
         while (notDone) {
+            if(service.getTrainingMode()) {
+                view.displayTrainingModeBanner();
+            }
+            
             choice = view.displayMenuAndGetChoice();
-
+            
             switch (choice) {
                 case DISPLAY_ORDERS:
                     displayOrders();
