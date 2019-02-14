@@ -59,7 +59,7 @@ public class OrderDaoStub implements OrderDao {
     }
 
     @Override
-    public void saveOrdersByDate(ArrayList<Order> orders) throws FlooringMasteryDaoFileException {
+    public void saveOrdersByDate(ArrayList<Order> orders, LocalDate date) throws FlooringMasteryDaoFileException {
         // do nothing
     }
 

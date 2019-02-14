@@ -12,6 +12,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -42,38 +44,38 @@ public class ServiceImpl implements Service {
     public void updateOrder(Order order) throws FlooringMasteryDaoFileException, FlooringMasteryServiceException {
         if (ordersForSelectedDate.isEmpty()) {
             throw new FlooringMasteryServiceException("No orders loaded.");
-        } else if (ordersForSelectedDate.size() < order.getOrderNumber()) {
-            throw new FlooringMasteryServiceException("Order does not exist.");
+        } 
+
+        for (int i = 1; i < ordersForSelectedDate.size(); i++) {
+            if(order.getOrderNumber() == ordersForSelectedDate.get(i).getOrderNumber()) {
+                ordersForSelectedDate.remove(i);
+                ordersForSelectedDate.add(i, order);
+            }
         }
-
-        int index = order.getOrderNumber() - 1;
-        ordersForSelectedDate.remove(index);
-        ordersForSelectedDate.add(index, order);
-
-        saveOrdersByDate();
+        saveOrdersByDate(order.getDate());
     }
 
     @Override
     public void saveNewOrder(Order order) throws FlooringMasteryDaoFileException {
         try {
             getOrdersByDate(order.getDate());
+            order.setOrderNumber(ordersForSelectedDate.get(ordersForSelectedDate.size() - 1).getOrderNumber() + 1);
         } catch (FlooringMasteryDaoFileException e) {
             // If no file exists, our list is empty
             ordersForSelectedDate = new ArrayList<>();
+            order.setOrderNumber(1);
         }
-        order.setOrderNumber(ordersForSelectedDate.size() + 1);
+
         ordersForSelectedDate.add(order);
-        saveOrdersByDate();
+        saveOrdersByDate(order.getDate());
     }
 
     @Override
-    public void saveOrdersByDate() throws FlooringMasteryDaoFileException {
-        if (!(ordersForSelectedDate == null || ordersForSelectedDate.isEmpty())) {
-            try {
-                orderDao.saveOrdersByDate(ordersForSelectedDate);
-            } catch (FlooringMasteryDaoDataException e) {
-                // don't save anything
-            }
+    public void saveOrdersByDate(LocalDate date) throws FlooringMasteryDaoFileException {
+        try {
+            orderDao.saveOrdersByDate(ordersForSelectedDate, date);
+        } catch (FlooringMasteryDaoDataException e) {
+            // don't save anything
         }
     }
 
@@ -87,23 +89,30 @@ public class ServiceImpl implements Service {
     public Order getOrderByNumber(int orderNumber) throws FlooringMasteryServiceException {
         if (ordersForSelectedDate.isEmpty()) {
             throw new FlooringMasteryServiceException("No orders loaded.");
-        } else if (ordersForSelectedDate.size() < orderNumber) {
-            throw new FlooringMasteryServiceException("Order does not exist.");
         }
-        return ordersForSelectedDate.get(orderNumber - 1);
+
+        List<Order> orderList = ordersForSelectedDate.stream()
+                .filter(o -> o.getOrderNumber() == orderNumber)
+                .collect(Collectors.toList());
+
+        if (orderList.size() > 0) {
+            return orderList.get(0);
+        }
+
+        throw new FlooringMasteryServiceException("Order does not exist.");
     }
 
     @Override
     public void removeOrder(Order order) throws FlooringMasteryServiceException, FlooringMasteryDaoFileException {
         if (ordersForSelectedDate.isEmpty()) {
             throw new FlooringMasteryServiceException("No orders loaded.");
-        } else if (ordersForSelectedDate.size() < order.getOrderNumber()) {
-            throw new FlooringMasteryServiceException("Order does not exist.");
         }
 
-        ordersForSelectedDate.remove(order.getOrderNumber() - 1);
+        if (!ordersForSelectedDate.remove(order)) {
+            throw new FlooringMasteryServiceException("Order does not exist. No changes were saved.");
+        }
 
-        saveOrdersByDate();
+        saveOrdersByDate(order.getDate());
     }
 
     @Override

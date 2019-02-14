@@ -60,7 +60,7 @@ public class OrdersDaoFileImplTest {
         
         ArrayList<Order> orderList = new ArrayList<>();
         orderList.add(order);
-        instance.saveOrdersByDate(orderList);
+        instance.saveOrdersByDate(orderList, date);
         
         // Confirm we succeeded in creating a file
         File file = new File("./testing/Orders_" + instance.serializeDate(date)  + ".txt");
@@ -77,12 +77,6 @@ public class OrdersDaoFileImplTest {
         if(file.exists()) {
             file.delete();
         }
-    }
-    
-    @Test(expected = FlooringMasteryDaoDataException.class)
-    public void testSaveOrdersByDateAndLoadOrdersNoData() throws FlooringMasteryDaoFileException, FlooringMasteryDaoDataException {
-        ArrayList<Order> orderList = new ArrayList<>();
-        instance.saveOrdersByDate(orderList);
     }
     
     @Test

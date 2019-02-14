@@ -53,7 +53,7 @@ public class FlooringMasteryView {
     public int getChoiceToRemove(int numberOfChoices) {
         int choice = io.readInt("Select an order to remove (0 to cancel): ", 1, numberOfChoices);
         while (true) {
-            String confirm = io.readString("Are you sure you want to delete this entry? (Y/N):");
+            String confirm = io.readString("Are you sure you want to delete this entry? (Y/N): ");
             if (confirm.toLowerCase().contains("y")) {
                 return choice;
             } else if (confirm.toLowerCase().contains("n")) {
@@ -88,6 +88,7 @@ public class FlooringMasteryView {
         String confirm = io.readString("Are you sure you want to save this entry? (Y/N): ");
         while (true) {
             if (confirm.toLowerCase().contains("y")) {
+                io.println("Ok, saving order...");
                 return order;
             } else if (confirm.toLowerCase().contains("n")) {
                 io.println("Ok, order will not be added.");
@@ -100,9 +101,7 @@ public class FlooringMasteryView {
         io.println("+----------------+");
         io.println("| State  Tax     |");
 
-        taxRates.forEach((k, v) -> {
-            io.println("| " + k + "     " + v + "    |");
-        });
+        taxRates.forEach((k, v) -> io.println("| " + k + "     " + v + "%   |"));
         io.println("+----------------+");
 
     }
@@ -122,7 +121,7 @@ public class FlooringMasteryView {
         String choice = "";
         do {
             choice = io.readString("Select a state " + "(" + state + "): ");
-        } while (!(taxRates.containsKey(choice) || choice.equals("\n")));
+        } while (!(taxRates.containsKey(choice) || choice.equals("")));
         return choice;
     }
 
@@ -131,7 +130,8 @@ public class FlooringMasteryView {
         io.println("|  Product    Material Cost (sqft)    Labor Cost (sqft) |");
 
         productList.forEach(item -> {
-            io.println("| " + productList.indexOf(item) + ". " + item.getName() 
+            int index = productList.indexOf(item) + 1;
+            io.println("| " + index + ". " + item.getName() 
                     + "\t$" + item.getMaterialCostPerSquareFoot() 
                     + "\t\t\t$" + item.getLaborCostPerSquareFoot() + "           |");
         });
@@ -156,7 +156,7 @@ public class FlooringMasteryView {
             try {
                 choice = Integer.parseInt(input);
 
-                // Return if re get a valid selection
+                // Return if we get a valid selection
                 if (0 < choice && choice < productList.size()) {
                     return choice - 1;
                 }
@@ -165,7 +165,7 @@ public class FlooringMasteryView {
             }
 
             // Return -1 if we get a newline
-        } while (!input.equals("\n"));
+        } while (!input.equals(""));
 
         return -1;
     }
@@ -195,11 +195,11 @@ public class FlooringMasteryView {
         BigDecimal area = io.readBigDecimalOrNewline("Enter Area" + "(" + order.getAreaSquareFeet() + "): ");
         String recalculate = io.readString("Update calculated fields? (Y/N - default Y) ");
 
-        if (!name.equals("\n")) {
+        if (!name.equals("")) {
             order.setCustName(name);
         }
 
-        if (!taxState.equals("\n")) {
+        if (!taxState.equals("")) {
             order.setState(taxState);
             order.setTaxRate(taxRates.get(taxState));
         }
@@ -220,7 +220,7 @@ public class FlooringMasteryView {
         return order;
     }
     
-    public void displaySaveSuccess() {
-        io.println("Order saved!");
+    public void displayDeleteSuccessful() {
+        io.println("Order deleted!");
     }
 }

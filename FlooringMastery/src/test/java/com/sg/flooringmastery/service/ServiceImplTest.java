@@ -176,14 +176,12 @@ public class ServiceImplTest {
         Order testOrder = instance.getOrderByNumber(1);
     }
     
-    @Test
+    @Test(expected = FlooringMasteryServiceException.class)
     public void testRemoveOrder() throws FlooringMasteryServiceException, FlooringMasteryDaoFileException {
         Order order = instance.getOrderByNumber(1);
         
         instance.removeOrder(order);
-        order = instance.getOrderByNumber(1);
-        
-        assertEquals("Test Cust 2", order.getCustName());
+        instance.getOrderByNumber(1);
     }
     
     @Test(expected = FlooringMasteryServiceException.class)

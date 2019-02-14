@@ -32,9 +32,10 @@ public interface Service {
     
     /**
      * Saves internal order list.
+     * @param date
      * @throws FlooringMasteryDaoFileException 
      */
-    void saveOrdersByDate() throws FlooringMasteryDaoFileException;
+    void saveOrdersByDate(LocalDate date) throws FlooringMasteryDaoFileException;
     
     /**
      * Loads orders for a given date and returns them.

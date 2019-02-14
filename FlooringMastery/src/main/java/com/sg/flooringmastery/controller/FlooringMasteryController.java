@@ -50,15 +50,9 @@ public class FlooringMasteryController {
                     removeOrder();
                     break;
 
-                case QUIT: {
-                    try {
-                        service.saveOrdersByDate();
-                    } catch (FlooringMasteryDaoFileException e) {
-                        view.displayError(e);
-                    }
-                }
-                notDone = false;
-                break;
+                case QUIT: 
+                    notDone = false;
+                    break;
             }
         }
     }
@@ -82,7 +76,6 @@ public class FlooringMasteryController {
         } catch (FlooringMasteryDaoFileException e) {
             view.displayError(e);
         }
-        view.displaySaveSuccess();
         view.displayEnterToContinue();
     }
 
@@ -91,7 +84,7 @@ public class FlooringMasteryController {
         try {
             ArrayList<Order> orderList = service.getOrdersByDate(date);
             view.displayOrderList(orderList);
-            int choice = view.getChoiceToEdit(orderList.size());
+            int choice = view.getChoiceToEdit(orderList.get(orderList.size()-1).getOrderNumber());
 
             // 0 to cancel
             if (choice != 0) {
@@ -110,11 +103,12 @@ public class FlooringMasteryController {
         try {
             ArrayList<Order> orderList = service.getOrdersByDate(date);
             view.displayOrderList(orderList);
-            int choice = view.getChoiceToRemove(orderList.size());
+            int choice = view.getChoiceToRemove(orderList.get(orderList.size()-1).getOrderNumber());
 
             // 0 to cancel
             if (choice != 0) {
                 service.removeOrder(service.getOrderByNumber(choice));
+                view.displayDeleteSuccessful();
             }
         } catch (FlooringMasteryDaoFileException | FlooringMasteryServiceException e) {
             view.displayError(e);

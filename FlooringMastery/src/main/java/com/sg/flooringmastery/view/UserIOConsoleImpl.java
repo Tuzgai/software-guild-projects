@@ -165,7 +165,7 @@ public class UserIOConsoleImpl implements UserIO {
 
         while (true) {
             str = scn.nextLine();
-            if(str.equals("\n")) {
+            if(str.equals("")) {
                 return null;
             }
             

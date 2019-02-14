@@ -42,7 +42,7 @@ public class OrderDaoFileImpl implements OrderDao {
 
         String currentLine;
         String[] currentTokens;
-        Order order = new Order();
+        Order order;
 
         // Skip the heading line
         scn.nextLine();
@@ -50,7 +50,8 @@ public class OrderDaoFileImpl implements OrderDao {
         while (scn.hasNextLine()) {
             currentLine = scn.nextLine();
             currentTokens = currentLine.split(DELIMITER);
-
+            
+            order = new Order();
             // Skip malformed lists
             if (currentTokens.length == 12) {
                 order.setDate(date);
@@ -75,48 +76,50 @@ public class OrderDaoFileImpl implements OrderDao {
     }
 
     @Override
-    public void saveOrdersByDate(ArrayList<Order> orders) throws FlooringMasteryDaoFileException, FlooringMasteryDaoDataException {
-        if (orders == null) {
-            throw new FlooringMasteryDaoDataException("No orders submitted to save.");
-        }
-
-        LocalDate date = orders.get(0).getDate();
-        String filename = path + ORDER_PREFIX + serializeDate(date) + ".txt";
-        File file = new File(filename);
-        PrintWriter writer;
-
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                throw new FlooringMasteryDaoFileException("Order file could not be created.");
-            }
-        }
-
-        try {
-            writer = new PrintWriter(new FileWriter(file));
-        } catch (IOException e) {
-            throw new FlooringMasteryDaoFileException("Could not open order file.");
-        }
-
-        writer.println("OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCost"
-                + "PerSquareFoot,MaterialCost,LaborCost,Tax,Total");
+    public void saveOrdersByDate(ArrayList<Order> orders, LocalDate date) throws FlooringMasteryDaoFileException, FlooringMasteryDaoDataException {
         if (!orders.isEmpty()) {
-            orders.forEach(order -> writer.println(
-                    order.getOrderNumber() + DELIMITER
-                    + order.getCustName() + DELIMITER
-                    + order.getState() + DELIMITER
-                    + order.getTaxRate() + DELIMITER
-                    + order.getProductType().getName() + DELIMITER
-                    + order.getAreaSquareFeet() + DELIMITER
-                    + order.getMaterialCostPerSquareFoot() + DELIMITER
-                    + order.getLaborCostPerSquareFoot() + DELIMITER
-                    + order.getMaterialCost() + DELIMITER
-                    + order.getLaborCost() + DELIMITER
-                    + order.getTaxPaid() + DELIMITER
-                    + order.getTotal()));
+            String filename = path + ORDER_PREFIX + serializeDate(date) + ".txt";
+            File file = new File(filename);
+            PrintWriter writer;
+
+            if (!file.exists()) {
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    throw new FlooringMasteryDaoFileException("Order file could not be created.");
+                }
+            }
+
+            try {
+                writer = new PrintWriter(new FileWriter(file));
+            } catch (IOException e) {
+                throw new FlooringMasteryDaoFileException("Could not open order file.");
+            }
+
+            writer.println("OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCost"
+                    + "PerSquareFoot,MaterialCost,LaborCost,Tax,Total");
+
+            orders.forEach(o -> writer.println(
+                    o.getOrderNumber() + DELIMITER
+                    + o.getCustName() + DELIMITER
+                    + o.getState() + DELIMITER
+                    + o.getTaxRate() + DELIMITER
+                    + o.getProductType().getName() + DELIMITER
+                    + o.getAreaSquareFeet() + DELIMITER
+                    + o.getMaterialCostPerSquareFoot() + DELIMITER
+                    + o.getLaborCostPerSquareFoot() + DELIMITER
+                    + o.getMaterialCost() + DELIMITER
+                    + o.getLaborCost() + DELIMITER
+                    + o.getTaxPaid() + DELIMITER
+                    + o.getTotal()));
+            writer.close();
+        } else {
+            // if we have no orders, delete the file
+            String filename = path + ORDER_PREFIX + serializeDate(date) + ".txt";
+            File file = new File(filename);
+            file.delete();
         }
-        writer.close();
+
     }
 
     @Override
