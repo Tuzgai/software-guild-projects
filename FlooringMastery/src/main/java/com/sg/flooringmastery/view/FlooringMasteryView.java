@@ -63,6 +63,10 @@ public class FlooringMasteryView {
         }
     }
 
+    public int getChoiceToEdit(int numberOfChoices) {
+        return io.readInt("Select an order to edit (0 to cancel): ", 1, numberOfChoices);
+    }
+
     public Order getNewOrderDetails(ArrayList<ProductType> productList, HashMap<String, BigDecimal> taxRates) {
         LocalDate date = LocalDate.now();
         Order order = new Order();
@@ -101,14 +105,29 @@ public class FlooringMasteryView {
         });
 
         String choice = "";
-        while (!taxRates.containsKey(choice)) {
+        do {
             choice = io.readString("Select a state (two letter code): ");
-        }
+        } while (!taxRates.containsKey(choice));
+        return choice;
+    }
+
+    public String displayStatesAndGetSelectionEditMode(HashMap<String, BigDecimal> taxRates) {
+        io.println("+----------------+");
+        io.println("| State  Tax     |");
+
+        taxRates.forEach((k, v) -> {
+            io.println("| " + k + "     " + v + "    ");
+        });
+
+        String choice = "";
+        do {
+            choice = io.readString("Select a state (two letter code): ");
+        } while (!(taxRates.containsKey(choice) || choice.equals("\n")));
         return choice;
     }
 
     public int displayProductsAndGetSelection(ArrayList<ProductType> productList) {
-        io.println("+---------------------+");
+        io.println("+-------------------------------------------------------+");
         io.println("|   Product    Material Cost (sqft)    Labor Cost (sqft)");
 
         productList.forEach(item -> {
@@ -116,6 +135,35 @@ public class FlooringMasteryView {
         });
 
         return io.readInt("Select a product: ", 1, productList.size()) - 1;
+    }
+
+    public int displayProductsAndGetSelectionEditMode(ArrayList<ProductType> productList) {
+        io.println("+-------------------------------------------------------+");
+        io.println("|   Product    Material Cost (sqft)    Labor Cost (sqft)");
+
+        productList.forEach(item -> {
+            io.println(productList.indexOf(item) + ". " + item.getName() + "\t" + item.getMaterialCostPerSquareFoot() + "\t" + item.getLaborCostPerSquareFoot());
+        });
+
+        int choice;
+        String input;
+        do {
+            input = io.readString("Select A Product: ");
+            try {
+                choice = Integer.parseInt(input);
+
+                // Return if re get a valid selection
+                if (0 < choice && choice < productList.size()) {
+                    return choice - 1;
+                }
+            } catch (NumberFormatException e) {
+                // Do nothing, just loop again
+            }
+
+            // Return -1 if we get a newline
+        } while (!input.equals("\n"));
+
+        return -1;
     }
 
     public void displayOrder(Order order) {
@@ -128,5 +176,41 @@ public class FlooringMasteryView {
         io.println("| Area: " + order.getAreaSquareFeet() + " sqft");
         io.println("| Tax: $" + order.getTaxPaid());
         io.println("| Total: $" + order.getTotal());
+    }
+    
+    public Order getEditedOrder(Order order, ArrayList<ProductType> productList, HashMap<String, BigDecimal> taxRates) {
+        io.println("=== EDIT AN ORDER ===");
+        io.println("Enter new value or return to skip.");
+
+        String name = io.readString("Enter Customer Name: " + "(" + order.getCustName() + "):");
+        String taxState = displayStatesAndGetSelectionEditMode(taxRates);
+
+        int productChoice = displayProductsAndGetSelectionEditMode(productList);
+        BigDecimal area = io.readBigDecimalOrNewline(name);
+        String recalculate = io.readString("Update calculated fields? (Y/N - default Y)");
+
+        if (!name.equals("\n")) {
+            order.setCustName(name);
+        }
+
+        if (!taxState.equals("\n")) {
+            order.setState(taxState);
+            order.setTaxRate(taxRates.get(taxState));
+        }
+
+        if (productChoice != -1) {
+            ProductType product = productList.get(productChoice);
+            order.setProductType(product);
+        }
+
+        if (area != null) {
+            order.setAreaSquareFeet(area);
+        }
+
+        if (!recalculate.toLowerCase().contains("n")) {
+            order.updateDerivedFields();
+        }
+
+        return order;
     }
 }

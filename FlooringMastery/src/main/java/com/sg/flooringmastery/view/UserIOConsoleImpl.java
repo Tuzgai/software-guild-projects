@@ -157,6 +157,24 @@ public class UserIOConsoleImpl implements UserIO {
             print("Please enter the number in the form ##.##: ");
         }
     }
+    
+    @Override
+    public BigDecimal readBigDecimalOrNewline(String prompt) {
+        String str;
+        print(prompt);
+
+        while (true) {
+            str = scn.nextLine();
+            if(str.equals("\n")) {
+                return null;
+            }
+            
+            if (str.matches("\\d*\\.\\d{0,2}")) {
+                return new BigDecimal(str);
+            }
+            print("Please enter the number in the form ##.##: ");
+        }
+    }
 
    @Override
     public LocalDate readLocalDate() {
