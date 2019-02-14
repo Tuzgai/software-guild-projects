@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  * @author Stuart
  */
 public class ConfigDaoFileImplTest {
-    ConfigDaoFileImpl instance = new ConfigDaoFileImpl("/testing/");
+    ConfigDaoFileImpl instance = new ConfigDaoFileImpl("./testing/");
     
     public ConfigDaoFileImplTest() {
     }

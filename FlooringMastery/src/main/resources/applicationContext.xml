@@ -24,22 +24,22 @@
    
     <bean id="configDao" 
           class="com.sg.flooringmastery.dao.configdao.ConfigDaoFileImpl">
-        <constructor-arg index = "0" value = ""/>
+        <constructor-arg index = "0" value = "./data/"/>
     </bean>
         
     <bean id="orderDao" 
           class="com.sg.flooringmastery.dao.orderdao.OrderDaoFileImpl">
-        <constructor-arg index = "0" value = ""/>
+        <constructor-arg index = "0" value = "./data/"/>
     </bean>
     
     <bean id="productsDao" 
           class="com.sg.flooringmastery.dao.productsdao.ProductsDaoFileImpl">
-        <constructor-arg index = "0" value = ""/>
+        <constructor-arg index = "0" value = "./data/"/>
     </bean>
     
     <bean id="taxesDao" 
           class="com.sg.flooringmastery.dao.taxesdao.TaxesDaoFileImpl">
-        <constructor-arg index = "0" value = ""/>
+        <constructor-arg index = "0" value = "./data/"/>
     </bean>
     
     <bean id="serviceLayer" 
