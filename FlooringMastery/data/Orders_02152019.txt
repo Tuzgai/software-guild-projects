@@ -1,0 +1,4 @@
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
+1,Stuart,MI,5.75,Wood,10.0,5.15,4.75,51.50,47.50,5.69,104.69
+2,Test,IN,6.00,Wood,10,5.15,4.75,51.50,47.50,5.94,104.94
+3,Test 2,MI,5.75,Tile,10,3.50,4.15,35.00,41.50,4.40,80.90

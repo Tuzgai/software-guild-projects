@@ -45,10 +45,10 @@ public class ServiceImpl implements Service {
     public void updateOrder(Order order) throws FlooringMasteryDaoFileException, FlooringMasteryServiceException {
         if (ordersForSelectedDate.isEmpty()) {
             throw new FlooringMasteryServiceException("No orders loaded.");
-        }
-
+        }      
+        
         boolean updateSuccessful = false;
-        for (int i = 1; i < ordersForSelectedDate.size(); i++) {
+        for (int i = 0; i < ordersForSelectedDate.size(); i++) {
             if (order.getOrderNumber() == ordersForSelectedDate.get(i).getOrderNumber()) {
                 ordersForSelectedDate.remove(i);
                 ordersForSelectedDate.add(i, order);

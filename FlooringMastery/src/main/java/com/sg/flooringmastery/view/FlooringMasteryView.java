@@ -157,7 +157,7 @@ public class FlooringMasteryView {
                 choice = Integer.parseInt(input);
 
                 // Return if we get a valid selection
-                if (0 < choice && choice < productList.size()) {
+                if (0 < choice && choice <= productList.size()) {
                     return choice - 1;
                 }
             } catch (NumberFormatException e) {
