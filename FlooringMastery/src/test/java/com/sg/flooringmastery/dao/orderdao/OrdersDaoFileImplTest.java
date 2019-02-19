@@ -41,7 +41,7 @@ public class OrdersDaoFileImplTest {
     }
 
     @Test
-    public void testSaveOrdersByDateAndLoadOrders() throws FlooringMasteryDaoFileException, FlooringMasteryDaoDataException {
+    public void testSaveOrdersByDateAndLoadOrders() throws FlooringMasteryDaoFileException {
         LocalDate date = LocalDate.now();
         ProductType product = new ProductType("TestProduct", new BigDecimal("5.00"), new BigDecimal("10.00"));
         Order order = new Order();

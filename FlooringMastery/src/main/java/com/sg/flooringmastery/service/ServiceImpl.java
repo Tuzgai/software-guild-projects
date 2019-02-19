@@ -2,7 +2,6 @@ package com.sg.flooringmastery.service;
 
 import com.sg.flooringmastery.dao.FlooringMasteryDaoFileException;
 import com.sg.flooringmastery.dao.configdao.ConfigDao;
-import com.sg.flooringmastery.dao.orderdao.FlooringMasteryDaoDataException;
 import com.sg.flooringmastery.dao.productsdao.ProductsDao;
 import com.sg.flooringmastery.dao.taxesdao.TaxesDao;
 import com.sg.flooringmastery.dao.orderdao.OrderDao;
@@ -45,8 +44,8 @@ public class ServiceImpl implements Service {
     public void updateOrder(Order order) throws FlooringMasteryDaoFileException, FlooringMasteryServiceException {
         if (ordersForSelectedDate.isEmpty()) {
             throw new FlooringMasteryServiceException("No orders loaded.");
-        }      
-        
+        }
+
         boolean updateSuccessful = false;
         for (int i = 0; i < ordersForSelectedDate.size(); i++) {
             if (order.getOrderNumber() == ordersForSelectedDate.get(i).getOrderNumber()) {
@@ -56,7 +55,7 @@ public class ServiceImpl implements Service {
                 break;
             }
         }
-        
+
         if (updateSuccessful) {
             saveOrdersByDate(order.getDate());
         } else {
@@ -79,14 +78,11 @@ public class ServiceImpl implements Service {
         saveOrdersByDate(order.getDate());
     }
 
+    // TODO Clean up exceptions
     @Override
     public void saveOrdersByDate(LocalDate date) throws FlooringMasteryDaoFileException {
-        try {
-            if (!trainingMode) {
-                orderDao.saveOrdersByDate(ordersForSelectedDate, date);
-            }
-        } catch (FlooringMasteryDaoDataException e) {
-            // don't save anything
+        if (!trainingMode) {
+            orderDao.saveOrdersByDate(ordersForSelectedDate, date);
         }
     }
 
@@ -142,7 +138,7 @@ public class ServiceImpl implements Service {
     public ArrayList<ProductType> getProductList() {
         return productList;
     }
-    
+
     public boolean getTrainingMode() {
         return trainingMode;
     }

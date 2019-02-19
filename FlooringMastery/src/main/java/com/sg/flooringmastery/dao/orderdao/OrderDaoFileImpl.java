@@ -76,7 +76,7 @@ public class OrderDaoFileImpl implements OrderDao {
     }
 
     @Override
-    public void saveOrdersByDate(ArrayList<Order> orders, LocalDate date) throws FlooringMasteryDaoFileException, FlooringMasteryDaoDataException {
+    public void saveOrdersByDate(ArrayList<Order> orders, LocalDate date) throws FlooringMasteryDaoFileException {
         if (!orders.isEmpty()) {
             String filename = path + ORDER_PREFIX + serializeDate(date) + ".txt";
             File file = new File(filename);
