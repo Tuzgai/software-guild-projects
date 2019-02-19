@@ -51,7 +51,9 @@ public class FlooringMasteryView {
     }
 
     public int getChoiceToRemove(int numberOfChoices) {
-        int choice = io.readInt("Select an order to remove (0 to cancel): ", 1, numberOfChoices);
+        int choice = io.readInt("Select an order to remove (0 to cancel): ", 0, numberOfChoices);
+        if (choice == 0) return 0;
+        
         while (true) {
             String confirm = io.readString("Are you sure you want to delete this entry? (Y/N): ");
             if (confirm.toLowerCase().contains("y")) {
@@ -64,7 +66,7 @@ public class FlooringMasteryView {
     }
 
     public int getChoiceToEdit(int numberOfChoices) {
-        return io.readInt("Select an order to edit (0 to cancel): ", 1, numberOfChoices);
+        return io.readInt("Select an order to edit (0 to cancel): ", 0, numberOfChoices);
     }
 
     public Order getNewOrderDetails(ArrayList<ProductType> productList, HashMap<String, BigDecimal> taxRates) {

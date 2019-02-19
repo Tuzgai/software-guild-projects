@@ -33,7 +33,7 @@ public class ConfigDaoFileImpl implements ConfigDao {
             return in.equals("Training");
         }
         
-        // Default to training mode
+        // Default to training mode if no file is found
         return true;
     }
     

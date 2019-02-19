@@ -37,7 +37,7 @@ public class OrderDaoFileImpl implements OrderDao {
         try {
             scn = new Scanner(file);
         } catch (FileNotFoundException e) {
-            throw new FlooringMasteryDaoFileException("File not found for date: " + date.toString());
+            throw new FlooringMasteryDaoFileException("No orders available for date: " + date.toString());
         }
 
         String currentLine;
