@@ -49,8 +49,8 @@ CREATE TABLE Bill (
 CREATE TABLE BillLineItem (
     BillLineItemID INT PRIMARY KEY AUTO_INCREMENT,
     BillID INT NOT NULL,
-    ItemName VARCHAR(45) NOT NULL,
-    ItemPrice DECIMAL(10,4) NOT NULL
+    ItemName VARCHAR(40),
+    ItemPrice DECIMAL(10,4)
 );
 
 CREATE TABLE RoomReservation (
@@ -60,8 +60,7 @@ CREATE TABLE RoomReservation (
 
 CREATE TABLE RoomAddOn (
     RoomID INT NOT NULL,
-    AddOnID INT NOT NULL,
-    BillLineItemID INT
+    AddOnID INT NOT NULL
 );
 
 CREATE TABLE AddOn (
