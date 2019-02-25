@@ -26,7 +26,8 @@ CREATE TABLE CustomerReservation (
 CREATE TABLE Reservation (
     ReservationID INT PRIMARY KEY AUTO_INCREMENT,
     StartDate DATE NOT NULL,
-    EndDate DATE NOT NULL
+    EndDate DATE NOT NULL,
+    PromoCodeID INT
 );
 
 CREATE TABLE PromoCode (
@@ -34,18 +35,22 @@ CREATE TABLE PromoCode (
     StartDate DATE,
     EndDate DATE,
     DiscountPercent DECIMAL(2,2),
-    DiscountFlat DECIMAL(10,4),
-    ReservationID INT
+    DiscountFlat DECIMAL(10,4)
 );
 
 CREATE TABLE Bill (
     ReservationID INT PRIMARY KEY AUTO_INCREMENT,
-    TaxRate DECIMAL(7,4) NOT NULL DEFAULT 0.0
+    TaxRate DECIMAL(7,4) NOT NULL DEFAULT 0.0,
+    Total DECIMAL(10,4) NOT NULL,
+    NumberGuests INT NOT NULL,
+    NumberRooms INT NOT NULL
 );
 
 CREATE TABLE BillLineItem (
     BillLineItemID INT PRIMARY KEY AUTO_INCREMENT,
-    BillID INT NOT NULL
+    BillID INT NOT NULL,
+    ItemName VARCHAR(45) NOT NULL,
+    ItemPrice DECIMAL(10,4) NOT NULL
 );
 
 CREATE TABLE RoomReservation (
@@ -63,7 +68,7 @@ CREATE TABLE AddOn (
     AddOnID INT PRIMARY KEY AUTO_INCREMENT,
     StartDate Date NOT NULL,
     EndDate Date NOT NULL,
-    Name VARCHAR(45) NOT NULL,
+    `Name` VARCHAR(45) NOT NULL,
     Price DECIMAL(10,4) NOT NULL
 );
 
@@ -86,7 +91,7 @@ CREATE TABLE RoomType (
 
 CREATE TABLE Amenity (
     AmenityID INT PRIMARY KEY AUTO_INCREMENT,
-    Name VARCHAR(45) NOT NULL
+    `Name` VARCHAR(45) NOT NULL
 );
 
 CREATE TABLE RateType (
@@ -97,12 +102,12 @@ CREATE TABLE RateType (
 
 CREATE TABLE `Type` (
     TypeID INT PRIMARY KEY AUTO_INCREMENT,
-    Name VARCHAR(45) NOT NULL
+    `Name` VARCHAR(45) NOT NULL
 );
 
 CREATE TABLE Rate (
     RateID INT PRIMARY KEY AUTO_INCREMENT,
-    Name VARCHAR(45) NOT NULL,
+    `Name` VARCHAR(45) NOT NULL,
     StartDate DATE NOT NULL,
     EndDate DATE
 );
@@ -120,10 +125,10 @@ ALTER TABLE CustomerReservation
         FOREIGN KEY (CustomerID)
         REFERENCES Customer (CustomerID);
 
-ALTER TABLE PromoCode
-    ADD CONSTRAINT fk_PromoCode_Reservation
-        FOREIGN KEY (ReservationID)
-        REFERENCES Reservation (ReservationID);
+ALTER TABLE Reservation
+    ADD CONSTRAINT fk_Reservation_PromoCode
+        FOREIGN KEY (PromoCodeID)
+        REFERENCES PromoCode (PromoCodeID);
 
 ALTER TABLE BillLineItem
     ADD CONSTRAINT fk_BillLineItem_Bill
