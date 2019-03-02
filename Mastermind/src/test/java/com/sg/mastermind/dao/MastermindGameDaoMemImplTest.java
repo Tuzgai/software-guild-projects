@@ -101,4 +101,18 @@ public class MastermindGameDaoMemImplTest {
         assertEquals(0, gameDao.getAllGames().size());
     }
     
+    @Test
+    public void testEndGame() {
+        Game game = new Game();
+        game.setComplete(true);
+        char [] solution = {'1', '2', '3', '4'};
+        game.setSolution(solution);
+        gameDao.createGame(game);
+        
+        gameDao.endGame(game);
+        
+        game = gameDao.getGameById(game.getId());
+        assertTrue(game.isComplete());
+    }
+    
 }

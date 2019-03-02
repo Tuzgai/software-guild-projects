@@ -32,6 +32,18 @@ public class MastermindGameDaoMemImpl implements MastermindGameDao {
     }
     
     @Override
+    public void endGame(Game game) {
+        game.setComplete(true);
+        
+        for(int i = 0; i < games.size(); i++) {
+            if(games.get(i).getId() == game.getId()) {
+                games.remove(i);
+                games.add(i, game);
+            }
+        }
+    }
+    
+    @Override
     public Game getGameById(int id) {
         return games.stream()
                 .filter(g -> g.getId() == id)
