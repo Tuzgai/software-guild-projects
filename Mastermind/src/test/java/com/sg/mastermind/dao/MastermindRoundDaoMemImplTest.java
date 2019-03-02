@@ -59,13 +59,14 @@ public class MastermindRoundDaoMemImplTest {
     public void testCreateGetRoundsByGame() {
         Game game = new Game();
         game.setComplete(true);
-        char[] solution = {'1', '2', '3', '4'};
+        ArrayList<Character> solution = new ArrayList<>(Arrays.asList('1', '2', '3', '4'));
         game.setSolution(solution);
         gameDao.createGame(game);
 
         Game game2 = new Game();
         game2.setComplete(true);
-        char[] solution2 = {'1', '2', '3', '4'};
+        ArrayList<Character> solution2 = new ArrayList<>(Arrays.asList('1', '2', '3', '4'));
+
         game2.setSolution(solution2);
         gameDao.createGame(game2);
 
