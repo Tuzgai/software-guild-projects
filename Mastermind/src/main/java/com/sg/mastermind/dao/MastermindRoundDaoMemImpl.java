@@ -1,7 +1,7 @@
 package com.sg.mastermind.dao;
 
-import com.sg.mastermind.entity.Game;
 import com.sg.mastermind.entity.Round;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +28,7 @@ public class MastermindRoundDaoMemImpl implements MastermindRoundDao {
                 .max().orElse(0) + 1;
 
         round.setId(newId);
+        round.setTimestamp(LocalDateTime.now());
         rounds.add(round);
         return round;
     }

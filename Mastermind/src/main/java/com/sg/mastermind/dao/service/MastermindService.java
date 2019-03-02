@@ -67,6 +67,7 @@ public class MastermindService {
         round.setExactMatches(e);
         round.setPartialMatches(p);
         round.setGameId(gameId);
+        round.setGuess(guess);
         roundDao.createRound(round);
 
         if (e == GAME_SIZE) {
