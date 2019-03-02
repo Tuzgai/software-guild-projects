@@ -32,22 +32,35 @@ public class MastermindGameDaoMemImpl implements MastermindGameDao {
     }
     
     @Override
-    public void endGame(Game game) {
-        game.setComplete(true);
+    public void endGame(Game game) throws GameNotFoundException {
+        boolean changesMade = false;
         
+        game.setComplete(true);
+       
         for(int i = 0; i < games.size(); i++) {
             if(games.get(i).getId() == game.getId()) {
                 games.remove(i);
                 games.add(i, game);
+                changesMade = true;
             }
+        }
+        
+        if(!changesMade) {
+            throw new GameNotFoundException("Game not found!");
         }
     }
     
     @Override
-    public Game getGameById(int id) {
-        return games.stream()
+    public Game getGameById(int id) throws GameNotFoundException {
+        Game game = games.stream()
                 .filter(g -> g.getId() == id)
                 .findFirst().orElse(null);
+        
+        if(game == null) {
+            throw new GameNotFoundException("Game not found!");
+        }
+        
+        return game;
     }
     
     @Override

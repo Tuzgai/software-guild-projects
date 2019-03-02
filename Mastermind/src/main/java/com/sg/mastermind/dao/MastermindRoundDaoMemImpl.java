@@ -34,10 +34,16 @@ public class MastermindRoundDaoMemImpl implements MastermindRoundDao {
     }
     
     @Override
-    public List<Round> getRoundsByGameId(int id) {
-        return rounds.stream()
+    public List<Round> getRoundsByGameId(int id) throws GameEmptyException {
+        List<Round> roundList = rounds.stream()
                 .filter(r -> r.getGameId() == id)
                 .collect(Collectors.toList());
+        
+        if(roundList.isEmpty()) {
+            throw new GameEmptyException("No rounds found for this game ID");
+        }
+        
+        return roundList;
     }
     
     @Override

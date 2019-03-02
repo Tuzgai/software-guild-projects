@@ -9,6 +9,6 @@ import java.util.List;
  */
 public interface MastermindRoundDao {
     public Round createRound(Round round);
-    public List<Round> getRoundsByGameId(int id);
+    public List<Round> getRoundsByGameId(int id) throws GameEmptyException;
     public void clearStorage();
 }

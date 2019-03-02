@@ -1,5 +1,7 @@
 package com.sg.mastermind.controller;
 
+import com.sg.mastermind.dao.GameEmptyException;
+import com.sg.mastermind.dao.GameNotFoundException;
 import com.sg.mastermind.dao.service.MastermindService;
 import com.sg.mastermind.entity.Game;
 import com.sg.mastermind.entity.Round;
@@ -31,7 +33,7 @@ public class MastermindController {
     }
     
     @PostMapping("/guess/{gameId}")
-    public ResponseEntity<Round> makeGuess(@PathVariable int gameId, @RequestBody ArrayList<Character> guess) {
+    public ResponseEntity<Round> makeGuess(@PathVariable int gameId, @RequestBody ArrayList<Character> guess) throws GameNotFoundException {
         return ResponseEntity.ok(service.makeGuess(guess, gameId));
     }
     
@@ -41,12 +43,12 @@ public class MastermindController {
     }
     
     @GetMapping("/game/{gameId}")
-    public ResponseEntity<Game> displayOneGame(@PathVariable int gameId) {
+    public ResponseEntity<Game> displayOneGame(@PathVariable int gameId) throws GameNotFoundException {
         return ResponseEntity.ok(service.getGameByIdForDisplay(gameId));
     }
     
     @GetMapping("/rounds/{gameId}")
-    public ResponseEntity<List<Round>> displayRounds(@PathVariable int gameId) {
+    public ResponseEntity<List<Round>> displayRounds(@PathVariable int gameId) throws GameEmptyException {
         return ResponseEntity.ok(service.getRoundsByGameId(gameId));
     }
     

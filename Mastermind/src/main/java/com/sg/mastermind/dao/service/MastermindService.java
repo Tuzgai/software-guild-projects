@@ -1,5 +1,7 @@
 package com.sg.mastermind.dao.service;
 
+import com.sg.mastermind.dao.GameEmptyException;
+import com.sg.mastermind.dao.GameNotFoundException;
 import com.sg.mastermind.dao.MastermindGameDao;
 import com.sg.mastermind.dao.MastermindRoundDao;
 import com.sg.mastermind.entity.Game;
@@ -44,7 +46,7 @@ public class MastermindService {
         return gameDao.createGame(game);
     }
 
-    public Round makeGuess(ArrayList<Character> guess, int gameId) {
+    public Round makeGuess(ArrayList<Character> guess, int gameId) throws GameNotFoundException {
         Round round = new Round();
         Game game = gameDao.getGameById(gameId);
         ArrayList<Character> solution = game.getSolution();
@@ -91,7 +93,7 @@ public class MastermindService {
         return gameList;
     }
 
-    public Game getGameByIdForDisplay(int id) {
+    public Game getGameByIdForDisplay(int id) throws GameNotFoundException {
         Game game = gameDao.getGameById(id);
         ArrayList<Character> placeholder = new ArrayList<>();
         
@@ -102,7 +104,7 @@ public class MastermindService {
         return game;
     }
 
-    public List<Round> getRoundsByGameId(int id) {
+    public List<Round> getRoundsByGameId(int id) throws GameEmptyException {
         return roundDao.getRoundsByGameId(id);
     }
 
