@@ -40,9 +40,7 @@ public class MastermindGameDaoMemImpl implements MastermindGameDao {
     
     @Override
     public List<Game> getAllGames() {
-        ArrayList<Game> a = new ArrayList<>();
-        a.add(new Game());
-        return a;
+        return games;
     }
    
     // Needed for testing

@@ -73,10 +73,10 @@ public class MastermindGameDaoMemImplTest {
         gameDao.createGame(game);
         
         Game game2 = new Game();
-        game.setComplete(true);
+        game2.setComplete(true);
         char [] solution2 = {'4', '3', '2', '1'};
-        game.setSolution(solution2);
-        game.setId(2);
+        game2.setSolution(solution2);
+        game2.setId(2);
         gameDao.createGame(game2);
         
         List<Game> gameList = gameDao.getAllGames();

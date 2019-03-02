@@ -33,9 +33,9 @@ public class MastermindRoundDaoMemImpl implements MastermindRoundDao {
     }
     
     @Override
-    public List<Round> getRoundsByGame(Game game) {
+    public List<Round> getRoundsByGameId(int id) {
         return rounds.stream()
-                .filter(r -> r.getGameId() == game.getId())
+                .filter(r -> r.getGameId() == id)
                 .collect(Collectors.toList());
     }
     
