@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MastermindService {
+
     final int GAME_SIZE = 4;
     @Autowired
     MastermindGameDao gameDao;
@@ -28,43 +29,40 @@ public class MastermindService {
 
     public Game startNewGame() {
         Game game = new Game();
-        char[] options = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-        ArrayList<Character> a = new ArrayList<>();
-        for(char c: options) {
-            a.add(c);
-        }
-        
+        ArrayList<Character> a
+                = new ArrayList<>(Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'));
+
         Collections.shuffle(a);
-         
+
         // generate solution - 4 digits, no repeats
-        char[] solution = {a.get(0),
-            a.get(1),
-            a.get(2),
-            a.get(3)};
+        ArrayList<Character> solution = new ArrayList<>(Arrays.asList(a.get(0),
+                a.get(1),
+                a.get(2),
+                a.get(3)));
 
         game.setSolution(solution);
         return gameDao.createGame(game);
     }
 
-    public Round makeGuess(char[] guess, int gameId) {
+    public Round makeGuess(ArrayList<Character> guess, int gameId) {
         Round round = new Round();
         Game game = gameDao.getGameById(gameId);
-        char[] solution = game.getSolution();
+        ArrayList<Character> solution = game.getSolution();
         HashSet<Character> hs = new HashSet<>();
-        int e = 0, p;
+        int e = 0, p = 0;
 
-        for (int i = 0; i < solution.length; i++) {
-            if (guess[i] == solution[i]) {
+        for (int i = 0; i < solution.size(); i++) {
+            if (guess.get(i).equals(solution.get(i))) {
                 e++;
             }
-            hs.add(guess[i]);
-            hs.add(solution[i]);
-        }
+            hs.add(guess.get(i));
+            hs.add(solution.get(i));
+        }   
 
         // If no guesses are correct, both lists will be present in hs
         // Solution.length*2 instead of 8 in case we want to change the length
         // Exact is not partial, so subtract them
-        p = (solution.length * 2) - hs.size() - e;
+        p = (solution.size() * 2) - hs.size() - e;
 
         round.setExactMatches(e);
         round.setPartialMatches(p);
@@ -79,7 +77,7 @@ public class MastermindService {
 
     public List<Game> getAllGamesForDisplay() {
         List<Game> gameList = gameDao.getAllGames();
-        char[] placeholder = {'0', '0', '0', '0'};
+        ArrayList<Character> placeholder = new ArrayList<>();
 
         gameList.stream()
                 .forEach(g -> {
@@ -94,8 +92,8 @@ public class MastermindService {
 
     public Game getGameByIdForDisplay(int id) {
         Game game = gameDao.getGameById(id);
-        char[] placeholder = {'0', '0', '0', '0'};
-
+        ArrayList<Character> placeholder = new ArrayList<>();
+        
         if (!game.isComplete()) {
             game.setSolution(placeholder);
         }
@@ -112,7 +110,8 @@ public class MastermindService {
         roundDao.clearStorage();
     }
 
-    private class SortById implements Comparator<Game> {     
+    private class SortById implements Comparator<Game> {
+
         @Override
         public int compare(Game a, Game b) {
             return a.getId() - b.getId();

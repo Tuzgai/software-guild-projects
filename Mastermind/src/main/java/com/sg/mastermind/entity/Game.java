@@ -1,6 +1,7 @@
 package com.sg.mastermind.entity;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  *
@@ -8,7 +9,7 @@ import java.util.Arrays;
  */
 public class Game {
     int id;
-    char[] solution;
+    ArrayList<Character> solution;
     boolean complete;
 
     public int getId() {
@@ -19,11 +20,11 @@ public class Game {
         this.id = id;
     }
 
-    public char[] getSolution() {
+    public ArrayList<Character> getSolution() {
         return solution;
     }
 
-    public void setSolution(char[] solution) {
+    public void setSolution(ArrayList<Character> solution) {
         this.solution = solution;
     }
 
@@ -38,9 +39,9 @@ public class Game {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 11 * hash + this.id;
-        hash = 11 * hash + Arrays.hashCode(this.solution);
-        hash = 11 * hash + (this.complete ? 1 : 0);
+        hash = 17 * hash + this.id;
+        hash = 17 * hash + Objects.hashCode(this.solution);
+        hash = 17 * hash + (this.complete ? 1 : 0);
         return hash;
     }
 
@@ -62,9 +63,11 @@ public class Game {
         if (this.complete != other.complete) {
             return false;
         }
-        if (!Arrays.equals(this.solution, other.solution)) {
+        if (!Objects.equals(this.solution, other.solution)) {
             return false;
         }
         return true;
     }
+
+    
 }

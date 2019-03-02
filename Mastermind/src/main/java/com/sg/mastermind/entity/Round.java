@@ -1,6 +1,7 @@
 package com.sg.mastermind.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -10,7 +11,7 @@ import java.util.Objects;
  */
 public class Round {
     int id;
-    char[] guess;
+    ArrayList<Character> guess;
     int exactMatches;
     int partialMatches;
     LocalDateTime timestamp;
@@ -32,11 +33,11 @@ public class Round {
         this.id = id;
     }
 
-    public char[] getGuess() {
+    public ArrayList<Character> getGuess() {
         return guess;
     }
 
-    public void setGuess(char[] guess) {
+    public void setGuess(ArrayList<Character> guess) {
         this.guess = guess;
     }
 
@@ -66,12 +67,13 @@ public class Round {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 83 * hash + this.id;
-        hash = 83 * hash + Arrays.hashCode(this.guess);
-        hash = 83 * hash + this.exactMatches;
-        hash = 83 * hash + this.partialMatches;
-        hash = 83 * hash + Objects.hashCode(this.timestamp);
+        int hash = 7;
+        hash = 37 * hash + this.id;
+        hash = 37 * hash + Objects.hashCode(this.guess);
+        hash = 37 * hash + this.exactMatches;
+        hash = 37 * hash + this.partialMatches;
+        hash = 37 * hash + Objects.hashCode(this.timestamp);
+        hash = 37 * hash + this.gameId;
         return hash;
     }
 
@@ -96,7 +98,10 @@ public class Round {
         if (this.partialMatches != other.partialMatches) {
             return false;
         }
-        if (!Arrays.equals(this.guess, other.guess)) {
+        if (this.gameId != other.gameId) {
+            return false;
+        }
+        if (!Objects.equals(this.guess, other.guess)) {
             return false;
         }
         if (!Objects.equals(this.timestamp, other.timestamp)) {
@@ -104,6 +109,6 @@ public class Round {
         }
         return true;
     }
-    
-    
+
+   
 }

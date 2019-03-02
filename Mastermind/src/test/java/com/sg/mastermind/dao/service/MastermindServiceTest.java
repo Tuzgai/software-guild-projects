@@ -2,6 +2,8 @@ package com.sg.mastermind.dao.service;
 
 import com.sg.mastermind.entity.Game;
 import com.sg.mastermind.entity.Round;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import org.junit.After;
@@ -74,7 +76,7 @@ public class MastermindServiceTest {
     @Test
     public void testMakeGuessAllMatch() {
         Game game = instance.startNewGame();
-        char[] guess = game.getSolution();
+        ArrayList<Character> guess = game.getSolution();
 
         Round r = instance.makeGuess(guess, game.getId());
 
@@ -89,7 +91,7 @@ public class MastermindServiceTest {
     @Test
     public void testMakeGuessNoneMatch() {
         Game game = instance.startNewGame();
-        char[] guess = {'A','B','C','D'};
+        ArrayList<Character> guess = new ArrayList(Arrays.asList('A', 'B', 'C', 'D'));
 
         Round r = instance.makeGuess(guess, game.getId());
 
@@ -103,9 +105,11 @@ public class MastermindServiceTest {
     @Test
     public void testMakeGuessSomeExactMatch() {
         Game game = instance.startNewGame();
-        char[] guess = game.getSolution();
-        guess[0] = 'Z';
-        guess[1] = 'A';
+        ArrayList<Character> guess = new ArrayList(game.getSolution());
+        guess.remove(0);
+        guess.add(0, Character.MIN_VALUE);
+        guess.remove(1);
+        guess.add(1, Character.MAX_VALUE);
         Round r = instance.makeGuess(guess, game.getId());
 
         assertEquals(2, r.getExactMatches());
@@ -118,14 +122,16 @@ public class MastermindServiceTest {
     @Test
     public void testMakeGuessAllPartialMatch() {
         Game game = instance.startNewGame();
-        char[] guess = game.getSolution();
+        ArrayList<Character> guess = new ArrayList(game.getSolution());
 
         // Just reverse the array
         // Note: this will break if we ever use non-unique guess choices
-        for (int i = 0; i < guess.length / 2; i++) {
-            char temp = guess[i];
-            guess[i] = guess[guess.length - i - 1];
-            guess[guess.length - i - 1] = temp;
+        for (int i = 0; i < guess.size() / 2; i++) {
+            char temp = guess.get(0);
+            guess.remove(i);
+            guess.add(i, guess.get(guess.size() - i - 1));
+            guess.remove(guess.size() - i - 1);
+            guess.add(guess.size() - i - 1, temp);
         }
 
         Round r = instance.makeGuess(guess, game.getId());
@@ -140,18 +146,22 @@ public class MastermindServiceTest {
     @Test
     public void testMakeGuessSomePartialMatch() {
         Game game = instance.startNewGame();
-        char[] guess = game.getSolution();
+        ArrayList<Character> guess = new ArrayList(game.getSolution());
 
         // Just reverse the array
         // Note: this will break if we ever use non-unique guess choices
-        for (int i = 0; i < guess.length / 2; i++) {
-            char temp = guess[i];
-            guess[i] = guess[guess.length - i - 1];
-            guess[guess.length - i - 1] = temp;
-        }
+        for (int i = 0; i < guess.size() / 2; i++) {
+            char temp = guess.get(0);
+            guess.remove(i);
+            guess.add(i, guess.get(guess.size() - i - 1));
+            guess.remove(guess.size() - i - 1);
+            guess.add(temp);
 
-        guess[3] = 'Z';
-        guess[2] = 'A';
+        }
+        guess.remove(3);
+        guess.add(3, Character.MIN_VALUE);
+        guess.remove(2);
+        guess.add(2, Character.MAX_VALUE);
         Round r = instance.makeGuess(guess, game.getId());
 
         assertEquals(0, r.getExactMatches());
@@ -164,11 +174,13 @@ public class MastermindServiceTest {
     @Test
     public void testMakeGuessSomePartialSomeExactMatch() {
         Game game = instance.startNewGame();
-        char[] guess = game.getSolution();
+        ArrayList<Character> guess = new ArrayList(game.getSolution());
 
-        char temp = guess[0];
-        guess[0] = guess[guess.length-1];
-        guess[guess.length-1] = temp;
+        char temp = guess.get(0);
+        guess.remove(0);
+        guess.add(0, guess.get(guess.size() - 1));
+        guess.remove(guess.size() - 1);
+        guess.add(temp);
 
         Round r = instance.makeGuess(guess, game.getId());
 
@@ -184,42 +196,42 @@ public class MastermindServiceTest {
         Game game1 = instance.startNewGame();
         Game game2 = instance.startNewGame();
         Game game3 = instance.startNewGame();
-        
-        char[] guess = game2.getSolution();
+
+        ArrayList<Character> guess = new ArrayList(game2.getSolution());
 
         instance.makeGuess(guess, game2.getId());
-        
+
         List<Game> gameList = instance.getAllGamesForDisplay();
-        
+
         // Game 1 should be blank
         Game testGame = instance.getGameByIdForDisplay(game1.getId());
         HashSet<Character> hs = new HashSet<>();
-        
-        for(char c : testGame.getSolution()) {
+
+        for (char c : testGame.getSolution()) {
             hs.add(c);
         }
-        
-        assertEquals(1, hs.size());
-        
+
+        assertEquals(0, hs.size());
+
         // Game 2 should be populated
         testGame = instance.getGameByIdForDisplay(game2.getId());
         hs = new HashSet<>();
-        
-        for(char c : testGame.getSolution()) {
+
+        for (char c : testGame.getSolution()) {
             hs.add(c);
         }
-        
+
         assertEquals(4, hs.size());
-        
+
         // Game 3 should be blank
         testGame = instance.getGameByIdForDisplay(game3.getId());
         hs = new HashSet<>();
-        
-        for(char c : testGame.getSolution()) {
+
+        for (char c : testGame.getSolution()) {
             hs.add(c);
         }
-        
-        assertEquals(1, hs.size());
+
+        assertEquals(0, hs.size());
     }
 
     /**
@@ -230,31 +242,31 @@ public class MastermindServiceTest {
         Game game1 = instance.startNewGame();
         Game game2 = instance.startNewGame();
         Game game3 = instance.startNewGame();
-        
-        char[] guess = game2.getSolution();
+
+        ArrayList<Character> guess = game2.getSolution();
 
         instance.makeGuess(guess, game2.getId());
-        
+
         Game testGame = instance.getGameByIdForDisplay(game2.getId());
         HashSet<Character> hs = new HashSet<>();
-        
+
         // Check if we got the solution
-        for(char c : testGame.getSolution()) {
+        for (char c : testGame.getSolution()) {
             hs.add(c);
         }
-        
+
         assertEquals(4, hs.size());
-        
+
         // Check an unsolved one for placeholder array
         testGame = instance.getGameByIdForDisplay(game3.getId());
         hs = new HashSet<>();
-        
+
         // Check if we got the solution
-        for(char c : testGame.getSolution()) {
+        for (char c : testGame.getSolution()) {
             hs.add(c);
         }
-        
-        assertEquals(1, hs.size());
+
+        assertEquals(0, hs.size());
     }
 
     /**
