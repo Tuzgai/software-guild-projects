@@ -11,6 +11,6 @@ public interface MastermindGameDao {
     public Game createGame (Game game);
     public Game getGameById(int id) throws GameNotFoundException;
     public List<Game> getAllGames();
-    public void endGame(Game game) throws GameNotFoundException;
+    public boolean endGame(Game game) throws GameNotFoundException;
     public void clearStorage();
 }

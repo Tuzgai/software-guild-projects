@@ -1,4 +1,4 @@
-package com.sg.mastermind.dao.service;
+package com.sg.mastermind.service;
 
 import com.sg.mastermind.dao.GameEmptyException;
 import com.sg.mastermind.dao.GameNotFoundException;
@@ -34,9 +34,8 @@ public class MastermindService {
         ArrayList<Character> a
                 = new ArrayList<>(Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'));
 
-        Collections.shuffle(a);
-
         // generate solution - 4 digits, no repeats
+        Collections.shuffle(a);
         ArrayList<Character> solution = new ArrayList<>(Arrays.asList(a.get(0),
                 a.get(1),
                 a.get(2),
@@ -46,10 +45,10 @@ public class MastermindService {
         return gameDao.createGame(game);
     }
 
-    public Round makeGuess(ArrayList<Character> guess, int gameId) throws GameNotFoundException {
+    public Round makeGuess(List<Character> guess, int gameId) throws GameNotFoundException {
         Round round = new Round();
         Game game = gameDao.getGameById(gameId);
-        ArrayList<Character> solution = game.getSolution();
+        List<Character> solution = game.getSolution();
         HashSet<Character> hs = new HashSet<>();
         int e = 0, p = 0;
 

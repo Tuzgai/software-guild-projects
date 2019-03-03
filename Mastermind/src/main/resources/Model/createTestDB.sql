@@ -1,5 +1,5 @@
-DROP DATABASE IF EXISTS mastermindtest;
-CREATE DATABASE IF NOT EXISTS mastermindtest;
+DROP DATABASE IF EXISTS mastermind;
+CREATE DATABASE IF NOT EXISTS mastermind;
 USE mastermind;
 
 CREATE TABLE game (
@@ -11,8 +11,8 @@ CREATE TABLE game (
 CREATE TABLE round (
 	id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
     guess CHAR(4) NOT NULL,
-    exactMatches INTEGER,
-    partialMatches INTEGER,
+    exactMatches TINYINT,
+    partialMatches TINYINT,
     `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     gameId INTEGER NOT NULL
 );

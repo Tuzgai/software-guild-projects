@@ -21,12 +21,12 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class MastermindGameDaoMemImplTest {
+public class MastermindGameDaoDBImplTest {
 
     @Autowired
     MastermindGameDao gameDao;
 
-    public MastermindGameDaoMemImplTest() {
+    public MastermindGameDaoDBImplTest() {
     }
 
     @BeforeClass
@@ -50,7 +50,6 @@ public class MastermindGameDaoMemImplTest {
     @Test
     public void testCreateGetGame() throws Exception {
         Game game = new Game();
-        game.setComplete(true);
         ArrayList<Character> solution = new ArrayList<>(Arrays.asList('1', '2', '3', '4'));
 
         game.setSolution(solution);
@@ -59,10 +58,10 @@ public class MastermindGameDaoMemImplTest {
         // Did create return the game added?
         assertEquals(game, test);
 
-        test = gameDao.getGameById(test.getId());
+        Game test2 = gameDao.getGameById(test.getId());
 
         // Can we get that game by id?
-        assertEquals(game, test);
+        assertEquals(game, test2);
     }
 
     @Test (expected = GameNotFoundException.class)
@@ -73,7 +72,6 @@ public class MastermindGameDaoMemImplTest {
     @Test
     public void testGetAllGames() {
         Game game = new Game();
-        game.setComplete(true);
         ArrayList<Character> solution = new ArrayList<>(Arrays.asList('1', '2', '3', '4'));
 
         game.setSolution(solution);
@@ -81,7 +79,6 @@ public class MastermindGameDaoMemImplTest {
         gameDao.createGame(game);
 
         Game game2 = new Game();
-        game2.setComplete(true);
         ArrayList<Character> solution2 = new ArrayList<>(Arrays.asList('4', '3', '2', '1'));
 
         game2.setSolution(solution2);

@@ -1,5 +1,8 @@
 package com.sg.mastermind.dao.service;
 
+import com.sg.mastermind.dao.GameEmptyException;
+import com.sg.mastermind.dao.GameNotFoundException;
+import com.sg.mastermind.service.MastermindService;
 import com.sg.mastermind.entity.Game;
 import com.sg.mastermind.entity.Round;
 import java.util.ArrayList;
@@ -70,13 +73,24 @@ public class MastermindServiceTest {
         assertEquals(3, instance.getAllGamesForDisplay().size());
     }
 
+    
+        /**
+     * Test of makeGuess method, of class MastermindService.
+     */
+    @Test(expected = GameNotFoundException.class)
+    public void testMakeGuessNoGameException() throws Exception {
+        ArrayList<Character> guess = new ArrayList<>(Arrays.asList('1','2','3','4'));
+        Round r = instance.makeGuess(guess, 1);
+    }
+
+    
     /**
      * Test of makeGuess method, of class MastermindService.
      */
     @Test
-    public void testMakeGuessAllMatch() {
+    public void testMakeGuessAllMatch() throws Exception {
         Game game = instance.startNewGame();
-        ArrayList<Character> guess = game.getSolution();
+        List<Character> guess = game.getSolution();
 
         Round r = instance.makeGuess(guess, game.getId());
 
@@ -89,7 +103,7 @@ public class MastermindServiceTest {
      * Test of makeGuess method, of class MastermindService.
      */
     @Test
-    public void testMakeGuessNoneMatch() {
+    public void testMakeGuessNoneMatch() throws Exception {
         Game game = instance.startNewGame();
         ArrayList<Character> guess = new ArrayList(Arrays.asList('A', 'B', 'C', 'D'));
 
@@ -103,7 +117,7 @@ public class MastermindServiceTest {
      * Test of makeGuess method, of class MastermindService.
      */
     @Test
-    public void testMakeGuessSomeExactMatch() {
+    public void testMakeGuessSomeExactMatch() throws Exception {
         Game game = instance.startNewGame();
         ArrayList<Character> guess = new ArrayList(game.getSolution());
         guess.remove(0);
@@ -120,7 +134,7 @@ public class MastermindServiceTest {
      * Test of makeGuess method, of class MastermindService.
      */
     @Test
-    public void testMakeGuessAllPartialMatch() {
+    public void testMakeGuessAllPartialMatch() throws Exception {
         Game game = instance.startNewGame();
         ArrayList<Character> guess = new ArrayList(game.getSolution());
 
@@ -144,7 +158,7 @@ public class MastermindServiceTest {
      * Test of makeGuess method, of class MastermindService.
      */
     @Test
-    public void testMakeGuessSomePartialMatch() {
+    public void testMakeGuessSomePartialMatch() throws Exception {
         Game game = instance.startNewGame();
         ArrayList<Character> guess = new ArrayList(game.getSolution());
 
@@ -172,7 +186,7 @@ public class MastermindServiceTest {
      * Test of makeGuess method, of class MastermindService.
      */
     @Test
-    public void testMakeGuessSomePartialSomeExactMatch() {
+    public void testMakeGuessSomePartialSomeExactMatch() throws Exception {
         Game game = instance.startNewGame();
         ArrayList<Character> guess = new ArrayList(game.getSolution());
 
@@ -192,7 +206,7 @@ public class MastermindServiceTest {
      * Test of getAllGamesForDisplay method, of class MastermindService.
      */
     @Test
-    public void testGetAllGamesForDisplay() {
+    public void testGetAllGamesForDisplay() throws Exception {
         Game game1 = instance.startNewGame();
         Game game2 = instance.startNewGame();
         Game game3 = instance.startNewGame();
@@ -238,12 +252,12 @@ public class MastermindServiceTest {
      * Test of getGameByIdForDisplay method, of class MastermindService.
      */
     @Test
-    public void testGetGameByIdForDisplayGuessCorrect() {
+    public void testGetGameByIdForDisplayGuessCorrect() throws Exception {
         Game game1 = instance.startNewGame();
         Game game2 = instance.startNewGame();
         Game game3 = instance.startNewGame();
 
-        ArrayList<Character> guess = game2.getSolution();
+        List<Character> guess = game2.getSolution();
 
         instance.makeGuess(guess, game2.getId());
 
@@ -269,6 +283,15 @@ public class MastermindServiceTest {
         assertEquals(0, hs.size());
     }
 
+    /**
+     * Test of getGameByIdForDisplay method, of class MastermindService.
+     */
+    @Test(expected = GameNotFoundException.class)
+    public void testGetGameByIdForDisplayNoGameExists() throws Exception {
+        instance.getGameByIdForDisplay(1);
+    }
+    
+    
     /**
      * Test of getRoundsByGameId method, of class MastermindService.
      */

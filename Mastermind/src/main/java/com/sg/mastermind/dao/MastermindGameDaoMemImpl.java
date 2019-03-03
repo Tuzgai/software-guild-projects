@@ -32,7 +32,7 @@ public class MastermindGameDaoMemImpl implements MastermindGameDao {
     }
     
     @Override
-    public void endGame(Game game) throws GameNotFoundException {
+    public boolean endGame(Game game) throws GameNotFoundException {
         boolean changesMade = false;
         
         game.setComplete(true);
@@ -45,9 +45,7 @@ public class MastermindGameDaoMemImpl implements MastermindGameDao {
             }
         }
         
-        if(!changesMade) {
-            throw new GameNotFoundException("Game not found!");
-        }
+        return changesMade;
     }
     
     @Override

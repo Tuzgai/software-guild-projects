@@ -1,6 +1,7 @@
 package com.sg.mastermind.entity;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Objects;
  */
 public class Game {
     int id;
-    ArrayList<Character> solution;
+    List<Character> solution;
     boolean complete;
 
     public int getId() {
@@ -20,11 +21,11 @@ public class Game {
         this.id = id;
     }
 
-    public ArrayList<Character> getSolution() {
+    public List<Character> getSolution() {
         return solution;
     }
 
-    public void setSolution(ArrayList<Character> solution) {
+    public void setSolution(List<Character> solution) {
         this.solution = solution;
     }
 

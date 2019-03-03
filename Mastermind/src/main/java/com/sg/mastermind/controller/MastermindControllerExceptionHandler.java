@@ -18,20 +18,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 @RestController
 public class MastermindControllerExceptionHandler extends ResponseEntityExceptionHandler {
-
-    private static final String CONSTRAINT_MESSAGE = "Could not save your item. "
-            + "Please insure it is valid and try again.";
-
-    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public final ResponseEntity<Error> handleSqlException(
-            SQLIntegrityConstraintViolationException ex,
-            WebRequest request) {
-
-        Error err = new Error();
-        err.setMessage(CONSTRAINT_MESSAGE);
-        return new ResponseEntity<>(err, HttpStatus.UNPROCESSABLE_ENTITY);
-    }
-
     @ExceptionHandler(GameNotFoundException.class)
     public final ResponseEntity<Error> handleGameNotFoundException(
             GameNotFoundException e,
@@ -49,5 +35,13 @@ public class MastermindControllerExceptionHandler extends ResponseEntityExceptio
         err.setMessage(e.getMessage());
         return new ResponseEntity<>(err, HttpStatus.NOT_FOUND);
     }
-
+    
+    @ExceptionHandler(BadRequestException.class)
+    public final ResponseEntity<Error> handleBadRequestException(
+            BadRequestException e,
+            WebRequest request) {
+        Error err = new Error();
+        err.setMessage(e.getMessage());
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+    }
 }

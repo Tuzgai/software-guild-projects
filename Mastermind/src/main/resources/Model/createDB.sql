@@ -11,8 +11,8 @@ CREATE TABLE game (
 CREATE TABLE round (
 	id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
     guess CHAR(4) NOT NULL,
-    exactMatches INTEGER,
-    partialMatches INTEGER,
+    exactMatches TINYINT,
+    partialMatches TINYINT,
     `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     gameId INTEGER NOT NULL
 );

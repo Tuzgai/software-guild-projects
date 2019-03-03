@@ -1,8 +1,7 @@
 package com.sg.mastermind.entity;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -11,7 +10,7 @@ import java.util.Objects;
  */
 public class Round {
     int id;
-    ArrayList<Character> guess;
+    List<Character> guess;
     int exactMatches;
     int partialMatches;
     LocalDateTime timestamp;
@@ -33,11 +32,11 @@ public class Round {
         this.id = id;
     }
 
-    public ArrayList<Character> getGuess() {
+    public List<Character> getGuess() {
         return guess;
     }
 
-    public void setGuess(ArrayList<Character> guess) {
+    public void setGuess(List<Character> guess) {
         this.guess = guess;
     }
 
