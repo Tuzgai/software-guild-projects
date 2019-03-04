@@ -30,7 +30,7 @@ public class MastermindRoundDaoDBImpl implements MastermindRoundDao {
     @Override
     @Transactional
     public Round createRound(Round round) {
-        final String sql = "INSERT INTO round(gameid, guess) VALUES(?,?)";
+        final String sql = "INSERT INTO round(gameId, guess, exactMatches, partialMatches) VALUES(?,?,?,?)";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update((Connection conn) -> {
@@ -43,8 +43,10 @@ public class MastermindRoundDaoDBImpl implements MastermindRoundDao {
             round.getGuess().stream()
                     .forEachOrdered(c -> sb.append(c));
 
-            statement.setString(1, "" + round.getGameId());
+            statement.setInt(1, round.getGameId());
             statement.setString(2, sb.toString());
+            statement.setInt(3, round.getExactMatches());
+            statement.setInt(4, round.getPartialMatches());
             return statement;
 
         }, keyHolder);
@@ -63,7 +65,7 @@ public class MastermindRoundDaoDBImpl implements MastermindRoundDao {
     @Override
     public List<Round> getRoundsByGameId(int id) throws GameEmptyException {
         final String sql
-                = "SELECT id, exactMatches, partialMatches, timestamp, guess "
+                = "SELECT id, exactMatches, partialMatches, timestamp, guess, gameId "
                 + "FROM round "
                 + "WHERE gameId = ?";
 
@@ -97,6 +99,7 @@ public class MastermindRoundDaoDBImpl implements MastermindRoundDao {
             r.setExactMatches(rs.getInt("exactMatches"));
             r.setPartialMatches(rs.getInt("partialMatches"));
             r.setTimestamp(rs.getTimestamp("timestamp").toLocalDateTime());
+            r.setGameId(rs.getInt("gameId"));
 
             String s = rs.getString("guess");
             List<Character> a = s.chars()

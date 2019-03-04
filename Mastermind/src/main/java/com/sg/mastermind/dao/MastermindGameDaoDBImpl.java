@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Profile("db")
 public class MastermindGameDaoDBImpl implements MastermindGameDao {
+    
     @Autowired
     JdbcTemplate jdbcTemplate;
     

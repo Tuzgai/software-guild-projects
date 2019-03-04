@@ -77,7 +77,7 @@ public class MastermindService {
         return round;
     }
 
-    public List<Game> getAllGamesForDisplay() {
+    public List<Game> getAllGamesForDisplay() throws GameNotFoundException {
         List<Game> gameList = gameDao.getAllGames();
         ArrayList<Character> placeholder = new ArrayList<>();
 
@@ -89,6 +89,11 @@ public class MastermindService {
                 });
 
         gameList.sort(new SortById());
+        
+        if(gameList.isEmpty()) {
+            throw new GameNotFoundException("No games found, please start a game.");
+        }
+        
         return gameList;
     }
 

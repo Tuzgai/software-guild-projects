@@ -44,7 +44,7 @@ public class MastermindController {
     }
 
     @GetMapping("/game")
-    public ResponseEntity<List<Game>> displayGames() {
+    public ResponseEntity<List<Game>> displayGames() throws GameNotFoundException {
         return ResponseEntity.ok(service.getAllGamesForDisplay());
     }
 
@@ -56,5 +56,11 @@ public class MastermindController {
     @GetMapping("/rounds/{gameId}")
     public ResponseEntity<List<Round>> displayRounds(@PathVariable int gameId) throws GameEmptyException {
         return ResponseEntity.ok(service.getRoundsByGameId(gameId));
+    }
+    
+    @GetMapping("/test")
+    public ResponseEntity<List<Character>> displaySampleList() {
+        ArrayList<Character> solution = new ArrayList<>(Arrays.asList('1', '2', '3', '4'));
+        return ResponseEntity.ok(solution);
     }
 }
