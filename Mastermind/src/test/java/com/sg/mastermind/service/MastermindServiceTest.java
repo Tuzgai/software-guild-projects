@@ -1,6 +1,5 @@
-package com.sg.mastermind.dao.service;
+package com.sg.mastermind.service;
 
-import com.sg.mastermind.dao.GameEmptyException;
 import com.sg.mastermind.dao.GameNotFoundException;
 import com.sg.mastermind.service.MastermindService;
 import com.sg.mastermind.entity.Game;
@@ -55,7 +54,7 @@ public class MastermindServiceTest {
      * Test of startNewGame method, of class MastermindService.
      */
     @Test
-    public void testStartNewGame() {
+    public void testStartNewGame() throws GameNotFoundException {
         Game game = instance.startNewGame();
 
         HashSet<Character> hs = new HashSet<>();

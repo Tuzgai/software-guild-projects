@@ -53,7 +53,7 @@ public class MastermindRoundDaoDBImpl implements MastermindRoundDao {
 
         // We need to get id and timestamp out, so let's just grab the whole thing.
         final String sql2
-                = "SELECT id, exactMatches, partialMatches, timestamp, guess "
+                = "SELECT id, exactMatches, partialMatches, timestamp, guess, gameId "
                 + "FROM round "
                 + "WHERE id = ?";
 

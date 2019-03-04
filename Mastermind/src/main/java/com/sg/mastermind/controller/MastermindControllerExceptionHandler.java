@@ -2,7 +2,6 @@ package com.sg.mastermind.controller;
 
 import com.sg.mastermind.dao.GameEmptyException;
 import com.sg.mastermind.dao.GameNotFoundException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
