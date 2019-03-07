@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Weather Page</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <h1>Weather Page</h1>
+        </div>
+        <hr>
+
+        <form>
+            <div class="form-group form-inline justify-content-center" role="form">
+                <label for="zipcode" class="col-form-label" style="font-weight: bold">Zipcode:&emsp;</label>
+                <input type="text" class="form-control" id="zipcode" placeholder="Enter Zipcode">&emsp;
+                <label for="units" class="col-form-label" style="font-weight: bold">Units:&emsp;</label>
+                <select type="text" class="form-control" id="units" placeholder="Enter Zipcode">
+                    <option>Imperial</option>
+                    <option>Metric</option>
+                </select>&emsp;
+                <button type="button" onclick="getWeather()" class="btn btn-primary" id="GetWeather">Get
+                    Weather</button>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="forecast" style="display:none">
+        <hr>
+
+        <h2 class="CurrentConditionsHeader"></h2>
+        <table>
+            <tr>
+                <td class="WeatherType col-md-3">
+
+                </td>
+                <td class="CurrentWeatherStats col-md-3">
+
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <h2>Five Day Forecast</h2>
+        <table class="table">
+            <tr>
+                <td class="text-center">
+                    <table id="day1" class="justify-content-center">
+                        <tr id="date1"></tr>
+                        <tr id="outlook1"></tr>
+                        <tr id="stats1"></tr>
+                    </table>
+                </td>
+                <td class="text-center">
+                    <table id="day2" class="justify-content-center">
+                        <tr id="date2"></tr>
+                        <tr id="outlook2"></tr>
+                        <tr id="stats2"></tr>
+                    </table>
+                </td>
+                <td class="text-center">
+                    <table id="day3" class="justify-content-center">
+                        <tr id="date3"></tr>
+                        <tr id="outlook3"></tr>
+                        <tr id="stats3"></tr>
+                    </table>
+                </td>
+                <td class="text-center">
+                    <table id="day4" class="justify-content-center">
+                        <tr id="date4"></tr>
+                        <tr id="outlook4"></tr>
+                        <tr id="stats4"></tr>
+                    </table>
+                </td>
+                <td class="text-center">
+                    <table id="day5" class="justify-content-center">
+                        <tr id="date5"></tr>
+                        <tr id="outlook5"></tr>
+                        <tr id="stats5"></tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="js/home.js"></script>
+</body>
