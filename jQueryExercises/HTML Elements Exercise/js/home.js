@@ -15,3 +15,47 @@ $(document).ready(function () {
     $(".footer").append("<p id='footerContent'>Stuart Wilson, stu@stu.systems</p>");
     $("#footerContent").css({"font-family": "Courier", "font-size": "24px"});
 });
+
+$('.button1').on('click', function() {
+    $('.red').toggle();
+});
+
+$('.button2').on('click', function() {
+    $('.jumbotron').toggle();
+})
+
+$('.party-zone').hover(
+    function() {
+        $('body').hide();
+    },
+    
+    function() {
+        $('body').show();
+    }
+)
+
+
+$('.row').hover(
+    function() {
+        var tmp = $(".orange").css("background-color");
+        
+        $(".orange").css("background-color", $(".blue").css("background-color"));
+        $(".blue").css("background-color", $(".red").css("background-color"));
+        $(".red").css("background-color", $(".yellow").css("background-color"));
+        $(".yellow").css("background-color", tmp);
+    },
+    
+    function() {
+        
+    }
+)
+
+$('.jumbotron').hover(
+    function(){
+        $('.heather').css('background-color', 'darkblue');  
+        $('.heather').css('color', 'white');
+    },
+    function(){
+    
+    }
+);
