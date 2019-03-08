@@ -102,7 +102,7 @@ function displayFiveDayForecast(weatherList) {
                 'L &nbsp;' + w.main.temp_min + 'C &nbsp;';
         }
 
-        $('#date' + n).html(date.getDay() + '&nbsp;' + months[date.getMonth()]);
+        $('#date' + n).html((date.getDay()+1) + '&nbsp;' + months[date.getMonth()]);
         $('#outlook' + n).append('<img src="http://openweathermap.org/img/w/' + icon + '">');
         $('#outlook' + n).append('&emsp;' + w.weather[0].main + ":&nbsp;" + w.weather[0].description);
         $('#stats' + n).html(stats);
