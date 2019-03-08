@@ -20,31 +20,41 @@
             <hr />
         </header>
         <div class="row">
-            <section class="col-8">Inventory</section>
+            <section class="col-8 row inventory">
+                <!-- Template for item cards -->
+                <div class="col-4 col card" style="display:none">
+                    <p>1</p>
+                    <p class="text-center">Snickers</p>
+                    <p class="text-center">$1.85</p>
+                    <p class="text-center">Quantity Left: 4</p>
+                </div>
+
+            </section>
             <section class="col-3">
-                <section>
+                <form>
                     <h3 class="text-center">Total $ In</h3>
                     <h4 class="text-center border" id="moneyDisplay">$1.15</h4>
                     <div class="row">
                         <div class="col-6">
                             <button type="button" class="btn btn-default btn-block" onclick="addDollar()"
-                                tabindex="1">Add
+                                tabindex="101">Add
                                 Dollar</button>
                             <button type="button" class="btn btn-default btn-block" onclick="addQuarter()"
-                                tabindex="3">Add
+                                tabindex="103">Add
                                 Quarter</button>
                         </div>
                         <div class="col-6">
-                            <button type="button" class="btn btn-default btn-block" onclick="addDime()" tabindex="2">Add
+                            <button type="button" class="btn btn-default btn-block" onclick="addDime()" 
+                                tabindex="102">Add
                                 Dime</button>
                             <button type="button" class="btn btn-default btn-block" onclick="addNickel()"
-                                tabindex="4">Add
+                                tabindex="104">Add
                                 Nickel</button>
                         </div>
                     </div>
-                </section>
+                </form>
                 <hr />
-                <section>
+                <form>
                     <h3 class="text-center">Messages</h3>
                     <h4 class="text-center border" id="messages">Test Message</h4>
                     <div class="col-12 row">
@@ -53,22 +63,20 @@
                     </div>
                     <button type="button" class="btn btn-default btn-block" onclick="makePurchase()">Make
                         Purchase</button>
-                </section>
+                </form>
                 <hr />
-                <section class="d-flex flex-column align-items-center">
+                <form class="d-flex flex-column align-items-center">
                     <h3>Change</h3>
                     <h4 class="text-center border col-6" id="change">$1.05</h4>
                     <button type="button" class="btn btn-default btn-block col-6" onclick="coinReturn()">Coin
                         Return</button>
-                </section>
+                </form>
             </section>
         </div>
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
