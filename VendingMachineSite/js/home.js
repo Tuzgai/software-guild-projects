@@ -108,19 +108,23 @@ function coinReturn() {
 
     var out = '';
     if (q == 1) {
-        out += '1 Quarter';
+        out += '1 Quarter<br id="trailingQuarterBr" />';
     } else if (q > 0) {
-        out += q + ' Quarters ';
+        out += q + ' Quarters<br id="trailingQuarterBr" />';
     }
 
-    if (d == 1) {
-        out += ' <br />1 Dime';
+    if(d == 0) {
+        $('#trailingQuarterBr').remove();
+    } else if (d == 1) {
+        out += '1 Dime<br id="trailingDimeBr" />';
     } else if (d > 0) {
-        out += d + ' <br />Dimes ';
+        out += d + 'Dimes<br id="trailingDimeBr" />';
     }
 
-    if (n == 1) {
-        out += ' <br />1 Nickel ';
+    if(n == 0) {
+        $('#trailingDimeBr').remove();
+    } else if (n == 1) {
+        out += '1 Nickel';
     }
 
     if (out == '') {
