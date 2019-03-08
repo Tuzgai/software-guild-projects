@@ -23,6 +23,8 @@ function displayItems(itemArray) {
         },
         error: function () {
             $('#messages').text('Inventory failed to load.');
+            resetMessagesStatus();
+            $('#messages').addClass('danger');
         }
     });
 }
@@ -32,6 +34,8 @@ function makePurchase() {
 
     if (selectedItem.length == 0) {
         $('#messages').text('Select an item first.');
+        resetMessagesStatus();
+        $('#messages').addClass('warning');
     }
     var id = selectedItem.find('.id').text();
     var amount = $('#money').text().substr(1);
@@ -41,16 +45,25 @@ function makePurchase() {
         url: "http://localhost:8080/money/" + amount + '/item/' + id,
         success: function (change) {
             $('#messages').text('THANK YOU!!!');
+            resetMessagesStatus();
+            $('#messages').addClass('success');
             var total = change.quarters * 0.25 +
                 change.dimes * 0.10 +
                 change.nickels * 0.05;
             var out = '$' + total.toFixed(2);
             $('#money').text(out);
         },
+        error: function() {
+            $('#messages').text('Server error');
+            resetMessagesStatus();
+            $('#messages').addClass('danger');
+        },
         statusCode: {
             422: function (error) {
                 var message = JSON.parse(error.responseText).message;
                 $('#messages').text(message);
+                resetMessagesStatus();
+                $('#messages').addClass('warning');
             }
         }
     });
@@ -60,6 +73,7 @@ function makePurchase() {
 
 function selectItem(id) {
     var button = $('#itemButton' + id);
+    // Clear old selections, then add the new one
     $('.selected').removeClass('selected');
     button.addClass('selected');
     $('.itemDisplay').text(button.find('.id').text());
@@ -71,6 +85,7 @@ function addChange(n) {
     total = parseFloat(total.substr(1)) + n;
 
     $('#money').text('$' + total.toFixed(2));
+    $('#change').html('&emsp;');
 }
 
 function coinReturn() {
@@ -113,4 +128,12 @@ function coinReturn() {
     }
     $('#change').html(out);
     $('#money').text('$0.00');
+    $('#messages').html('&emsp;');
+    resetMessagesStatus()
+}
+
+function resetMessagesStatus() {
+    $('#messages').removeClass('failure');
+    $('#messages').removeClass('warning');
+    $('#messages').removeClass('success');
 }
