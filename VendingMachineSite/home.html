@@ -33,21 +33,21 @@
             <section class="col-3">
                 <form>
                     <h3 class="text-center">Total $ In</h3>
-                    <h4 class="text-center border" id="moneyDisplay">$1.15</h4>
+                    <h4 class="text-center border" id="money">$0.00</h4>
                     <div class="row">
                         <div class="col-6">
-                            <button type="button" class="btn btn-default btn-block" onclick="addDollar()"
+                            <button type="button" class="btn btn-default btn-block" onclick="addChange(1)"
                                 tabindex="101">Add
                                 Dollar</button>
-                            <button type="button" class="btn btn-default btn-block" onclick="addQuarter()"
+                            <button type="button" class="btn btn-default btn-block" onclick="addChange(.25)"
                                 tabindex="103">Add
                                 Quarter</button>
                         </div>
                         <div class="col-6">
-                            <button type="button" class="btn btn-default btn-block" onclick="addDime()" 
+                            <button type="button" class="btn btn-default btn-block" onclick="addChange(.10)" 
                                 tabindex="102">Add
                                 Dime</button>
-                            <button type="button" class="btn btn-default btn-block" onclick="addNickel()"
+                            <button type="button" class="btn btn-default btn-block" onclick="addChange(.05)"
                                 tabindex="104">Add
                                 Nickel</button>
                         </div>
@@ -56,10 +56,10 @@
                 <hr />
                 <form>
                     <h3 class="text-center">Messages</h3>
-                    <h4 class="text-center border" id="messages">Test Message</h4>
+                    <h4 class="text-center border" id="messages">&emsp;</h4>
                     <div class="col-12 row">
                         <h3 class="col-4">Item</h3>
-                        <h4 class="border itemDisplay col-8">Test Item</h4>
+                        <h4 class="border itemDisplay text-center col-8"></h4>
                     </div>
                     <button type="button" class="btn btn-default btn-block" onclick="makePurchase()">Make
                         Purchase</button>
@@ -67,7 +67,7 @@
                 <hr />
                 <form class="d-flex flex-column align-items-center">
                     <h3>Change</h3>
-                    <h4 class="text-center border col-6" id="change">$1.05</h4>
+                    <p class="text-center border col-6" id="change">&emsp;</p>
                     <button type="button" class="btn btn-default btn-block col-6" onclick="coinReturn()">Coin
                         Return</button>
                 </form>
