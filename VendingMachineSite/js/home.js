@@ -2,22 +2,34 @@ $(document).ready(function () {
     displayItems();
 });
 
-function displayItems(itemArray) {
+function displayItems(id=-1) {
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/items",
         success: function (itemArray) {
             $('.inventory').empty();
             $.each(itemArray, function (index, item) {
+                if(parseInt(item.id) == id) {
                 var preparedHtml =
-                    '<button class="col-4 col card" id="itemButton' + item.id + '" ' +
+                    '<button class="col-sm-3 m-2 selected"' + // add selected
+                    'id="itemButton' + item.id + '" ' +
                     'onclick = selectItem(' + item.id + ')>' +
                     '<p class="text-left id">' + item.id + '</p>' +
                     '<p class="text-center name">' + item.name + '</p>' +
                     '<p class="text-center"> $' + item.price.toFixed(2) + '</p>' +
                     '<p class="text-center"> Quantity left: ' + item.quantity + '</p>' +
                     '</button>';
-
+                } else {
+                    var preparedHtml =
+                    '<button class="col-sm-3 m-2"' +
+                    'id="itemButton' + item.id + '" ' +
+                    'onclick = selectItem(' + item.id + ')>' +
+                    '<p class="text-left id">' + item.id + '</p>' +
+                    '<p class="text-center name">' + item.name + '</p>' +
+                    '<p class="text-center"> $' + item.price.toFixed(2) + '</p>' +
+                    '<p class="text-center"> Quantity left: ' + item.quantity + '</p>' +
+                    '</button>';
+                }
                 $('.inventory').append(preparedHtml);
             });
         },
@@ -37,12 +49,14 @@ function makePurchase() {
         resetMessagesStatus();
         $('#messages').addClass('warning');
     }
-    var id = selectedItem.find('.id').text();
+    var id = selectedItem.find('.id').text().toString();
     var amount = $('#money').text().substr(1);
 
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/money/" + amount + '/item/' + id,
+        data: "",
+        url: "http://localhost:8080/money/" + amount + "/item/" + id,
+        contentType: "application/json;charset=UTF-8",
         success: function (change) {
             $('#messages').text('THANK YOU!!!');
             resetMessagesStatus();
@@ -53,22 +67,23 @@ function makePurchase() {
             var out = '$' + total.toFixed(2);
             $('#money').text(out);
         },
-        error: function() {
-            $('#messages').text('Server error');
-            resetMessagesStatus();
-            $('#messages').addClass('danger');
-        },
         statusCode: {
             422: function (error) {
                 var message = JSON.parse(error.responseText).message;
                 $('#messages').text(message);
                 resetMessagesStatus();
                 $('#messages').addClass('warning');
+            },
+            500: function(error) {
+                var message = "Server error";
+                $('#messages').text(message);
+                resetMessagesStatus();
+                $('#messages').addClass('warning')
             }
         }
     });
 
-    displayItems();
+    displayItems(id);
 }
 
 function selectItem(id) {
@@ -77,7 +92,6 @@ function selectItem(id) {
     $('.selected').removeClass('selected');
     button.addClass('selected');
     $('.itemDisplay').text(button.find('.id').text());
-    console.log(id);
 }
 
 function addChange(n) {
@@ -137,7 +151,7 @@ function coinReturn() {
 }
 
 function resetMessagesStatus() {
-    $('#messages').removeClass('failure');
+    $('#messages').removeClass('danger');
     $('#messages').removeClass('warning');
     $('#messages').removeClass('success');
 }
