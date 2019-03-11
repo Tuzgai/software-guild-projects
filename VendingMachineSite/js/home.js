@@ -9,8 +9,9 @@ function displayItems(id=-1) {
         success: function (itemArray) {
             $('.inventory').empty();
             $.each(itemArray, function (index, item) {
+                var preparedHtml;
                 if(parseInt(item.id) == id) {
-                var preparedHtml =
+                preparedHtml =
                     '<button class="col-sm-3 m-2 selected"' + // add selected
                     'id="itemButton' + item.id + '" ' +
                     'onclick = selectItem(' + item.id + ')>' +
@@ -20,7 +21,7 @@ function displayItems(id=-1) {
                     '<p class="text-center"> Quantity left: ' + item.quantity + '</p>' +
                     '</button>';
                 } else {
-                    var preparedHtml =
+                    preparedHtml =
                     '<button class="col-sm-3 m-2"' +
                     'id="itemButton' + item.id + '" ' +
                     'onclick = selectItem(' + item.id + ')>' +
@@ -66,6 +67,7 @@ function makePurchase() {
                 change.nickels * 0.05;
             var out = '$' + total.toFixed(2);
             $('#money').text(out);
+            displayItems(id);
         },
         statusCode: {
             422: function (error) {
@@ -82,8 +84,6 @@ function makePurchase() {
             }
         }
     });
-
-    displayItems(id);
 }
 
 function selectItem(id) {
@@ -120,6 +120,8 @@ function coinReturn() {
         n = 1;
     }
 
+    // Refactor to put these into a ul? Then we wouldn't
+    // need so much logic around brs.
     var out = '';
     if (q == 1) {
         out += '1 Quarter<br id="trailingQuarterBr" />';
