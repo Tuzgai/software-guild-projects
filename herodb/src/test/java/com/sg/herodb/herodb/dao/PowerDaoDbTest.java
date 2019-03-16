@@ -5,6 +5,7 @@ import com.sg.herodb.herodb.entity.Organization;
 import com.sg.herodb.herodb.entity.Power;
 import com.sg.herodb.herodb.entity.Sighting;
 import com.sg.herodb.herodb.entity.Superhero;
+import java.math.BigDecimal;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -55,24 +56,119 @@ public class PowerDaoDbTest {
         // Clear out all daos before any tests
         List<Address> addresses = addressDao.getAllAddresses();
         addresses.forEach(a -> addressDao.deleteAddress(a.getId()));
-        
+
         List<Organization> orgs = organizationDao.getAllOrganizations();
         orgs.forEach(o -> organizationDao.deleteOrganization(o.getId()));
-        
+
         List<Power> powers = powerDao.getAllPowers();
         powers.forEach(p -> powerDao.deletePower(p.getId()));
-        
+
         List<Sighting> sightings = sightingDao.getAllSightings();
-        powers.forEach(s -> sightingDao.deleteSighting(s.getId()));
-        
+        sightings.forEach(s -> sightingDao.deleteSighting(s.getId()));
+
         List<Superhero> heroes = superheroDao.getAllSuperheroes();
         heroes.forEach(h -> superheroDao.deleteSuperhero(h.getId()));
+
+        // Add back the two dummy 'unknown' items after DB reset
+        if (addressDao.getAddressById(1) == null) {
+            Address address = new Address();
+            address.setCountry("Country Unknown");
+            address.setDescription("No Description");
+            address.setLatitude(new BigDecimal("1.000000"));
+            address.setLongitude(new BigDecimal("1.000000"));
+            address.setName("Name Unknown");
+            address.setPostalCode("ZipUnknown");
+            address.setStreetAddress("Street Address Unknown");
+            address.setTerritory("Territory Unknown");
+            addressDao.createAddress(address);
+        }
+
+        if (powerDao.getPowerById(1) == null) {
+            Power power = new Power();
+            power.setDescription("No description");
+            power.setName("Power unknown");
+            powerDao.createPower(power);
+        }
     }
     
     @After
     public void tearDown() {
     }
 
+    @Test
+    public void testAddAndGetPower() {
+        Power power = new Power();
+        power.setDescription("Test power description");
+        power.setName("Test power");
+        power = powerDao.createPower(power);
+        
+        Power fromDao = powerDao.getPowerById(power.getId());
+        
+        assertEquals(power, fromDao);
+    }
     
+    @Test
+    public void testGetAllPowers() {
+        Power power = new Power();
+        power.setDescription("Test power description");
+        power.setName("Test power");
+        power = powerDao.createPower(power);
+
+        Power power2 = new Power();
+        power2.setDescription("Test power description 2");
+        power2.setName("Test power 2");
+        power2 = powerDao.createPower(power2);
+        
+        List<Power> powers = powerDao.getAllPowers();
+        // Don't forget the dummy power
+        assertEquals(3, powers.size());
+        assertTrue(powers.contains(power));
+        assertTrue(powers.contains(power2));
+    }
     
+    @Test
+    public void testUpdatePower() {
+        Power power = new Power();
+        power.setDescription("Test power description");
+        power.setName("Test power");
+        power = powerDao.createPower(power);
+        
+        Power fromDao = powerDao.getPowerById(power.getId());
+        
+        assertEquals(power, fromDao);
+        
+        power.setName("Test updated name");
+        powerDao.updatePower(power);
+        
+        assertNotEquals(power, fromDao);
+        
+        fromDao = powerDao.getPowerById(power.getId());
+        
+        assertEquals(power, fromDao);
+    }
+    
+    @Test
+    public void testDeletePower() {
+        Power power = new Power();
+        power.setDescription("Test power description");
+        power.setName("Test power");
+        power = powerDao.createPower(power);
+
+        Superhero hero = new Superhero();
+        hero.setDescription("Test hero description 1");
+        hero.setIsVillain(true);
+        hero.setName("Test hero 1");
+        hero.setPower(power);
+        hero = superheroDao.createSuperhero(hero);
+        
+        Power fromDao = powerDao.getPowerById(power.getId());
+        assertEquals(power, fromDao);
+        
+        powerDao.deletePower(power.getId());
+        fromDao = powerDao.getPowerById(power.getId());
+        assertNull(fromDao);
+        
+        hero = superheroDao.getSupeheroById(hero.getId());
+        assertEquals("Power unknown", hero.getPower().getName());
+    }
 }

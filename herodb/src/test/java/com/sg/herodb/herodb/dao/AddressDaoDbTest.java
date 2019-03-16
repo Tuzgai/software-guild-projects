@@ -216,12 +216,12 @@ public class AddressDaoDbTest {
         heroes.add(hero);
         heroes.add(hero2);
 
-        Organization org = new Organization();
-        org.setDescription("Test org description");
-        org.setName("Test org");
-        org.setAddress(address);
-        org.setHeroes(heroes);
-        org = organizationDao.createOrganization(org);
+        Organization organization = new Organization();
+        organization.setDescription("Test org description");
+        organization.setName("Test org");
+        organization.setAddress(address);
+        organization.setHeroes(heroes);
+        organization = organizationDao.createOrganization(organization);
 
         Sighting sighting = new Sighting();
         sighting.setAddress(address);
@@ -237,10 +237,10 @@ public class AddressDaoDbTest {
         assertNull(fromDao);
 
         sighting = sightingDao.getSightingById(sighting.getId());
-        org = organizationDao.getOrganizationById(org.getId());
+        organization = organizationDao.getOrganizationById(organization.getId());
 
-        assertEquals(sighting.getAddress().getName(), "Name Unknown");
-        assertEquals(org.getAddress().getName(), "Name Unknown");
+        assertEquals("Name Unknown", sighting.getAddress().getName());
+        assertEquals("Name Unknown", organization.getAddress().getName());
     }
 
 }
