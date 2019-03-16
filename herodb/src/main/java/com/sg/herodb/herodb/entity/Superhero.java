@@ -11,7 +11,7 @@ public class Superhero {
     String name;
     String description;
     boolean isVillain;
-    Organization organization;
+    Power power;
 
     public int getId() {
         return id;
@@ -37,7 +37,7 @@ public class Superhero {
         this.description = description;
     }
 
-    public boolean isIsVillain() {
+    public boolean isVillain() {
         return isVillain;
     }
 
@@ -45,22 +45,22 @@ public class Superhero {
         this.isVillain = isVillain;
     }
 
-    public Organization getOrganization() {
-        return organization;
+    public Power getPower() {
+        return power;
     }
 
-    public void setOrganization(Organization organization) {
-        this.organization = organization;
+    public void setPower(Power power) {
+        this.power = power;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
+        int hash = 3;
         hash = 23 * hash + this.id;
         hash = 23 * hash + Objects.hashCode(this.name);
         hash = 23 * hash + Objects.hashCode(this.description);
         hash = 23 * hash + (this.isVillain ? 1 : 0);
-        hash = 23 * hash + Objects.hashCode(this.organization);
+        hash = 23 * hash + Objects.hashCode(this.power);
         return hash;
     }
 
@@ -88,12 +88,12 @@ public class Superhero {
         if (!Objects.equals(this.description, other.description)) {
             return false;
         }
-        if (!Objects.equals(this.organization, other.organization)) {
+        if (!Objects.equals(this.power, other.power)) {
             return false;
         }
         return true;
     }
-    
-    
-    
+
+
+   
 }

@@ -1,26 +1,15 @@
 package com.sg.herodb.herodb.entity;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
  *
  * @author Stuart
  */
-public class Organization {
-    int id;
+public class Power {
     String name;
     String description;
-    Address address;
-    List<Superhero> heroes;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    int id;
 
     public String getName() {
         return name;
@@ -38,30 +27,20 @@ public class Organization {
         this.description = description;
     }
 
-    public Address getAddress() {
-        return address;
+    public int getId() {
+        return id;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public List<Superhero> getHeroes() {
-        return heroes;
-    }
-
-    public void setHeroes(List<Superhero> heroes) {
-        this.heroes = heroes;
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + this.id;
-        hash = 59 * hash + Objects.hashCode(this.name);
-        hash = 59 * hash + Objects.hashCode(this.description);
-        hash = 59 * hash + Objects.hashCode(this.address);
-        hash = 59 * hash + Objects.hashCode(this.heroes);
+        int hash = 3;
+        hash = 89 * hash + Objects.hashCode(this.name);
+        hash = 89 * hash + Objects.hashCode(this.description);
+        hash = 89 * hash + this.id;
         return hash;
     }
 
@@ -76,7 +55,7 @@ public class Organization {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Organization other = (Organization) obj;
+        final Power other = (Power) obj;
         if (this.id != other.id) {
             return false;
         }
@@ -86,16 +65,8 @@ public class Organization {
         if (!Objects.equals(this.description, other.description)) {
             return false;
         }
-        if (!Objects.equals(this.address, other.address)) {
-            return false;
-        }
-        if (!Objects.equals(this.heroes, other.heroes)) {
-            return false;
-        }
         return true;
     }
-
-    
     
     
 }

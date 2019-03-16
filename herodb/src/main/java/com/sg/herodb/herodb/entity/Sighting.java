@@ -12,7 +12,7 @@ public class Sighting {
     int id;
     LocalDate date;
     Address address;
-    List<Superhero> superList;
+    List<Superhero> heroes;
 
     public int getId() {
         return id;
@@ -38,12 +38,12 @@ public class Sighting {
         this.address = address;
     }
 
-    public List<Superhero> getSuperList() {
-        return superList;
+    public List<Superhero> getHeroes() {
+        return heroes;
     }
 
-    public void setSuperList(List<Superhero> superList) {
-        this.superList = superList;
+    public void setHeroes(List<Superhero> superList) {
+        this.heroes = superList;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class Sighting {
         hash = 53 * hash + this.id;
         hash = 53 * hash + Objects.hashCode(this.date);
         hash = 53 * hash + Objects.hashCode(this.address);
-        hash = 53 * hash + Objects.hashCode(this.superList);
+        hash = 53 * hash + Objects.hashCode(this.heroes);
         return hash;
     }
 
@@ -77,7 +77,7 @@ public class Sighting {
         if (!Objects.equals(this.address, other.address)) {
             return false;
         }
-        if (!Objects.equals(this.superList, other.superList)) {
+        if (!Objects.equals(this.heroes, other.heroes)) {
             return false;
         }
         return true;

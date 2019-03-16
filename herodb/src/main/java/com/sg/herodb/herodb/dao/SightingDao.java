@@ -13,7 +13,7 @@ public interface SightingDao {
     List<Sighting> getAllSightings();
     Sighting createSighting(Sighting sighting);
     void updateSighting(Sighting sighting);
-    void deleteSighting(Sighting sighting);
+    void deleteSighting(int id);
     
     List<Sighting> getSightingsByDate(LocalDate date);
 }

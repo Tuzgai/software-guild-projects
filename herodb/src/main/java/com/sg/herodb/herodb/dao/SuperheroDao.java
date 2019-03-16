@@ -8,12 +8,11 @@ import java.util.List;
  * @author Stuart
  */
 public interface SuperheroDao {
-    Superhero getSupeherorById(int id);
+    Superhero getSupeheroById(int id);
     List<Superhero> getAllSuperheroes();
     Superhero createSuperhero(Superhero superhero);
     void updateSuperhero(Superhero superhero);
     void deleteSuperhero(Superhero superhero);
     
     List<Superhero> getSuperheroesByAddressId(int addressId);
-    List<Superhero> getSuperheroesByOrganizationId(int organizationId);
 }

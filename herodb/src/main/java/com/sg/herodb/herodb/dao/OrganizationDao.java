@@ -12,7 +12,7 @@ public interface OrganizationDao {
     List<Organization> getAllOrganizations();
     Organization createOrganization(Organization organization);
     void updateOrganization(Organization organization);
-    void deleteOrganization(Organization organization);
+    void deleteOrganization(int id);
     
     List<Organization> getOrganizationsByHeroId(int id);
 }
