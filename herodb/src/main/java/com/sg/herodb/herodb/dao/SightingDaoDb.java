@@ -29,7 +29,7 @@ public class SightingDaoDb implements SightingDao {
 
     @Override
     public Sighting getSightingById(int id) {
-        final String sql = "SELECT * FROM organization WHERE id = ?";
+        final String sql = "SELECT * FROM sighting WHERE id = ?";
 
         Sighting sighting;
         try {
@@ -44,8 +44,9 @@ public class SightingDaoDb implements SightingDao {
 
     private Address getAddressForSighting(int id) {
         final String sql
-                = "SELECT a* FROM address a "
-                + "JOIN sighting s ON a.id = s.addressid";
+                = "SELECT a.* FROM address a "
+                + "JOIN sighting s ON a.id = s.addressid "
+                + "WHERE s.id = ?";
 
         Address address;
         try {
@@ -58,9 +59,9 @@ public class SightingDaoDb implements SightingDao {
 
     private List<Superhero> getHeroesForSighting(int id) {
         final String sql
-                = "SELECT s* FROM `super` "
-                + "JOIN super_sighting so ON so.superid = s.id "
-                + "JOIN sighting si ON so.sightingid = si.id "
+                = "SELECT s.* FROM `super` s "
+                + "JOIN super_sighting ss ON ss.superid = s.id "
+                + "JOIN sighting si ON ss.sightingid = si.id "
                 + "WHERE si.id = ?";
 
         List<Superhero> heroes = jdbc.query(sql, new SuperheroDaoDb.SuperheroMapper(), id);
@@ -71,7 +72,7 @@ public class SightingDaoDb implements SightingDao {
     protected void getPower(Superhero hero) {
         final String sql
                 = "SELECT p.* FROM power p "
-                + "JOIN `super` s ON s.powerid = p.id"
+                + "JOIN `super` s ON s.powerid = p.id "
                 + "WHERE s.id = ?";
 
         Power power = jdbc.queryForObject(sql, new PowerDaoDb.PowerMapper(), hero.getId());
@@ -84,7 +85,7 @@ public class SightingDaoDb implements SightingDao {
 
     @Override
     public List<Sighting> getAllSightings() {
-        final String sql = "SELECT * FROM SIGHTINGS";
+        final String sql = "SELECT * FROM sighting";
 
         List<Sighting> sightings = jdbc.query(sql, new SightingMapper());
         associateHeroesAndAddresses(sightings);

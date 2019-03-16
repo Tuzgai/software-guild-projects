@@ -95,14 +95,15 @@ public class AddressDaoDb implements AddressDao {
 
     @Override
     @Transactional
-    public void deleteAddress(Address address) {
+    public void deleteAddress(int id) {
+        if(id == 1) return; // don't delete the dummy
+        
         final String UPDATE_ORGANIZATION = "UPDATE organization SET addressid = ? WHERE addressid = ?";
         final String UPDATE_SIGHTING = "UPDATE sighting SET addressid = ? WHERE addressid = ?";
-        final String DELETE_ADDRESS = "DELETE * FROM address WHERE id = ?";
+        final String DELETE_ADDRESS = "DELETE FROM address WHERE id = ?";
         
         // Update orgs and sightings to placeholder 'location unknown' address
         // This address is established during DB initialization 
-        int id = address.getId();
         jdbc.update(UPDATE_ORGANIZATION, 1, id);
         
         jdbc.update(UPDATE_SIGHTING, 1, id);
@@ -128,6 +129,7 @@ public class AddressDaoDb implements AddressDao {
         @Override
         public Address mapRow(ResultSet rs, int index) throws SQLException {
             Address a = new Address();
+            a.setName(rs.getString("name"));
             a.setCountry(rs.getString("country"));
             a.setDescription(rs.getString("description"));
             a.setId(rs.getInt("id"));

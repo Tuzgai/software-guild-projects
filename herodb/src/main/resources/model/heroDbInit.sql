@@ -6,10 +6,17 @@ CREATE TABLE `super` (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	`name` VARCHAR(30) NOT NULL,
     `description` VARCHAR(140) NOT NULL,
-    isvillain BOOLEAN NOT NULL DEFAULT FALSE
+    isvillain BOOLEAN NOT NULL DEFAULT FALSE,
+    powerid INT NOT NULL
 );
 
-CREATE TABLE superorganization (
+CREATE TABLE `power` (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    `name` VARCHAR(30) NOT NULL,
+    `description` VARCHAR(14)
+);
+
+CREATE TABLE super_organization (
 	superId INT NOT NULL,
     organizationid INT NOT NULL
 );
@@ -21,7 +28,7 @@ CREATE TABLE `organization` (
     addressid INT NOT NULL
 ); 
 
-CREATE TABLE ADDRESS (
+CREATE TABLE address (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     `name` VARCHAR(30) NOT NULL,
     `description` VARCHAR(140),
@@ -36,15 +43,15 @@ CREATE TABLE ADDRESS (
 CREATE TABLE sighting (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     addressid INT NOT NULL,
-    `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    `date` DATE NOT NULL
 );
 
-CREATE TABLE supersighting (
+CREATE TABLE super_sighting (
 	superid INT,
     sightingid INT
 );
 
-ALTER TABLE superorganization
+ALTER TABLE super_organization
     ADD CONSTRAINT fk_superorganization_super
         FOREIGN KEY (superid)
         REFERENCES `super` (id),
@@ -62,10 +69,15 @@ ALTER TABLE sighting
 		FOREIGN KEY (addressid)
 		REFERENCES address (id);
         
-ALTER TABLE supersighting
+ALTER TABLE super_sighting
 	ADD CONSTRAINT fk_supersighting_super
 		FOREIGN KEY (superid)
         REFERENCES `super` (id),
 	ADD CONSTRAINT fk_supersighting_sighting
 		FOREIGN KEY (sightingid)
 		REFERENCES sighting (id);
+        
+ALTER TABLE `super`
+	ADD CONSTRAINT fk_super_power
+		FOREIGN KEY (powerid)
+        REFERENCES power (id);

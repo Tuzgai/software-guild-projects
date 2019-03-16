@@ -4,6 +4,7 @@ import com.sg.herodb.herodb.entity.Power;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 public class PowerDaoDb implements PowerDao {
-
+    @Autowired
     JdbcTemplate jdbc;
 
     @Override
@@ -38,7 +39,8 @@ public class PowerDaoDb implements PowerDao {
     public List<Power> getAllPowers() {
         final String sql = "SELECT * from `power`";
         
-        return jdbc.query(sql, new PowerMapper());
+        List<Power> powers = jdbc.query(sql, new PowerMapper());
+        return powers;
     }
 
     @Override
@@ -63,6 +65,8 @@ public class PowerDaoDb implements PowerDao {
     @Override
     @Transactional
     public void deletePower(int id) {
+        if(id == 1) return; // don't delete the dummy
+        
         final String UPDATE_HEROES = "UPDATE `super` SET powerid = 1 WHERE powerid = ?";
         final String DELETE_POWER = "DELETE FROM `power` WHERE id = ?";
         

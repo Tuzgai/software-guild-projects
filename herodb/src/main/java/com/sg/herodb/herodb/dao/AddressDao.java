@@ -12,7 +12,7 @@ public interface AddressDao {
     List<Address> getAllAddresses();
     Address createAddress(Address address);
     void updateAddress(Address address);
-    void deleteAddress(Address address);
+    void deleteAddress(int id);
     
     List<Address> getAddressByHeroId(int id);
 }

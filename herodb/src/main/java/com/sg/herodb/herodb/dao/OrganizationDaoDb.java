@@ -54,9 +54,9 @@ public class OrganizationDaoDb implements OrganizationDao {
     
     private List<Superhero> getHeroesForOrganization(int id) {
         final String sql = 
-                "SELECT s* FROM `super` " +
+                "SELECT s.* FROM `super` s " +
                 "JOIN super_organization so ON so.superid = s.id " +
-                "JOIN organization o ON o.id = so.organizationid" +
+                "JOIN organization o ON o.id = so.organizationid " +
                 "WHERE o.id = ?";
         
         List<Superhero> heroes = jdbc.query(sql, new SuperheroMapper(), id);
@@ -137,7 +137,7 @@ public class OrganizationDaoDb implements OrganizationDao {
     @Transactional
     public void deleteOrganization(int id) {
         final String DELETE_SUPER_ORGANIZATION = "DELETE FROM super_organization WHERE organizationid = ?";
-        final String DELETE_ORGANIZATION = "DELETE FROM organizationd WHERE id = ?";
+        final String DELETE_ORGANIZATION = "DELETE FROM organization WHERE id = ?";
         
         jdbc.update(DELETE_SUPER_ORGANIZATION, id);
         jdbc.update(DELETE_ORGANIZATION, id);

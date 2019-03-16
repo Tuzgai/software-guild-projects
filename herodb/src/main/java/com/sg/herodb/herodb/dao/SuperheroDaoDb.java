@@ -41,7 +41,7 @@ public class SuperheroDaoDb implements SuperheroDao {
     protected void getPower(Superhero hero) {
         final String sql = 
                 "SELECT p.* FROM power p " +
-                "JOIN `super` s ON s.powerid = p.id" +
+                "JOIN `super` s ON s.powerid = p.id " +
                 "WHERE s.id = ?";
         
         Power power = jdbc.queryForObject(sql, new PowerMapper(), hero.getId());
@@ -66,7 +66,7 @@ public class SuperheroDaoDb implements SuperheroDao {
     @Override
     @Transactional
     public Superhero createSuperhero(Superhero hero) {
-        final String sql = "INSERT INTO `super`(`name`, `descripton`, powerid, isVillain) VALUES(?,?,?,?)";
+        final String sql = "INSERT INTO `super`(`name`, `description`, powerid, isvillain) VALUES(?,?,?,?)";
         
         jdbc.update(sql,
                 hero.getName(),
@@ -96,14 +96,14 @@ public class SuperheroDaoDb implements SuperheroDao {
 
     @Override
     @Transactional
-    public void deleteSuperhero(Superhero hero) {
+    public void deleteSuperhero(int id) {
         final String DELETE_SUPER_SIGHTING = "DELETE FROM super_sighting WHERE superid = ?";
         final String DELETE_SUPER_ORGANIZATION = "DELETE FROM super_organization WHERE superid = ?";
         final String DELETE_HERO = "DELETE FROM `super` WHERE id = ?";
         
-        jdbc.update(DELETE_SUPER_SIGHTING, hero.getId());
-        jdbc.update(DELETE_SUPER_ORGANIZATION, hero.getId());
-        jdbc.update(DELETE_HERO, hero.getId());
+        jdbc.update(DELETE_SUPER_SIGHTING,id);
+        jdbc.update(DELETE_SUPER_ORGANIZATION, id);
+        jdbc.update(DELETE_HERO, id);
     }
 
     @Override

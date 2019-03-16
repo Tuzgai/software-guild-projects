@@ -12,7 +12,7 @@ public interface SuperheroDao {
     List<Superhero> getAllSuperheroes();
     Superhero createSuperhero(Superhero superhero);
     void updateSuperhero(Superhero superhero);
-    void deleteSuperhero(Superhero superhero);
+    void deleteSuperhero(int id);
     
     List<Superhero> getSuperheroesByAddressId(int addressId);
 }
