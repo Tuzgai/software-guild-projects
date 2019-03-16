@@ -67,7 +67,7 @@ public class OrganizationDaoDb implements OrganizationDao {
     protected void getPower(Superhero hero) {
         final String sql = 
                 "SELECT p.* FROM power p " +
-                "JOIN `super` s ON s.powerid = p.id" +
+                "JOIN `super` s ON s.powerid = p.id " +
                 "WHERE s.id = ?";
         
         Power power = jdbc.queryForObject(sql, new PowerMapper(), hero.getId());
@@ -97,15 +97,23 @@ public class OrganizationDaoDb implements OrganizationDao {
     @Override
     @Transactional
     public Organization createOrganization(Organization organization) {
-        final String sql = "INSERT INTO organization(`name`, `description`, addressid) VALUES (?,?,?)";
+        final String INSERT_ORG = 
+                "INSERT INTO organization(`name`, `description`, addressid) VALUES (?,?,?)";
+        final String INSERT_SUPER_ORG = 
+                "INSERT INTO super_organization(superid, organizationid) VALUES (?,?)";
         
-        jdbc.update(sql,
+        jdbc.update(INSERT_ORG,
                 organization.getName(),
                 organization.getDescription(),
                 organization.getAddress().getId());
         
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         organization.setId(newId);
+        
+        organization.getHeroes().forEach((hero) -> 
+            jdbc.update(INSERT_SUPER_ORG,
+                    hero.getId(),
+                    organization.getId()));
         
         return organization;
     }

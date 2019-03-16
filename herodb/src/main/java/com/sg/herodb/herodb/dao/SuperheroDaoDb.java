@@ -84,14 +84,15 @@ public class SuperheroDaoDb implements SuperheroDao {
     public void updateSuperhero(Superhero hero) {
         final String sql = 
                 "UPDATE `super` " +
-                "SET `name` = ?, `description` = ?, isVillain = ?, powerid = ? " + 
+                "SET `name` = ?, `description` = ?, isvillain = ?, powerid = ? " + 
                 "WHERE id = ?";
         
         jdbc.update(sql,
                 hero.getName(),
                 hero.getDescription(),
                 hero.isVillain(),
-                hero.getPower().getId());
+                hero.getPower().getId(),
+                hero.getId());
     }
 
     @Override
