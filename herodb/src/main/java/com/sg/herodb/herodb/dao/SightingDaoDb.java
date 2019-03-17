@@ -108,7 +108,7 @@ public class SightingDaoDb implements SightingDao {
                 = "INSERT INTO super_sighting(superid, sightingid) VALUES(?,?)";
 
         jdbc.update(INSERT_SIGHTING,
-                Date.valueOf(sighting.getDate()),
+                sighting.getDate(),
                 sighting.getAddress().getId());
 
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
