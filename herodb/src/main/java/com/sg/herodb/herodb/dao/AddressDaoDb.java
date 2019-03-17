@@ -115,9 +115,9 @@ public class AddressDaoDb implements AddressDao {
     public List<Address> getAddressByHeroId(int id) {
         final String sql = 
                 "SELECT a.* FROM address a " +
-                "JOIN sighting s ON a.id = s.addressid" +
-                "JOIN supersighting ss ON s.id = ss.sightingid" +
-                "JOIN `super` su ON ss.superid = su.id" +
+                "JOIN sighting s ON a.id = s.addressid " +
+                "JOIN super_sighting ss ON s.id = ss.sightingid " +
+                "JOIN `super` su ON ss.superid = su.id " +
                 "WHERE su.id = ?";
         
         return jdbc.query(sql, new AddressMapper(), id);

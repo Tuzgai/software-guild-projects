@@ -156,7 +156,7 @@ public class SightingDaoDb implements SightingDao {
 
     @Override
     public List<Sighting> getSightingsByDate(LocalDate date) {
-        final String sql = "SELECT * FROM SIGHTINGS WHERE date = ?";
+        final String sql = "SELECT * FROM sighting WHERE date = ?";
 
         List<Sighting> sightings = jdbc.query(sql, new SightingMapper(), date);
         associateHeroesAndAddresses(sightings);

@@ -111,9 +111,9 @@ public class SuperheroDaoDb implements SuperheroDao {
     public List<Superhero> getSuperheroesByAddressId(int id) {
         final String sql = 
                 "SELECT s.* FROM `super` s " +
-                "JOIN super_sighting ss WHERE s.id = ss.superid " +
-                "JOIN sighting si WHERE ss.sightingid = si.id " +
-                "JOIN address a WHERE si.addressid = a.id " +
+                "JOIN super_sighting ss ON s.id = ss.superid " +
+                "JOIN sighting si ON ss.sightingid = si.id " +
+                "JOIN address a ON si.addressid = a.id " +
                 "WHERE a.id = ?";
         
         List<Superhero> heroes = jdbc.query(sql, new SuperheroMapper(), id);

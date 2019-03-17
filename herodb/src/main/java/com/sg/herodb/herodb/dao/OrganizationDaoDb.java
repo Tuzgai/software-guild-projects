@@ -159,7 +159,7 @@ public class OrganizationDaoDb implements OrganizationDao {
                 "JOIN `super` s ON so.superid = s.id " +
                 "WHERE s.id = ?";
         
-        List<Organization> organizations = jdbc.query(sql, new OrganizationMapper());
+        List<Organization> organizations = jdbc.query(sql, new OrganizationMapper(), id);
         associateAddressesAndHeroes(organizations);
         return organizations;    
     }

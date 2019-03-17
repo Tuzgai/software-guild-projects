@@ -242,5 +242,65 @@ public class AddressDaoDbTest {
         assertEquals("Name Unknown", sighting.getAddress().getName());
         assertEquals("Name Unknown", organization.getAddress().getName());
     }
+    
+    @Test
+    public void testGetAddresByHeroId() {
+        Address address = new Address();
+        address.setCountry("Test Country");
+        address.setDescription("Test Description");
+        address.setLatitude(new BigDecimal("1.000000"));
+        address.setLongitude(new BigDecimal("1.000000"));
+        address.setName("Test Name");
+        address.setPostalCode("Test Zip");
+        address.setStreetAddress("Test Street Address");
+        address.setTerritory("Test Territory");
+        address = addressDao.createAddress(address);
+
+        Power power = new Power();
+        power.setDescription("Test power description");
+        power.setName("Test power");
+        power = powerDao.createPower(power);
+
+        Power power2 = new Power();
+        power2.setDescription("Test power description 2");
+        power2.setName("Test power 2");
+        power2 = powerDao.createPower(power2);
+
+        Superhero hero = new Superhero();
+        hero.setDescription("Test hero description 1");
+        hero.setIsVillain(true);
+        hero.setName("Test hero 1");
+        hero.setPower(power);
+        hero = superheroDao.createSuperhero(hero);
+
+        Superhero hero2 = new Superhero();
+        hero2.setDescription("Test hero description 2");
+        hero2.setIsVillain(false);
+        hero2.setName("Test hero 2");
+        hero2.setPower(power2);
+        hero2 = superheroDao.createSuperhero(hero2);
+
+        List<Superhero> heroes = new ArrayList<>();
+        heroes.add(hero);
+
+        Organization organization = new Organization();
+        organization.setDescription("Test org description");
+        organization.setName("Test org");
+        organization.setAddress(address);
+        organization.setHeroes(heroes);
+        organization = organizationDao.createOrganization(organization);
+
+        Sighting sighting = new Sighting();
+        sighting.setAddress(address);
+        sighting.setDate(LocalDate.of(2018, Month.MARCH, 5));
+        sighting.setHeroes(heroes);
+        sighting = sightingDao.createSighting(sighting);
+        
+        List<Address> fromDao = addressDao.getAddressByHeroId(hero.getId());
+        assertTrue(fromDao.contains(address));
+        
+        fromDao = addressDao.getAddressByHeroId(hero2.getId());
+        assertFalse(fromDao.contains(address));
+    }
 
 }
