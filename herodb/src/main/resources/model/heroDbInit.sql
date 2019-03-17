@@ -82,4 +82,8 @@ ALTER TABLE `super`
 		FOREIGN KEY (powerid)
         REFERENCES power (id);
         
-SELECT * from super_organization;
+SELECT a.* FROM address a 
+                JOIN sighting s ON a.id = s.addressid 
+                JOIN super_sighting ss ON s.id = ss.sightingid 
+                JOIN `super` su ON ss.superid = su.id 
+                WHERE su.id = 1;
