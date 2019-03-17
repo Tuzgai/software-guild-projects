@@ -21,3 +21,5 @@ ALTER TABLE round
 	ADD CONSTRAINT fk_game
 		FOREIGN KEY (gameId)
 		REFERENCES game (id);
+        
+SELECT * FROM game;

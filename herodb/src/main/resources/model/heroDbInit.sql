@@ -13,7 +13,7 @@ CREATE TABLE `super` (
 CREATE TABLE `power` (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     `name` VARCHAR(30) NOT NULL,
-    `description` VARCHAR(14)
+    `description` VARCHAR(140)
 );
 
 CREATE TABLE super_organization (
@@ -81,3 +81,5 @@ ALTER TABLE `super`
 	ADD CONSTRAINT fk_super_power
 		FOREIGN KEY (powerid)
         REFERENCES power (id);
+        
+SELECT * from super_organization;
