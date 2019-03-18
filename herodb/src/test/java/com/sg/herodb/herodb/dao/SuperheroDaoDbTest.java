@@ -151,6 +151,7 @@ public class SuperheroDaoDbTest {
         assertTrue(heroes.contains(hero2));
     }
 
+    // Add a test for changes relationships
     @Test
     public void testUpdateHero() {
         Power power = new Power();

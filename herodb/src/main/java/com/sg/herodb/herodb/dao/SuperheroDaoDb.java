@@ -121,6 +121,8 @@ public class SuperheroDaoDb implements SuperheroDao {
         
         return heroes;
     }
+    
+    // TODO - getSuperheroesByPowerId
 
     protected static final class SuperheroMapper implements RowMapper<Superhero> {
 
