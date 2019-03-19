@@ -39,65 +39,69 @@
                 <li class="nav-item">
                     <a class="nav-link nav-organizations" href="/sightings/organizations">Organizations</a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link nav-sightings" href="/sightings/">All Sightings</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <div class="container d-flex flex-column align-items-center" style="margin-top: 1em">
-        <header>
-            <h1 class="mx-auto">HeroDB</h1>
-            <h5 class="mx-auto">The latest, now.</h3>
-        </header>
-        <!-- End Header -->
-        <!-- Main Body of Page -->
+    <div class="container">
+        <div class="d-flex flex-column align-items-center">
+            <header>
+                <h1 class="mx-auto">HeroDB</h1>
+                <h5 class="mx-auto">The latest, now.</h3>
+            </header>
+            <!-- End Header -->
+            <!-- Main Body of Page -->
+        </div>
+        <form class="form">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group row">
+                        <label for="powerName" class="col-sm-3 col-form-label">Power Name</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="powerName" placeholder="Power Name">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="addHero" class="col-sm-3 col-form-label">Add Heroes</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" id="addHero">
+                                <option>Froppy</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="powerDescription" class="col-sm-3 col-form-label">Power Description</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" id="powerName" placeholder="Power Description"
+                                rows="5"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </div> <!-- End left form column -->
+                <div class="col-sm-6">
+                    <div class="form-group row">
+                        <label for="heroList" class="col-sm-2 col-form-label">Users</label>
+                        <div class="col-sm-10">
+                            <select multiple class="form-control" id="heroList" rows="5">
+                                <option>Froppy</option>
+                            </select>
+                            <div class="col-sm-2"></div>
+                            <button class="btn btn-primary" type="button" style="margin-top:1em">Remove Hero</button>
+                        </div>
+                    </div>
 
-        <div class="row mr-auto align-items-center">
-            <h3>All Sightings</h3>
-            <a class="mr-auto ml-1" href="">(add a new sighting)</a>
-        </div>
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Location</th>
-                        <th>Description</th>
-                        <th>Heroes/Villains Sighted</th>
-                        <th>Edit</th>
-                    </tr>
-                </thead>
-                <tr class="expandable">
-                    <td>3/18/19</td>
-                    <td>
-                        <span class="shortText">U.A. High School</span>
-                        <div class="longText selector">
-                            <p>U.A. High School</p>
-                            <p>123 Test Street</p>
-                            <p>Tokyo, Japan</p>
-                            <p>Latitude: 100</p>
-                            <p>Longitude: 100</p>
-                        </div>
-                    </td>
-                    <td>A big fight!</td>
-                    <td>
-                        <span class="shortText">Midoriya</span>
-                        <div class="longText selector">
-                            <p>Midoriya</p>
-                            <p>All Might</p>
-                            <p>Bakugo</p>
-                        </div>
-                    </td>
-                    <td><a href="">Edit</a></td>
-                </tr>
-            </table>
-        </div>
+                </div>
+            </div>
+        </form>
     </div> <!-- Close container -->
     <!-- End Main Body -->
-
-
 
     <!-- Footer Material -->
     <!-- Optional JavaScript -->

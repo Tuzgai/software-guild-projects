@@ -19,6 +19,23 @@
     margin-top: 1em;
 }
 
+h1 {
+    margin-top: 1em;
+}
+
+.form {
+    margin-top: 2em;
+}
+
+.selector {
+    overflow: hidden; /* hide the element content, while height = 0 */
+    height: 0; opacity: 0;
+}
+.selector.visible {
+    height: 100%; opacity: 1;
+    transition: height 0ms 0ms, opacity 600ms 0ms;
+}
+
 /* Navbar vertical lines */
 .navbar-nav>li+li {
     border-left: 2px solid rgba(255, 255, 255, .3);
