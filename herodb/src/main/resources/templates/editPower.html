@@ -10,8 +10,10 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="styles/stylesheet.css">
+
     <title>HeroDB</title>
 </head>
 
@@ -57,28 +59,25 @@
         </div>
         <form class="form">
             <div class="row">
+                <div class="col-sm-2"></div>
+                <h5 class="col-sm-4">Add/Edit a Power</h5>
+                <h5 class="col-sm-4">Current Hero List For Power</h5>
+
                 <div class="col-sm-6">
                     <div class="form-group row">
-                        <label for="powerName" class="col-sm-3 col-form-label">Power Name</label>
-                        <div class="col-sm-9">
+                        <label for="powerName" class="col-sm-4 col-form-label">Power Name</label>
+                        <div class="col-sm-8">
                             <input type="text" class="form-control" id="powerName" placeholder="Power Name">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="addHero" class="col-sm-3 col-form-label">Add Heroes</label>
-                        <div class="col-sm-9">
-                            <select class="form-control" id="addHero">
-                                <option>Froppy</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="powerDescription" class="col-sm-3 col-form-label">Power Description</label>
-                        <div class="col-sm-9">
+                        <label for="powerDescription" class="col-sm-4 col-form-label">Power Description</label>
+                        <div class="col-sm-8">
                             <textarea class="form-control" id="powerName" placeholder="Power Description"
                                 rows="5"></textarea>
                         </div>
                     </div>
+
                     <div class="form-group row">
                         <div class="col-sm-10">
                             <button class="btn btn-primary" type="submit">Submit</button>
@@ -87,18 +86,42 @@
                 </div> <!-- End left form column -->
                 <div class="col-sm-6">
                     <div class="form-group row">
-                        <label for="heroList" class="col-sm-2 col-form-label">Users</label>
                         <div class="col-sm-10">
-                            <select multiple class="form-control" id="heroList" rows="5">
-                                <option>Froppy</option>
+                            <select multiple class="form-control" id="currentHeroes" rows="5">
+                                <option value="1">Froppy</option>
+                                <option value="2">Midoriya</option>
+                                <option value="3">All Might</option>
+                                <option value="4">Uravity</option>
                             </select>
-                            <div class="col-sm-2"></div>
-                            <button class="btn btn-primary" type="button" style="margin-top:1em">Remove Hero</button>
+                            <div class="d-flex justify-content-center">
+                                <button class="btn btn-primary ml-auto mr-1 updownbtn" onclick="addHero()" type="button"
+                                    style="margin-top:1em">
+                                    <span class="fas fa-angle-up"></span>
+                                </button>
+                                <button class="btn btn-primary mr-auto ml-2 updownbtn" onclick="removeHero()"
+                                    type="button" style="margin-top:1em">
+                                    <span class="fas fa-angle-down"></span>
+                                </button>
+                            </div>
                         </div>
                     </div>
+                    <div class="form-group row" style="margin-bottom:0em">
+                        <div class="col-sm-10">
+                            <select multiple class="form-control" id="heroRoster" rows="5">
+                                <option value="5">Headphone Jack</option>
+                                <option value="6">Eraser</option>
+                                <option value="7">Mr Icy Hot</option>
+                                <option value="8">Rich Girl</option>
+                            </select>
 
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <h5 class="col-sm-4">Hero Roster</h5>
+                    </div>
                 </div>
             </div>
+
         </form>
     </div> <!-- Close container -->
     <!-- End Main Body -->

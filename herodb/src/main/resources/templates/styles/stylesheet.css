@@ -61,3 +61,7 @@ h1 {
         border-left: none;
     }
 }
+
+span.fas {
+    font-size: 2em;
+}
