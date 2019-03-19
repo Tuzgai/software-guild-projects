@@ -84,6 +84,7 @@ public class SightingDaoDbTest {
             address.setPostalCode("ZipUnknown");
             address.setStreetAddress("Street Address Unknown");
             address.setTerritory("Territory Unknown");
+            address.setCity("City Unknown");
             addressDao.createAddress(address);
         }
 
@@ -110,6 +111,7 @@ public class SightingDaoDbTest {
         address.setPostalCode("Test Zip");
         address.setStreetAddress("Test Street Address");
         address.setTerritory("Test Territory");
+        address.setCity("Test city");
         address = addressDao.createAddress(address);
 
         Power power = new Power();
@@ -151,6 +153,7 @@ public class SightingDaoDbTest {
         sighting.setAddress(address);
         sighting.setDate(LocalDate.of(2018, Month.MARCH, 5));
         sighting.setHeroes(heroes);
+        sighting.setDescription("Test description");
         sighting = sightingDao.createSighting(sighting);
         
         Sighting fromDao = sightingDao.getSightingById(sighting.getId());
@@ -169,6 +172,7 @@ public class SightingDaoDbTest {
         address.setPostalCode("Test Zip");
         address.setStreetAddress("Test Street Address");
         address.setTerritory("Test Territory");
+        address.setCity("Test city");
         address = addressDao.createAddress(address);
 
         Power power = new Power();
@@ -210,12 +214,14 @@ public class SightingDaoDbTest {
         sighting.setAddress(address);
         sighting.setDate(LocalDate.of(2018, Month.MARCH, 5));
         sighting.setHeroes(heroes);
+        sighting.setDescription("Test description");
         sighting = sightingDao.createSighting(sighting);
         
         Sighting sighting2 = new Sighting();
         sighting2.setAddress(address);
         sighting2.setDate(LocalDate.of(2022, Month.DECEMBER, 20)); // new date
         sighting2.setHeroes(heroes);
+        sighting2.setDescription("Test description 2");
         sighting2 = sightingDao.createSighting(sighting2);
         
         List<Sighting> sightings = sightingDao.getAllSightings();
@@ -236,6 +242,7 @@ public class SightingDaoDbTest {
         address.setPostalCode("Test Zip");
         address.setStreetAddress("Test Street Address");
         address.setTerritory("Test Territory");
+        address.setCity("Test city");
         address = addressDao.createAddress(address);
 
         Power power = new Power();
@@ -277,6 +284,7 @@ public class SightingDaoDbTest {
         sighting.setAddress(address);
         sighting.setDate(LocalDate.of(2018, Month.MARCH, 5));
         sighting.setHeroes(heroes);
+        sighting.setDescription("Test description");
         sighting = sightingDao.createSighting(sighting);
         
         Sighting fromDao = sightingDao.getSightingById(sighting.getId()); 
@@ -303,6 +311,7 @@ public class SightingDaoDbTest {
         address.setPostalCode("Test Zip");
         address.setStreetAddress("Test Street Address");
         address.setTerritory("Test Territory");
+        address.setCity("Test city");
         address = addressDao.createAddress(address);
 
         Power power = new Power();
@@ -344,6 +353,7 @@ public class SightingDaoDbTest {
         sighting.setAddress(address);
         sighting.setDate(LocalDate.of(2018, Month.MARCH, 5));
         sighting.setHeroes(heroes);
+        sighting.setDescription("Test description");
         sighting = sightingDao.createSighting(sighting);
         
         Sighting fromDao = sightingDao.getSightingById(sighting.getId());
@@ -365,6 +375,7 @@ public class SightingDaoDbTest {
         address.setPostalCode("Test Zip");
         address.setStreetAddress("Test Street Address");
         address.setTerritory("Test Territory");
+        address.setCity("Test city");
         address = addressDao.createAddress(address);
 
         Power power = new Power();
@@ -406,6 +417,7 @@ public class SightingDaoDbTest {
         sighting.setAddress(address);
         sighting.setDate(LocalDate.of(2018, Month.MARCH, 5));
         sighting.setHeroes(heroes);
+        sighting.setDescription("Test description");
         sighting = sightingDao.createSighting(sighting);
         
         List<Sighting> sightings = sightingDao.getSightingsByDate(LocalDate.of(2018, Month.MARCH, 5));

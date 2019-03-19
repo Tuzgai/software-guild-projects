@@ -84,6 +84,7 @@ public class AddressDaoDbTest {
             address.setPostalCode("ZipUnknown");
             address.setStreetAddress("Street Address Unknown");
             address.setTerritory("Territory Unknown");
+            address.setCity("City Unknown");
             addressDao.createAddress(address);
         }
 
@@ -110,6 +111,7 @@ public class AddressDaoDbTest {
         address.setPostalCode("TestZip");
         address.setStreetAddress("Test Street Address");
         address.setTerritory("Test Territory");
+        address.setCity("Test city");
         address = addressDao.createAddress(address);
 
         Address fromDao = addressDao.getAddressById(address.getId());
@@ -128,6 +130,7 @@ public class AddressDaoDbTest {
         address.setPostalCode("Test Zip");
         address.setStreetAddress("Test Street Address");
         address.setTerritory("Test Territory");
+        address.setCity("Test city");
         address = addressDao.createAddress(address);
 
         Address address2 = new Address();
@@ -139,6 +142,7 @@ public class AddressDaoDbTest {
         address2.setPostalCode("Test Zip 2");
         address2.setStreetAddress("Test Street Address 2");
         address2.setTerritory("Test Territory 2");
+        address2.setCity("Test city 2");
         address2 = addressDao.createAddress(address2);
 
         List<Address> list = addressDao.getAllAddresses();
@@ -159,6 +163,7 @@ public class AddressDaoDbTest {
         address.setPostalCode("Test Zip");
         address.setStreetAddress("Test Street Address");
         address.setTerritory("Test Territory");
+        address.setCity("Test city");
         address = addressDao.createAddress(address);
 
         Address fromDao = addressDao.getAddressById(address.getId());
@@ -186,6 +191,7 @@ public class AddressDaoDbTest {
         address.setPostalCode("Test Zip");
         address.setStreetAddress("Test Street Address");
         address.setTerritory("Test Territory");
+        address.setCity("Test city");
         address = addressDao.createAddress(address);
 
         Power power = new Power();
@@ -227,6 +233,7 @@ public class AddressDaoDbTest {
         sighting.setAddress(address);
         sighting.setDate(LocalDate.of(2018, Month.MARCH, 5));
         sighting.setHeroes(heroes);
+        sighting.setDescription("Test description");
         sighting = sightingDao.createSighting(sighting);
 
         Address fromDao = addressDao.getAddressById(address.getId());
@@ -254,6 +261,7 @@ public class AddressDaoDbTest {
         address.setPostalCode("Test Zip");
         address.setStreetAddress("Test Street Address");
         address.setTerritory("Test Territory");
+        address.setCity("Test city");
         address = addressDao.createAddress(address);
 
         Power power = new Power();
@@ -294,6 +302,7 @@ public class AddressDaoDbTest {
         sighting.setAddress(address);
         sighting.setDate(LocalDate.of(2018, Month.MARCH, 5));
         sighting.setHeroes(heroes);
+        sighting.setDescription("Test description");
         sighting = sightingDao.createSighting(sighting);
         
         List<Address> fromDao = addressDao.getAddressByHeroId(hero.getId());

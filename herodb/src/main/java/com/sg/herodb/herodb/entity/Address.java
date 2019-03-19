@@ -2,6 +2,7 @@ package com.sg.herodb.herodb.entity;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
 
 /**
  *
@@ -9,11 +10,22 @@ import java.util.Objects;
  */
 public class Address {
     int id;
+    
+    @NotBlank
     String name;
+    
+    @NotBlank
     String description;
+    
     String streetAddress;
     String territory;
+    
+    @NotBlank
     String country;
+    
+    @NotBlank
+    String city;
+    
     String postalCode;
     BigDecimal latitude;
     BigDecimal longitude;
@@ -90,18 +102,27 @@ public class Address {
         this.longitude = longitude;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 29 * hash + this.id;
-        hash = 29 * hash + Objects.hashCode(this.name);
-        hash = 29 * hash + Objects.hashCode(this.description);
-        hash = 29 * hash + Objects.hashCode(this.streetAddress);
-        hash = 29 * hash + Objects.hashCode(this.territory);
-        hash = 29 * hash + Objects.hashCode(this.country);
-        hash = 29 * hash + Objects.hashCode(this.postalCode);
-        hash = 29 * hash + Objects.hashCode(this.latitude);
-        hash = 29 * hash + Objects.hashCode(this.longitude);
+        int hash = 7;
+        hash = 89 * hash + this.id;
+        hash = 89 * hash + Objects.hashCode(this.name);
+        hash = 89 * hash + Objects.hashCode(this.description);
+        hash = 89 * hash + Objects.hashCode(this.streetAddress);
+        hash = 89 * hash + Objects.hashCode(this.territory);
+        hash = 89 * hash + Objects.hashCode(this.country);
+        hash = 89 * hash + Objects.hashCode(this.city);
+        hash = 89 * hash + Objects.hashCode(this.postalCode);
+        hash = 89 * hash + Objects.hashCode(this.latitude);
+        hash = 89 * hash + Objects.hashCode(this.longitude);
         return hash;
     }
 
@@ -135,6 +156,9 @@ public class Address {
         if (!Objects.equals(this.country, other.country)) {
             return false;
         }
+        if (!Objects.equals(this.city, other.city)) {
+            return false;
+        }
         if (!Objects.equals(this.postalCode, other.postalCode)) {
             return false;
         }
@@ -146,6 +170,8 @@ public class Address {
         }
         return true;
     }
+    
+
     
     
 }

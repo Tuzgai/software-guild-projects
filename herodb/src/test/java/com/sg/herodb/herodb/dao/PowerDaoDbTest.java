@@ -80,6 +80,7 @@ public class PowerDaoDbTest {
             address.setPostalCode("ZipUnknown");
             address.setStreetAddress("Street Address Unknown");
             address.setTerritory("Territory Unknown");
+            address.setCity("City Unknown");
             addressDao.createAddress(address);
         }
 

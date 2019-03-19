@@ -1,13 +1,16 @@
 package com.sg.herodb.herodb.entity;
 
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
 
 /**
  *
  * @author Stuart
  */
 public class Power {
+    @NotBlank
     String name;
+    
     String description;
     int id;
 

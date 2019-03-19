@@ -12,7 +12,7 @@
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles/stylesheet.css">
+    <link rel="stylesheet" href="/styles/stylesheet.css">
     <title>HeroDB</title>
 </head>
 
@@ -65,29 +65,30 @@
                         <th>Heroes</th>
                     </tr>
                 </thead>
-                <tr class="expandable">
-                    <td>2/3/18</td>
+                <tr class="expandable" th:each="sighting : ${sightings}">
+                    <td th:text="${sighting.date}"></td>
                     <td>
-                        <span class="shortText">U.A. High School</span>
+                        <span th:text="${sighting.address.name}" class="shortText">U.A. High School</span>
                         <div class="longText selector">
-                            <p>U.A. High School</p>
-                            <p>123 Test Street</p>
-                            <p>Tokyo, Japan</p>
-                            <p>Latitude: 100</p>
-                            <p>Longitude: 100</p>
+                            <p th:text="${sighting.address.name}">U.A. High School</p>
+                            <p th:text="${sighting.address.streetAddress}">123 Test Street</p>
+                            <p th:text="${sighting.address.city} + ', ' + ${sighting.address.country}">Tokyo, Japan</p>
+                            <p th:text="${sighting.address.latitude}">Latitude: 100</p>
+                            <p th:text="${sighting.address.longitude}">Longitude: 100</p>
                             <hr>
-                            <p>A big fight!</p>
+                            <p th:text="${sighting.description}">A big fight!</p>
                         </div>
                     </td>
                     <td>
                         <span class="shortText">All Might</span>
                         <div class="longText selector">
-                            <p>All Might</p>
-                            <p>Midoriya</p>
-                            <p>Froppy</p>
+                            <div th:each="hero : ${sighting.heroes}">
+                                <p th:text="${hero.name}">All Might</p>
+                            </div>
                         </div>
                     </td>
                 </tr>
+                <!--Example of a sighting entry 
                 <tr class="expandable">
                     <td>2/3/18</td>
                     <td>
@@ -110,6 +111,7 @@
                         </div>
                     </td>
                 </tr>
+                -->
             </table>
         </div>
     </div> <!-- Close container -->

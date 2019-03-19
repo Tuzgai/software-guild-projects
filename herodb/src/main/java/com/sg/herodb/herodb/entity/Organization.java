@@ -2,6 +2,7 @@ package com.sg.herodb.herodb.entity;
 
 import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
 
 /**
  *
@@ -9,6 +10,7 @@ import java.util.Objects;
  */
 public class Organization {
     int id;
+    @NotBlank
     String name;
     String description;
     Address address;

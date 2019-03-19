@@ -1,6 +1,7 @@
 package com.sg.herodb.herodb.entity;
 
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
 
 /**
  *
@@ -8,7 +9,10 @@ import java.util.Objects;
  */
 public class Superhero {
     int id;
+    
+    @NotBlank
     String name;
+    
     String description;
     boolean isVillain;
     Power power;

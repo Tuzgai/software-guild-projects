@@ -103,13 +103,14 @@ public class SightingDaoDb implements SightingDao {
     @Override
     @Transactional
     public Sighting createSighting(Sighting sighting) {
-        final String INSERT_SIGHTING = "INSERT INTO sighting(date, addressid) VALUES(?,?)";
+        final String INSERT_SIGHTING = "INSERT INTO sighting(date, addressid, description) VALUES(?,?,?)";
         final String INSERT_SUPER_SIGHTING
                 = "INSERT INTO super_sighting(superid, sightingid) VALUES(?,?)";
 
         jdbc.update(INSERT_SIGHTING,
                 sighting.getDate(),
-                sighting.getAddress().getId());
+                sighting.getAddress().getId(),
+                sighting.getDescription());
 
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         sighting.setId(newId);
@@ -126,14 +127,15 @@ public class SightingDaoDb implements SightingDao {
     @Override
     @Transactional
     public void updateSighting(Sighting sighting) {
-        final String UPDATE_SIGHTING = "UPDATE sighting SET date = ?, addressid = ?";
+        final String UPDATE_SIGHTING = "UPDATE sighting SET date = ?, addressid = ?, description = ?";
         final String CLEAR_SUPER_SIGHTING = "DELETE FROM super_sighting WHERE sightingid = ?";
         final String INSERT_SUPER_SIGHTING
                 = "INSERT INTO super_sighting(superid, sightingid) VALUES(?,?)";
 
         jdbc.update(UPDATE_SIGHTING,
                 Date.valueOf(sighting.getDate()),
-                sighting.getAddress().getId());
+                sighting.getAddress().getId(),
+                sighting.getDescription());
 
         jdbc.update(CLEAR_SUPER_SIGHTING, sighting.getId());
 
@@ -172,7 +174,7 @@ public class SightingDaoDb implements SightingDao {
 
             s.setId(rs.getInt("id"));
             s.setDate(rs.getDate("date").toLocalDate());
-
+            s.setDescription(rs.getString("description"));
             return s;
         }
     }

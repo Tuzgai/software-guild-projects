@@ -82,6 +82,7 @@ public class OrganizationDaoDbTest {
             address.setPostalCode("ZipUnknown");
             address.setStreetAddress("Street Address Unknown");
             address.setTerritory("Territory Unknown");
+            address.setCity("City Unknown");
             addressDao.createAddress(address);
         }
 
@@ -108,6 +109,7 @@ public class OrganizationDaoDbTest {
         address.setPostalCode("TestZip");
         address.setStreetAddress("Test Street Address");
         address.setTerritory("Test Territory");
+        address.setCity("Test city");
         address = addressDao.createAddress(address);
         
         Power power = new Power();
@@ -161,6 +163,7 @@ public class OrganizationDaoDbTest {
         address.setPostalCode("TestZip");
         address.setStreetAddress("Test Street Address");
         address.setTerritory("Test Territory");
+        address.setCity("Test city");
         address = addressDao.createAddress(address);
         
         Power power = new Power();
@@ -223,6 +226,7 @@ public class OrganizationDaoDbTest {
         address.setPostalCode("TestZip");
         address.setStreetAddress("Test Street Address");
         address.setTerritory("Test Territory");
+        address.setCity("Test city");
         address = addressDao.createAddress(address);
         
         Power power = new Power();
@@ -285,6 +289,7 @@ public class OrganizationDaoDbTest {
         address.setPostalCode("Test Zip");
         address.setStreetAddress("Test Street Address");
         address.setTerritory("Test Territory");
+        address.setCity("Test city");
         address = addressDao.createAddress(address);
 
         Power power = new Power();
@@ -341,6 +346,7 @@ public class OrganizationDaoDbTest {
         address.setPostalCode("Test Zip");
         address.setStreetAddress("Test Street Address");
         address.setTerritory("Test Territory");
+        address.setCity("Test city");
         address = addressDao.createAddress(address);
 
         Power power = new Power();

@@ -47,8 +47,8 @@ public class AddressDaoDb implements AddressDao {
     @Transactional
     public Address createAddress(Address address) {
         final String sql = "INSERT INTO address(`name`, `description`, " + 
-                "streetaddress, territory, country, postalcode, latitude, longitude) " +
-                "VALUES(?,?,?,?,?,?,?,?)";
+                "streetaddress, territory, country, postalcode, latitude, longitude, city) " +
+                "VALUES(?,?,?,?,?,?,?,?,?)";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         
         jdbc.update((Connection conn) -> {
@@ -65,6 +65,7 @@ public class AddressDaoDb implements AddressDao {
             statement.setString(6, address.getPostalCode());
             statement.setBigDecimal(7, address.getLatitude());
             statement.setBigDecimal(8, address.getLongitude());
+            statement.setString(9, address.getCity());
             
             return statement;
 
@@ -78,7 +79,7 @@ public class AddressDaoDb implements AddressDao {
     @Override
     public void updateAddress(Address address) {
         final String sql = "UPDATE address SET `name` = ?, `description` = ?, " + 
-                "streetaddress = ?, territory = ?, country = ?, postalcode = ?, latitude = ?, longitude = ?" +
+                "streetaddress = ?, territory = ?, country = ?, postalcode = ?, latitude = ?, longitude = ?, city = ? " +
                 "WHERE id = ?";
         
         jdbc.update(sql,
@@ -90,6 +91,7 @@ public class AddressDaoDb implements AddressDao {
                 address.getPostalCode(),
                 address.getLatitude(),
                 address.getLongitude(),
+                address.getCity(),
                 address.getId());
     }
 
@@ -138,6 +140,7 @@ public class AddressDaoDb implements AddressDao {
             a.setPostalCode(rs.getString("postalcode"));
             a.setStreetAddress(rs.getString("streetaddress"));
             a.setTerritory(rs.getString("territory"));
+            a.setCity(rs.getString("city"));
             
             return a;
         }

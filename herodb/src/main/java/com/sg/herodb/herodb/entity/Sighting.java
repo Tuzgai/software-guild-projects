@@ -3,15 +3,25 @@ package com.sg.herodb.herodb.entity;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
 
 /**
  *
  * @author Stuart
  */
-public class Sighting {
+public class Sighting implements Comparable<Sighting> {
     int id;
+    
+    @NotBlank
+    @Past
     LocalDate date;
+    
+    @NotBlank
     Address address;
+    
+    String description;
+    
     List<Superhero> heroes;
 
     public int getId() {
@@ -46,13 +56,34 @@ public class Sighting {
         this.heroes = superList;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    
+    
+    @Override
+    public String toString() {
+        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int compareTo(Sighting s) {
+        return this.getDate().compareTo(s.getDate());
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 53 * hash + this.id;
-        hash = 53 * hash + Objects.hashCode(this.date);
-        hash = 53 * hash + Objects.hashCode(this.address);
-        hash = 53 * hash + Objects.hashCode(this.heroes);
+        int hash = 5;
+        hash = 59 * hash + this.id;
+        hash = 59 * hash + Objects.hashCode(this.date);
+        hash = 59 * hash + Objects.hashCode(this.address);
+        hash = 59 * hash + Objects.hashCode(this.description);
+        hash = 59 * hash + Objects.hashCode(this.heroes);
         return hash;
     }
 
@@ -71,6 +102,9 @@ public class Sighting {
         if (this.id != other.id) {
             return false;
         }
+        if (!Objects.equals(this.description, other.description)) {
+            return false;
+        }
         if (!Objects.equals(this.date, other.date)) {
             return false;
         }
@@ -83,5 +117,6 @@ public class Sighting {
         return true;
     }
     
+
     
 }
