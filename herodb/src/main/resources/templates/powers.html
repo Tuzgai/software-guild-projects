@@ -12,13 +12,13 @@
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
         integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles/stylesheet.css">
+    <link rel="stylesheet" href="/styles/stylesheet.css">
     <title>HeroDB</title>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="/index.html">HeroDB</a>
+        <a class="navbar-brand" href="/">HeroDB</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -69,15 +69,16 @@
                         <th>Edit</th>
                     </tr>
                 </thead>
-                <tr class="expandable">
-                    <td>Zero Gravity</td>
-                    <td>Objects touched are not affected by gravity</td>
+                <tr th:each="power : ${powers}" class="expandable">
+                    <td th:text="${power.name}">Zero Gravity</td>
+                    <td th:text="${power.description}">Objects touched are not affected by gravity</td>
                     <td>
-                        <span class="shortText">Click for list</span>
+                        <!-- This is breaking because right now powers don't have a list of heroes, fix this later -->
+                        <span th:text="${power.heroes[0].name}" class="shortText">Click for list</span>
                         <div class="longText selector">
-                            <p>Uraraka</p>
-                            <p>Midoriya</p>
-                            <p>Froppy</p>
+                            <div th:each="hero : ${power.heroes}">
+                                <p th:text="hero.name">Uraraka</p>
+                            </div>
                         </div>
                     </td>
                     <td><a href="">Edit</a></td>

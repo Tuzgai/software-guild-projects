@@ -18,7 +18,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="/index.html">HeroDB</a>
+        <a class="navbar-brand" href="/">HeroDB</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -80,7 +80,7 @@
                         </div>
                     </td>
                     <td>
-                        <span class="shortText">All Might</span>
+                        <span th:text="${sighting.heroes[0].name}" class="shortText">All Might</span>
                         <div class="longText selector">
                             <div th:each="hero : ${sighting.heroes}">
                                 <p th:text="${hero.name}">All Might</p>
@@ -88,30 +88,6 @@
                         </div>
                     </td>
                 </tr>
-                <!--Example of a sighting entry 
-                <tr class="expandable">
-                    <td>2/3/18</td>
-                    <td>
-                        <span class="shortText">New York</span>
-                        <div class="longText selector">
-                            <p>123 Test Street</p>
-                            <p>New York, NY 55155</p>
-                            <p>Latitude: 100</p>
-                            <p>Longitude: 100</p>
-                            <hr>
-                            <p>A big fight!</p>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="shortText">All Might</span>
-                        <div class="longText selector">
-                            <p>All Might</p>
-                            <p>Midoriya</p>
-                            <p>Froppy</p>
-                        </div>
-                    </td>
-                </tr>
-                -->
             </table>
         </div>
     </div> <!-- Close container -->
