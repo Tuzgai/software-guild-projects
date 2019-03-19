@@ -49,8 +49,11 @@
     </nav>
 
     <div class="container">
-        <div class="d-flex flex-column align-items-center">
-            <header>
+        <div class="d-flex flex-column align-items-end">
+            <a href="/deletePower/number" id="deleteButton"> <!--Make this work-->
+                <button type="button" class="btn btn-danger" style="margin-top: 1em">DELETE POWER</button>
+            </a>
+            <header class="align-self-center">
                 <h1 class="mx-auto">HeroDB</h1>
                 <h5 class="mx-auto">The latest, now.</h3>
             </header>
@@ -61,7 +64,7 @@
             <div class="row">
                 <div class="col-sm-2"></div>
                 <h5 class="col-sm-4">Add/Edit a Power</h5>
-                <h5 class="col-sm-4">Current Hero List For Power</h5>
+                <h5 class="col-sm-4">Current Super List For Power</h5>
 
                 <div class="col-sm-6">
                     <div class="form-group row">
@@ -79,11 +82,12 @@
                     </div>
 
                     <div class="form-group row">
-                        <div class="col-sm-10">
+                        <div class="col-sm-4"></div>
+                        <div class="col-sm-8">
                             <button class="btn btn-primary" type="submit">Submit</button>
                         </div>
                     </div>
-                </div> <!-- End left form column -->
+                </div> <!-- End first form column -->
                 <div class="col-sm-6">
                     <div class="form-group row">
                         <div class="col-sm-10">
@@ -117,7 +121,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <h5 class="col-sm-4">Hero Roster</h5>
+                        <h5 class="col-sm-4">Super Roster</h5>
                     </div>
                 </div>
             </div>
