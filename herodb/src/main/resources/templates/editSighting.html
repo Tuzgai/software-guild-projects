@@ -52,7 +52,7 @@
         <div class="d-flex flex-column align-items-end">
             <a href="/deletePower/number" id="deleteButton">
                 <!--Make this work-->
-                <button type="button" class="btn btn-danger" style="margin-top: 1em">DELETE ORGANIZATION</button>
+                <button type="button" class="btn btn-danger" style="margin-top: 1em">DELETE SIGHTING</button>
             </a>
             <header class="align-self-center">
                 <h1 class="mx-auto">HeroDB</h1>
@@ -64,31 +64,30 @@
         <form class="form">
             <div class="row">
                 <div class="col-sm-2"></div>
-                <h5 class="col-sm-4">Enter Organization Details</h5>
-                <h5 class="col-sm-4">Current Organization Roster</h5>
+                <h5 class="col-sm-4">Enter Sighting Details</h5>
+                <h5 class="col-sm-4">Heroes/Villains at Sighting</h5>
 
                 <div class="col-sm-6">
                     <div class="form-group row">
-                        <label for="organizationName" class="col-sm-4 col-form-label">Organization Name</label>
+                        <label for="date" class="col-sm-4 col-form-label">Sighting Date</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="organizationName"
-                                placeholder="Organization Name">
+                            <input type="date" class="form-control" id="date">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="locationSelect" class="col-sm-4 col-form-label">Headquarters</label>
+                        <label for="locationSelect" class="col-sm-4 col-form-label">Location</label>
                         <div class="col-sm-8">
-                            <select type="text" class="form-control" id="locationSelect" placeholder="Select Headquarters">
-                                <option value="" selected disabled>Select Headquarters</option>
+                            <select type="text" class="form-control" id="locationSelect" placeholder="Select Location">
+                                <option value="" selected disabled>Select Location</option>
                                 <option value="1">U.A. High School</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="organizationDescription" class="col-sm-4 col-form-label">Organization
+                        <label for="sightingDescription" class="col-sm-4 col-form-label">Sighting
                             Description</label>
                         <div class="col-sm-8">
-                            <textarea class="form-control" id="organizationName" placeholder="Organization Description"
+                            <textarea class="form-control" id="sightingName" placeholder="Sighting Description"
                                 rows="5"></textarea>
                         </div>
                     </div>
@@ -133,7 +132,7 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <h5 class="col-sm-12">Heroes Not In Organization</h5>
+                        <h5 class="col-sm-12">Known Heroes/Villains</h5>
                     </div>
                 </div>
             </div>
