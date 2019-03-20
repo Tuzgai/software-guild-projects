@@ -73,10 +73,10 @@
                         <th>Edit</th>
                     </tr>
                 </thead>
-                <tr class="expandable">
-                    <td>Froppy</td>
-                    <td>Frog Girl</td>
-                    <td>Frog</td>
+                <tr th:each="hero: ${heroes}" class="expandable">
+                    <td th:text="${hero.name}">Froppy</td>
+                    <td th:text="${hero.description}">Frog Girl</td>
+                    <td th:text="${hero.power.name}">Frog</td>
                     <td>
                         <span class="shortText">U.A High School</span>
                         <div class="longText selector">
@@ -85,8 +85,8 @@
                             <p>U.A. Girls</p>
                         </div>
                     </td>
-                    <td><a href="">Froppy Sightings</a></td>
-                    <td><a href="">Edit</a></td>
+                    <td><a th:href="'/super/profile/' + ${hero.id}">Froppy Sightings</a></td>
+                    <td><a th:href="'/super/edit/' + ${hero.id}">Edit</a></td>
                 </tr>
             </table>
         </div>
