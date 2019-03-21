@@ -56,13 +56,13 @@ public class OrganizationDaoDb implements OrganizationDao {
         final String sql = 
                 "SELECT s.* FROM `super` s " +
                 "JOIN super_organization so ON so.superid = s.id " +
-                "JOIN organization o ON o.id = so.organizationid " +
-                "WHERE o.id = ?";
+                "WHERE so.organizationid = ?";
         
         List<Superhero> heroes = jdbc.query(sql, new SuperheroMapper(), id);
         associatePowers(heroes);
         return heroes;
     }
+    
     
     protected void getPower(Superhero hero) {
         final String sql = 
@@ -156,8 +156,7 @@ public class OrganizationDaoDb implements OrganizationDao {
         final String sql = 
                 "SELECT * FROM organization o " + 
                 "JOIN super_organization so ON o.id = so.organizationid " +
-                "JOIN `super` s ON so.superid = s.id " +
-                "WHERE s.id = ?";
+                "WHERE so.superid = ?";
         
         List<Organization> organizations = jdbc.query(sql, new OrganizationMapper(), id);
         associateAddressesAndHeroes(organizations);

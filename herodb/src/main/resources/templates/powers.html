@@ -57,7 +57,7 @@
 
         <div class="row mr-auto align-items-center">
             <h3>Known Powers</h3>
-            <a class="mr-auto ml-1" href="">(add a new power)</a>
+            <a class="mr-auto ml-1" href="#" th:href="@{/editPower(id=-1)}">(add a new power)</a>
         </div>
         <div class="table-responsive">
             <table class="table table-hover">
@@ -81,7 +81,7 @@
                             </div>
                         </div>
                     </td>
-                    <td><a href="">Edit</a></td>
+                    <td><a href="#" th:href="@{/editOrganization(id=$power.id)}">Edit</a></td>
                 </tr>
             </table>
         </div>

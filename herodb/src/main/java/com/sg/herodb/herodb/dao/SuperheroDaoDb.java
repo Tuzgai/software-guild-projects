@@ -122,6 +122,22 @@ public class SuperheroDaoDb implements SuperheroDao {
         return heroes;
     }
     
+        
+    @Override
+    public List<Superhero> getHeroesNotInOrganization(int id) {
+        
+        // Find the heroes that don't have a bridge table entry for the org
+        final String sql = 
+                "SELECT * FROM `super` WHERE NOT EXISTS (" +
+                "SELECT s.* FROM `super` s " +
+                "JOIN super_organization so ON so.superid = s.id " +
+                "WHERE so.organizationid = ?)";
+        
+        List<Superhero> heroes = jdbc.query(sql, new SuperheroMapper(), id);
+        associatePowers(heroes);
+        return heroes;
+    }
+    
     // TODO - getSuperheroesByPowerId
 
     protected static final class SuperheroMapper implements RowMapper<Superhero> {

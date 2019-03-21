@@ -15,4 +15,6 @@ public interface SuperheroDao {
     void deleteSuperhero(int id);
     
     List<Superhero> getSuperheroesByAddressId(int addressId);
+    List<Superhero> getHeroesNotInOrganization(int id);
+
 }

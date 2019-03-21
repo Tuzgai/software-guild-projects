@@ -57,7 +57,7 @@
 
         <div class="row mr-auto align-items-center">
             <h3>Location Manager</h3>
-            <a class="mr-auto ml-1" href="">(add a new location)</a>
+            <a class="mr-auto ml-1" href="#" th:href="@{/editLocation(id)}">(add a new location)</a>
         </div>
         <div class="table-responsive">
             <table class="table table-hover">
@@ -86,7 +86,7 @@
                     </td>
                     <td>35.6762° N</td>
                     <td>139.6503° E</td>
-                    <td><a href="">Edit</a></td>
+                    <td><a href="#" th:href="@{/editLocation(id=$location.id})">Edit</a></td>
                 </tr>
             </table>
         </div>
