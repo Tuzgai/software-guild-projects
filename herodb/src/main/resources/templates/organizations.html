@@ -57,7 +57,7 @@
 
         <div class="row mr-auto align-items-center">
             <h3>Known Organizations</h3>
-            <a class="mr-auto ml-1" href="#" th:href="@{/editOrganization(id=-1)}">(add a new organization)</a>
+            <a class="mr-auto ml-1" href="/addOrganization">(add a new organization)</a>
         </div>
         <div class="table-responsive">
             <table class="table table-hover">
@@ -78,21 +78,23 @@
                         <div class="longText selector">
                             <p th:text="${organization.address.name}">U.A. High School</p>
                             <p th:text="${organization.address.streetAddress}">123 Test Street</p>
-                            <p th:text="${organization.address.city} + ', ' + ${organization.address.country}">Tokyo, Japan
+                            <p th:text="${organization.address.city} + ', ' + ${organization.address.country}">Tokyo,
+                                Japan
                             </p>
                             <p th:text="${organization.address.latitude}">Latitude: 100</p>
                             <p th:text="${organization.address.longitude}">Longitude: 100</p>
                         </div>
                     </td>
                     <td>
-                        <span th:text="${organization.heroes[0].name}" class="shortText">All Might</span>
+                        <span th:text="${organization.heroes != null and !organization.heroes.empty} ? ${organization.heroes[0].name} : 'None associated'" class="shortText">All Might</span>
                         <div class="longText selector">
                             <div th:each="hero : ${organization.heroes}">
                                 <p th:text="${hero.name}">All Might</p>
                             </div>
+                            <p th:text="${organization.heroes == null or organization.heroes.empty} ? 'None associated'"></p>
                         </div>
                     </td>
-                    <td><a th:href="@{/editOrganization(id=$organization.id)}">Edit</a></td>
+                    <td><a th:href="@{/editOrganization(id=${organization.id})}">Edit</a></td>
                 </tr>
             </table>
         </div>

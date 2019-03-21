@@ -1,18 +1,23 @@
-$(".expandable").click(function() {
+$(".hero-select-form").submit(function () {
+    $(".selectedHero").attr("selected", "selected");
+    return true;
+});
+
+$(".expandable").not("a").click(function() {
     $(".shortText", this).toggle();
     $(".longText", this).toggleClass("visible");
 });
 
 /* Hero roster module */
 function removeHero() {
-    var item = $("#currentHeroes").children("option:selected");
+    var item = $("#selectedHeroes").children("option:selected");
     $("#heroRoster").append(item);
-    $("#currentHeroes").remove(item);
+    $("#selectedHeroes").remove(item);
 }
 
 function addHero() {
     var item = $("#heroRoster").children("option:selected");
-    $("#currentHeroes").append(item);
+    $("#selectedHeroes").append(item);
     $("#heroRoster").remove(item);
 }
 /* End Hero roster module */
