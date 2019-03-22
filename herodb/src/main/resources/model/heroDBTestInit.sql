@@ -5,7 +5,7 @@ USE herodbtest;
 CREATE TABLE `super` (
 	id INT PRIMARY KEY AUTO_INCREMENT,
 	`name` VARCHAR(30) NOT NULL,
-    `description` VARCHAR(140) NOT NULL,
+    `description` VARCHAR(140),
     isvillain BOOLEAN NOT NULL DEFAULT FALSE,
     powerid INT NOT NULL
 );
@@ -44,7 +44,8 @@ CREATE TABLE address (
 CREATE TABLE sighting (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     addressid INT NOT NULL,
-    `date` DATE NOT NULL
+    `date` DATE NOT NULL,
+    `description` VARCHAR(140)
 );
 
 CREATE TABLE super_sighting (
