@@ -44,10 +44,8 @@ public class OrganizationController {
     public String editOrganization(HttpServletRequest request, Model model) {
         int id = Integer.parseInt(request.getParameter("id"));
 
-        if (id > 0) {
-            Organization organization = organizationDao.getOrganizationById(id);
-            model.addAttribute("organization", organization);
-        }
+        Organization organization = organizationDao.getOrganizationById(id);
+        model.addAttribute("organization", organization);
 
         List<Address> addresses = addressDao.getAllAddresses();
         model.addAttribute("addresses", addresses);

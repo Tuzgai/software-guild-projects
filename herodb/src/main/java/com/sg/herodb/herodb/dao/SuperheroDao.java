@@ -16,5 +16,6 @@ public interface SuperheroDao {
     
     List<Superhero> getSuperheroesByAddressId(int addressId);
     List<Superhero> getHeroesNotInOrganization(int id);
+    List<Superhero> getHeroesNotInSighting(int id);
 
 }

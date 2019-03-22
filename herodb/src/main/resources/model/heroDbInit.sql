@@ -83,3 +83,8 @@ ALTER TABLE `super`
 	ADD CONSTRAINT fk_super_power
 		FOREIGN KEY (powerid)
         REFERENCES power (id);
+        
+SELECT * FROM `super` WHERE id NOT IN (
+                SELECT s.id FROM `super` s 
+                JOIN super_organization so ON so.superid = s.id 
+                WHERE so.organizationid = 4);

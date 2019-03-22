@@ -5,6 +5,7 @@ import com.sg.herodb.herodb.entity.Power;
 import com.sg.herodb.herodb.entity.Superhero;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -113,8 +114,7 @@ public class SuperheroDaoDb implements SuperheroDao {
                 "SELECT s.* FROM `super` s " +
                 "JOIN super_sighting ss ON s.id = ss.superid " +
                 "JOIN sighting si ON ss.sightingid = si.id " +
-                "JOIN address a ON si.addressid = a.id " +
-                "WHERE a.id = ?";
+                "WHERE si.addressid = ?";
         
         List<Superhero> heroes = jdbc.query(sql, new SuperheroMapper(), id);
         associatePowers(heroes);
@@ -128,15 +128,30 @@ public class SuperheroDaoDb implements SuperheroDao {
         
         // Find the heroes that don't have a bridge table entry for the org
         final String sql = 
-                "SELECT * FROM `super` WHERE NOT EXISTS (" +
-                "SELECT s.* FROM `super` s " +
-                "JOIN super_organization so ON so.superid = s.id " +
+                "SELECT * FROM `super` WHERE id NOT IN (" +
+                "SELECT s.id FROM `super` s " +
+                "JOIN super_organization so ON so.superid = s.id " + 
                 "WHERE so.organizationid = ?)";
         
         List<Superhero> heroes = jdbc.query(sql, new SuperheroMapper(), id);
         associatePowers(heroes);
         return heroes;
     }
+
+    @Override
+    public List<Superhero> getHeroesNotInSighting(int id) {
+        final String sql = 
+                "SELECT * FROM `super` WHERE id NOT IN (" +
+                "SELECT s.id FROM `super` s " +
+                "JOIN super_sighting ss ON s.id = ss.superid " +
+                "WHERE ss.sightingid = ?)";
+        
+        List<Superhero> heroes = jdbc.query(sql, new SuperheroMapper(), id);
+        associatePowers(heroes);
+        return heroes;
+    }
+    
+    
     
     // TODO - getSuperheroesByPowerId
 
