@@ -5,7 +5,6 @@ import com.sg.herodb.herodb.dao.OrganizationDao;
 import com.sg.herodb.herodb.dao.SightingDao;
 import com.sg.herodb.herodb.dao.SuperheroDao;
 import com.sg.herodb.herodb.entity.Address;
-import com.sg.herodb.herodb.entity.Organization;
 import com.sg.herodb.herodb.entity.Sighting;
 import com.sg.herodb.herodb.entity.Superhero;
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  * @author Stuart
  */
 @Controller
-public class SIghtingController {
+public class SightingController {
 
     @Autowired
     SightingDao sightingDao;
@@ -59,6 +58,45 @@ public class SIghtingController {
         List<Superhero> heroes = superheroDao.getHeroesNotInSighting(id);
         model.addAttribute("heroes", heroes);
 
-        return "editOrganization";
+        return "editSighting";
+    }
+    
+    @GetMapping("/addSighting")
+    public String addOrganization(Model model) {
+        List<Address> addresses = addressDao.getAllAddresses();
+        model.addAttribute("addresses", addresses);
+
+        List<Superhero> heroes = superheroDao.getAllSuperheroes();
+        model.addAttribute("heroes", heroes);
+
+        return "addOrganization";
+    }
+    
+    @GetMapping("/deleteSighting")
+    public String deleteOrganization(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        sightingDao.deleteSighting(id);
+
+        return "redirect:/sightings";
+    }
+    
+    @PostMapping("editSighting")
+    public String updateOrganization(Sighting sighting, HttpServletRequest request) {
+        sighting.setAddress(addressDao.getAddressById(
+                Integer.parseInt(request.getParameter("addressid"))));
+
+        String[] heroIds = request.getParameterValues("selectedHeroes");
+
+        List<Superhero> heroes = new ArrayList<>();
+        if (heroIds != null) {
+            for (String id : heroIds) {
+                heroes.add(superheroDao.getSupeheroById(Integer.parseInt(id)));
+            }
+        }
+
+        sighting.setHeroes(heroes);
+        sightingDao.updateSighting(sighting);
+
+        return "redirect:/sightings";
     }
 }
