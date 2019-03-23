@@ -42,6 +42,9 @@
                     <a class="nav-link nav-organizations active" href="/organizations">Organizations</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link nav-locations" href="/locations">Locations</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link nav-sightings" href="/sightings/">All Sightings</a>
                 </li>
             </ul>
@@ -71,17 +74,16 @@
                         <label for="organizationName" class="col-sm-4 col-form-label">Organization Name</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="name" name="name"
-                                th:value="${organization.name}" placeholder="Organization Name">
+                                th:value="${organization.name}" placeholder="Organization Name" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="addressid" class="col-sm-4 col-form-label">Headquarters</label>
                         <div class="col-sm-8">
                             <select type="text" class="form-control" id="addressid" name="addressid" 
-                                placeholder="Select Headquarters">
-
+                                placeholder="Select Headquarters" required>
                                 <option th:value="${organization.address.id}"
-                                    th:text="${organization.address.name}"></option>
+                                    th:text="${organization.address.name}" selected></option>
                                 <span th:each="address: ${addresses}">
                                     <option th:unless="${address.id == organization.address.id}"
                                         th:value="${address.id}" th:text="${address.name}">U.A. High School</option>

@@ -40,6 +40,9 @@
                 <li class="nav-item">
                     <a class="nav-link nav-organizations" href="/organizations">Organizations</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-locations" href="/locations">Locations</a>
+                </li>
                 <li class="nav-item active">
                     <a class="nav-link nav-sightings" href="/sightings/">All Sightings</a>
                 </li>
@@ -57,7 +60,7 @@
 
         <div class="row mr-auto align-items-center">
             <h3>All Sightings</h3>
-            <a class="mr-auto ml-1" href="#" th:href="@{/editSighting(id=$-1)}">(add a new sighting)</a>
+            <a class="mr-auto ml-1" href="/sightings/new">(add a new sighting)</a>
         </div>
         <div class="table-responsive">
             <table class="table table-hover">
@@ -93,7 +96,7 @@
                             </div>
                         </div>
                     </td>
-                    <td><a href="#" th:href="@{/editSighting(id=$sighting.id)}">Edit</a></td>
+                    <td><a th:href="@{/editSighting(id=$sighting.id)}">Edit</a></td>
                 </tr>
             </table>
         </div>

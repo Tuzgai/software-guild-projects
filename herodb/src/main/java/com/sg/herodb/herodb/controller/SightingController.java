@@ -61,7 +61,7 @@ public class SightingController {
         return "editSighting";
     }
     
-    @GetMapping("/addSighting")
+    @GetMapping("/sightings/new")
     public String addOrganization(Model model) {
         List<Address> addresses = addressDao.getAllAddresses();
         model.addAttribute("addresses", addresses);
@@ -69,7 +69,7 @@ public class SightingController {
         List<Superhero> heroes = superheroDao.getAllSuperheroes();
         model.addAttribute("heroes", heroes);
 
-        return "addOrganization";
+        return "addSighting";
     }
     
     @GetMapping("/deleteSighting")

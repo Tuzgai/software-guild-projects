@@ -56,7 +56,7 @@ public class OrganizationController {
         return "editOrganization";
     }
 
-    @GetMapping("/addOrganization")
+    @GetMapping("/organizations/new")
     public String addOrganization(Model model) {
         List<Address> addresses = addressDao.getAllAddresses();
         model.addAttribute("addresses", addresses);
@@ -75,7 +75,7 @@ public class OrganizationController {
         return "redirect:/organizations";
     }
 
-    @PostMapping("editOrganization")
+    @PostMapping(value = {"editOrganization", "/organizations/new"})
     public String updateOrganization(Organization organization, HttpServletRequest request) {
         organization.setAddress(addressDao.getAddressById(
                 Integer.parseInt(request.getParameter("addressid"))));
@@ -90,8 +90,11 @@ public class OrganizationController {
         }
 
         organization.setHeroes(heroes);
-        organizationDao.updateOrganization(organization);
-
+        if (organization.getId() == 0) {
+            organizationDao.createOrganization(organization);
+        } else {
+            organizationDao.updateOrganization(organization);
+        }
         return "redirect:/organizations";
     }
 }

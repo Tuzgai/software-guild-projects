@@ -1,7 +1,19 @@
 package com.sg.herodb.herodb.controller;
 
+import com.sg.herodb.herodb.dao.AddressDao;
+import com.sg.herodb.herodb.dao.OrganizationDao;
+import com.sg.herodb.herodb.dao.PowerDao;
 import com.sg.herodb.herodb.dao.SightingDao;
+import com.sg.herodb.herodb.dao.SuperheroDao;
+import com.sg.herodb.herodb.entity.Address;
+import com.sg.herodb.herodb.entity.Organization;
+import com.sg.herodb.herodb.entity.Power;
 import com.sg.herodb.herodb.entity.Sighting;
+import com.sg.herodb.herodb.entity.Superhero;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +28,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class IndexController {
     @Autowired
+    AddressDao addressDao;
+
+    @Autowired
+    OrganizationDao organizationDao;
+
+    @Autowired
+    PowerDao powerDao;
+
+    @Autowired
     SightingDao sightingDao;
+
+    @Autowired
+    SuperheroDao superheroDao;
 
     @GetMapping("/")
     public String displayRecentSightings(Model model) {
