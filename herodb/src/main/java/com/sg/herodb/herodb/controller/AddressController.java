@@ -27,42 +27,44 @@ public class AddressController {
     public String displayLocations(Model model) {
         List<Address> addresses = addressDao.getAllAddresses();
         addresses.remove(0); // don't display dummy address
-        
+
         model.addAttribute("locations", addresses);
         return "locations";
     }
-    
+
     @GetMapping("/locations/new")
     public String editAddress(Model model) {
         return "addLocation";
     }
-    
+
     @GetMapping("/editLocation")
     public String updateLocation(HttpServletRequest request, Model model) {
         int id = Integer.parseInt(request.getParameter("id"));
-        
+
         Address address = addressDao.getAddressById(id);
         model.addAttribute("location", address);
-        
+
         return "editLocation";
     }
-    
+
     @PostMapping(value = {"/editLocation", "/locations/new"})
     public String updateLocation(Address address, HttpServletRequest request) {
-        if(address.getId() == 0 || address.getId() == 1) {
+        if (address.getId() == 0 || address.getId() == 1) {
             addressDao.createAddress(address);
         } else {
             addressDao.updateAddress(address);
         }
-        
+
         return "redirect:/locations";
     }
-    
+
     @GetMapping("/deleteLocation")
     public String deleteLocation(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
-        addressDao.deleteAddress(id);
-        
+
+        if (id != 1) {
+            addressDao.deleteAddress(id);
+        }
         return "redirect:/locations";
     }
 }

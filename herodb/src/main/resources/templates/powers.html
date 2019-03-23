@@ -60,7 +60,7 @@
 
         <div class="row mr-auto align-items-center">
             <h3>Known Powers</h3>
-            <a class="mr-auto ml-1" href="#" href="/powers/new">(add a new power)</a>
+            <a class="mr-auto ml-1" href="/powers/new">(add a new power)</a>
         </div>
         <div class="table-responsive">
             <table class="table table-hover">
@@ -68,23 +68,13 @@
                     <tr>
                         <th>Name</th>
                         <th>Description</th>
-                        <th>Known Users</th>
                         <th>Edit</th>
                     </tr>
                 </thead>
-                <tr th:each="power : ${powers}" class="expandable">
+                <tr th:each="power : ${powers}" class="expandable" th:id="${power.id}">
                     <td th:text="${power.name}">Zero Gravity</td>
                     <td th:text="${power.description}">Objects touched are not affected by gravity</td>
-                    <td>
-                        <!-- This is breaking because right now powers don't have a list of heroes, fix this later -->
-                        <span th:text="${power.heroes[0].name}" class="shortText">Click for list</span>
-                        <div class="longText selector">
-                            <div th:each="hero : ${power.heroes}">
-                                <p th:text="hero.name">Uraraka</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td><a href="#" th:href="@{/editOrganization(id=$power.id)}">Edit</a></td>
+                    <td><a th:href="@{/editPower(id=${power.id})}">Edit</a></td>
                 </tr>
             </table>
         </div>

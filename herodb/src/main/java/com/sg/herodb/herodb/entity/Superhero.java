@@ -44,6 +44,10 @@ public class Superhero {
     public boolean isVillain() {
         return isVillain;
     }
+    
+    public boolean isIsVillain() {
+        return isVillain;
+    }
 
     public void setIsVillain(boolean isVillain) {
         this.isVillain = isVillain;

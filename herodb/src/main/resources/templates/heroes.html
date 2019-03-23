@@ -76,20 +76,21 @@
                         <th>Edit</th>
                     </tr>
                 </thead>
-                <tr th:each="hero: ${heroes}" class="expandable">
-                    <td th:text="${hero.name}">Froppy</td>
-                    <td th:text="${hero.description}">Frog Girl</td>
-                    <td th:text="${hero.power.name}">Frog</td>
+                <tr th:each="hero: ${heroMap}" class="expandable">
+                    <td th:text="${hero.key.name}">Froppy</td>
+                    <td th:text="${hero.key.description}">Frog Girl</td>
+                    <td th:text="${hero.key.power.name}">Frog</td>
                     <td>
-                        <span class="shortText">U.A High School</span>
+                        <span class="shortText" th:text="${hero.value != null and !hero.value.empty} ? ${hero.value[0].name} : 'No Organizations'">U.A High School</span>
                         <div class="longText selector">
-                            <p>U.A. High School</p>
-                            <p>Cool Kids Club</p>
-                            <p>U.A. Girls</p>
+                            <p th:if="${hero.value == null or hero.value.empty}">No Organizations</p>
+                            <div th:each="organization : ${hero.value}">
+                                <p th:text="${organization.name}"></p>
+                            </div>
                         </div>
                     </td>
-                    <td><a th:href="'/super/profile/' + ${hero.id}">Froppy Sightings</a></td>
-                    <td><a th:href="@{/editSuper(id=$hero.id)}">Edit</a></td>
+                    <td><a th:href="'/super/profile/' + ${hero.key.id}" th:text="${hero.key.name} + ' Sightings'">Froppy Sightings</a></td>
+                    <td><a th:href="@{/editSuper(id=${hero.key.id})}">Edit</a></td>
                 </tr>
             </table>
         </div>
