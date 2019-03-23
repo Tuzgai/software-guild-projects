@@ -104,18 +104,18 @@ public class HeroController {
 
     @PostMapping(value = {"/supers/new", "editSuper"})
     public String updateSuper(Superhero hero, HttpServletRequest request) {
-        if (request.getParameter("powerName") != null) {
-            Power power = new Power();
+        Power power = new Power();
+        if (!request.getParameter("powerName").equals("")) {
             power.setName(request.getParameter("powerName"));
             power.setDescription(request.getParameter("powerDescription"));
             power = powerDao.createPower(power);
-            hero.setPower(power);
-        } else if (hero.getPower() == null) {
-            Power power = new Power();
-            power.setId(1);
-            hero.setPower(power);
+        } else if(request.getParameter("powerId") == null) {
+            power.setId(0);
+        } else {
+            power.setId(Integer.parseInt(request.getParameter("powerId")));
         }
 
+        hero.setPower(power);
         if (hero.getId() == 0) {
             superheroDao.createSuperhero(hero);
         } else {

@@ -80,8 +80,8 @@
                     <div class="form-group row">
                         <label for="powerSelect" class="col-sm-4 col-form-label">Select a Power</label>
                         <div class="col-sm-8">
-                            <select type="text" class="form-control" id="powerSelect" placeholder="Select a Power">
-                                <option value="" selected disabled>Select a Power</option>
+                            <select type="text" class="form-control" id="powerSelect" name="powerid" placeholder="Select a Power">
+                                <option value="0" selected disabled>Select a Power</option>
                                 <span th:each="power : ${powers}">
                                     <option th:value="${power.id}" th:text="${power.name}"></option>
                                 </span>

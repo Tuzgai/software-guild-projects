@@ -7,6 +7,7 @@ import com.sg.herodb.herodb.dao.SuperheroDao;
 import com.sg.herodb.herodb.entity.Address;
 import com.sg.herodb.herodb.entity.Sighting;
 import com.sg.herodb.herodb.entity.Superhero;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -80,11 +81,12 @@ public class SightingController {
         return "redirect:/sightings";
     }
     
-    @PostMapping("editSighting")
+    @PostMapping(value = {"/sightings/new", "editSighting"})
     public String updateOrganization(Sighting sighting, HttpServletRequest request) {
         sighting.setAddress(addressDao.getAddressById(
                 Integer.parseInt(request.getParameter("addressid"))));
 
+        sighting.setDate(LocalDate.parse(request.getParameter("sightingDate")));
         String[] heroIds = request.getParameterValues("selectedHeroes");
 
         List<Superhero> heroes = new ArrayList<>();
