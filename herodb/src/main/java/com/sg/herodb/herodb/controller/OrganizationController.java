@@ -75,7 +75,7 @@ public class OrganizationController {
         return "redirect:/organizations";
     }
 
-    @PostMapping(value = {"editOrganization", "/organizations/new"})
+    @PostMapping(value = {"/editOrganization", "/organizations/new"})
     public String updateOrganization(Organization organization, HttpServletRequest request) {
         organization.setAddress(addressDao.getAddressById(
                 Integer.parseInt(request.getParameter("addressid"))));

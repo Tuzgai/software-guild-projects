@@ -31,7 +31,7 @@ CREATE TABLE `organization` (
 CREATE TABLE address (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     `name` VARCHAR(30) NOT NULL,
-    `description` VARCHAR(140) NOT NULL,
+    `description` VARCHAR(140),
     streetaddress VARCHAR(50),
     territory VARCHAR(30),
     country VARCHAR(30) NOT NULL,
@@ -84,7 +84,6 @@ ALTER TABLE `super`
 		FOREIGN KEY (powerid)
         REFERENCES power (id);
         
-SELECT * FROM `super` WHERE id NOT IN (
-                SELECT s.id FROM `super` s 
-                JOIN super_organization so ON so.superid = s.id 
-                WHERE so.organizationid = 4);
+INSERT INTO `address`(`name`, country, `description`) VALUES ("Location Unknown", "Location Unknown", "Placeholder Location");
+INSERT INTO `power`(`name`, `description`) VALUES ("Power Unknown", "Placeholder Power");
+	

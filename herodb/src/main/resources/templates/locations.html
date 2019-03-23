@@ -69,29 +69,25 @@
                         <th>Name</th>
                         <th>Description</th>
                         <th>Address</th>
-                        <th>Latitude</th>
-                        <th>Longitude</th>
                         <th>Edit</th>
                     </tr>
                 </thead>
                 <tr th:each="location : ${locations}" class="expandable">
-                    <td th:text="location.name">U.A. High School</td>
-                    <td th:text="location.description">The top superhero high school</td>
+                    <td th:text="${location.name}">No Name Available</td>
+                    <td th:text="${location.description}">No Description Available</td>
                     <td>
-                        <span th:text="${location.name}" class="shortText">U.A. High School</span>
+                        <span th:text="${location.name}" class="shortText">No Name Available</span>
                         <div class="longText selector">
-                            <p th:text="${location.name}">U.A. High School</p>
-                            <p th:text="${location.streetAddress}">123 Test Street</p>
+                            <p th:text="${location.name}">No Name Available</p>
+                            <p th:text="${location.streetAddress}">No Street Address Available</p>
                             <p th:text="${location.city} + ', ' + ${location.country}">Tokyo,
                                 Japan
                             </p>
-                            <p th:text="${location.latitude}">Latitude: 100</p>
-                            <p th:text="${location.longitude}">Longitude: 100</p>
+                            <p th:text="'Latitude: ' + ${location.latitude}">No Latitude Available</p>
+                            <p th:text="'Longitude: ' + ${location.longitude}">No Longitude Available</p>
                         </div>
                     </td>
-                    <td>35.6762° N</td>
-                    <td>139.6503° E</td>
-                    <td><a th:href="@{/editLocation(id=$location.id})">Edit</a></td>
+                    <td><a th:href="@{/editLocation(id=${location.id})}">Edit</a></td>
                 </tr>
             </table>
         </div>

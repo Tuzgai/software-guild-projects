@@ -27,7 +27,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto mx-auto">
                 <li class="nav-item">
-                    <a class="nav-link nav-log-sighting active" href="/sightings/new">Log a Sighting</a>
+                    <a class="nav-link nav-log-sighting" href="/sightings/new">Log a Sighting</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link nav-heropedia" href="/heroes">Heropedia</a>
@@ -42,7 +42,7 @@
                     <a class="nav-link nav-organizations" href="/organizations">Organizations</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-locations" href="/locations">Locations</a>
+                    <a class="nav-link nav-locations active" href="/locations">Locations</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link nav-sightings" href="/sightings/">All Sightings</a>
@@ -53,6 +53,9 @@
 
     <div class="container">
         <div class="d-flex flex-column align-items-end">
+            <a href="#" th:href="@{/deleteLocation(id=${location.id})}" id="deleteButton">
+                <button type="button" class="btn btn-danger" style="margin-top: 1em">DELETE LOCATION</button>
+            </a>
             <header class="align-self-center">
                 <h1 class="mx-auto">HeroDB</h1>
                 <h5 class="mx-auto">The latest, now.</h3>
@@ -62,37 +65,36 @@
         </div>
         <form class="form hero-select-form" method="POST">
             <div class="row">
-                <div class="col-sm-2"></div>
-                <h5 class="col-sm-4">Enter Sighting Details</h5>
-                <h5 class="col-sm-4">Heroes in Sighting</h5>
-
                 <div class="col-sm-6">
                     <div class="form-group row">
-                        <label for="date" class="col-sm-4 col-form-label">Sighting Date</label>
+                        <label for="name" class="col-sm-4 col-form-label">Location Name *</label>
                         <div class="col-sm-8">
-                            <input type="date" class="form-control" id="date" name="date" required>
+                            <input type="text" class="form-control" id="name" name="name" th:value="${location.name}"
+                                placeholder="Location Name" required>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="addressid" class="col-sm-4 col-form-label">Sighting Location</label>
-                        <div class="col-sm-8">
-                            <select type="text" class="form-control" id="addressid" name="addressid" 
-                                placeholder="Select Headquarters" required>
-
-                                <option value="" selected disabled>Select a location</option>
-                                <span th:each="address: ${addresses}">
-                                    <option th:unless="${address.id == sighting.address.id}"
-                                        th:value="${address.id}" th:text="${address.name}">U.A. High School</option>
-                                </span>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="description" class="col-sm-4 col-form-label">Sighting
+                        <label for="description" class="col-sm-4 col-form-label">Location
                             Description</label>
                         <div class="col-sm-8">
-                            <textarea class="form-control" id="description" name="description" 
-                                placeholder="Sighting Description" rows="5" required></textarea>
+                            <textarea class="form-control" id="description" name="description"
+                                placeholder="Location Description" rows="5"></textarea>
+                        </div>
+                    </div>
+                    <!-- Regex credit: https://stackoverflow.com/questions/3518504/regular-expression-for-matching-latitude-longitude-coordinates-->
+                    <div class="form-group row">
+                        <label for="latitude" class="col-sm-4 col-form-label">Latitude</label>
+                        <div class="col-sm-8">
+                            <input type="pattern" pattern="^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$" class="form-control"
+                                id="latitude" name="latitude" th:value="${location.latitude}" placeholder="Latitude">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="longitude" class="col-sm-4 col-form-label">Latitude</label>
+                        <div class="col-sm-8">
+                            <input type="pattern" pattern="^[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$"
+                                class="form-control" id="longitude" name="longitude" th:value="${location.longitude}"
+                                placeholder="Longitude">
                         </div>
                     </div>
                     <input type="hidden" name="id" value="0">
@@ -105,32 +107,39 @@
                 </div> <!-- End first form column -->
                 <div class="col-sm-6">
                     <div class="form-group row">
-                        <div class="col-sm-10">
-                            <select multiple class="form-control" id="selectedHeroes" name="selectedHeroes" rows="5">
-                            </select>
-                            <div class="d-flex justify-content-center">
-                                <button class="btn btn-primary ml-auto mr-1 updownbtn" onclick="addHero()" type="button"
-                                    style="margin-top:1em">
-                                    <span class="fas fa-angle-up"></span>
-                                </button>
-                                <button class="btn btn-primary mr-auto ml-2 updownbtn" onclick="removeHero()"
-                                    type="button" style="margin-top:1em">
-                                    <span class="fas fa-angle-down"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row" style="margin-bottom:0em">
-                        <div class="col-sm-10">
-                            <select multiple class="form-control" id="heroRoster" rows="5">
-                                <span th:each="hero : ${heroes}">
-                                    <option th:value="${hero.id}" th:text="${hero.name}">Froppy</option>
-                                </span>
-                            </select>
+                        <label for="streetAddress" class="col-sm-4 col-form-label">Street Address</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="streetAddress" name="streetAddress"
+                                th:value="${location.streetAddress}" placeholder="Street Address">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <h5 class="col-sm-12">Heroes Not In Sighting</h5>
+                        <label for="city" class="col-sm-4 col-form-label">City</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="city" name="city" placeholder="City"
+                                th:value="${location.city}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="territory" class="col-sm-4 col-form-label">Territory</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="territory" name="territory"
+                                th:value="${location.territory}" placeholder="State/Territory">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="country" class="col-sm-4 col-form-label">Country *</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="country" name="country" placeholder="Country"
+                                th:value="${location.country}" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="postalCode" class="col-sm-4 col-form-label">Postal Code</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="postalCode" name="postalCode"
+                                th:value="${location.postalCode}" placeholder="Postal Code">
+                        </div>
                     </div>
                 </div>
             </div>

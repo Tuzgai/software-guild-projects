@@ -94,7 +94,7 @@
                             <div th:each="hero : ${organization.heroes}">
                                 <p th:text="${hero.name}">All Might</p>
                             </div>
-                            <p th:text="${organization.heroes == null or organization.heroes.empty} ? 'None associated'"></p>
+                            <p th:text="${organization.heroes == null or organization.heroes.empty} ? 'No Known Members'"></p>
                         </div>
                     </td>
                     <td><a th:href="@{/editOrganization(id=${organization.id})}">Edit</a></td>
