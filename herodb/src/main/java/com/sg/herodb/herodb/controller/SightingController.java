@@ -97,8 +97,12 @@ public class SightingController {
         }
 
         sighting.setHeroes(heroes);
-        sightingDao.updateSighting(sighting);
-
+        
+        if(sighting.getId() == 0) {
+            sightingDao.createSighting(sighting);
+        } else {
+            sightingDao.updateSighting(sighting);
+        }
         return "redirect:/sightings";
     }
 }
