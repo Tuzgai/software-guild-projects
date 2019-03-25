@@ -5,7 +5,6 @@ import com.sg.herodb.herodb.entity.Power;
 import com.sg.herodb.herodb.entity.Superhero;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -150,10 +149,6 @@ public class SuperheroDaoDb implements SuperheroDao {
         associatePowers(heroes);
         return heroes;
     }
-    
-    
-    
-    // TODO - getSuperheroesByPowerId
 
     protected static final class SuperheroMapper implements RowMapper<Superhero> {
 
