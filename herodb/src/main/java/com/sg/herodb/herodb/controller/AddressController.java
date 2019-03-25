@@ -1,15 +1,14 @@
 package com.sg.herodb.herodb.controller;
 
 import com.sg.herodb.herodb.dao.AddressDao;
-import com.sg.herodb.herodb.dao.OrganizationDao;
-import com.sg.herodb.herodb.dao.SightingDao;
-import com.sg.herodb.herodb.dao.SuperheroDao;
 import com.sg.herodb.herodb.entity.Address;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -42,18 +41,29 @@ public class AddressController {
         int id = Integer.parseInt(request.getParameter("id"));
 
         Address address = addressDao.getAddressById(id);
-        model.addAttribute("location", address);
+        model.addAttribute("address", address);
 
         return "editLocation";
     }
 
-    @PostMapping(value = {"/editLocation", "/locations/new"})
-    public String updateLocation(Address address, HttpServletRequest request) {
-        if (address.getId() == 0 || address.getId() == 1) {
-            addressDao.createAddress(address);
-        } else {
-            addressDao.updateAddress(address);
+    @PostMapping("/editLocation")
+    public String updateLocation(@Valid Address location, BindingResult result) {
+        if (result.hasErrors()) {
+            return "editLocation";
         }
+
+        addressDao.updateAddress(location);
+        return "redirect:/locations";
+    }
+
+    @PostMapping(value = {"/locations/new"})
+    public String createLocation(@Valid Address address, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("address", address);
+            return "editLocation";
+        }
+
+        addressDao.createAddress(address);
 
         return "redirect:/locations";
     }

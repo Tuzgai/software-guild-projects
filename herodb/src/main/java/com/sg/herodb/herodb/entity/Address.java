@@ -2,7 +2,10 @@ package com.sg.herodb.herodb.entity;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -12,22 +15,29 @@ public class Address {
     int id;
     
     @NotBlank
+    @Size(max = 30, message = "Maximum name length is 30 characters.")
     String name;
     
-    @NotBlank
+    @Size(max = 30, message = "Maximum description length is 140 characters.")
     String description;
     
+    @Size(max = 50, message = "Maximum address length is 50 characters.")
     String streetAddress;
+    
+    @Size(max = 30, message = "Maximum territory length is 30 characters.")
     String territory;
     
     @NotBlank
+    @Size(max = 30, message = "Maximum country length is 30 characters.")
     String country;
     
-    @NotBlank
+    @Size(max = 30, message = "Maximum city length is 30 characters.")
     String city;
     
     String postalCode;
+
     BigDecimal latitude;
+
     BigDecimal longitude;
 
     public int getId() {

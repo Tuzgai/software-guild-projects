@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -17,9 +18,9 @@ public class Sighting implements Comparable<Sighting> {
     @Past
     LocalDate date;
     
-    @NotBlank
     Address address;
-    
+
+    @Size(max = 140, message = "Maximum description length is 140 characters.")
     String description;
     
     List<Superhero> heroes;

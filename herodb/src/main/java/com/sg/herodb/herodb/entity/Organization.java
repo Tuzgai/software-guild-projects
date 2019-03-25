@@ -3,6 +3,7 @@ package com.sg.herodb.herodb.entity;
 import java.util.List;
 import java.util.Objects;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -10,9 +11,14 @@ import javax.validation.constraints.NotBlank;
  */
 public class Organization {
     int id;
+    
     @NotBlank
+    @Size(max = 30, message = "Maximum name length is 30 characters.")
     String name;
+    
+    @Size(max = 140, message = "Maximum description length is 140 characters.")
     String description;
+    
     Address address;
     List<Superhero> heroes;
 
