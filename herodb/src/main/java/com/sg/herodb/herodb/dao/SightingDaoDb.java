@@ -127,7 +127,7 @@ public class SightingDaoDb implements SightingDao {
     @Override
     @Transactional
     public void updateSighting(Sighting sighting) {
-        final String UPDATE_SIGHTING = "UPDATE sighting SET date = ?, addressid = ?, description = ?";
+        final String UPDATE_SIGHTING = "UPDATE sighting SET date = ?, addressid = ?, description = ? WHERE id = ?";
         final String CLEAR_SUPER_SIGHTING = "DELETE FROM super_sighting WHERE sightingid = ?";
         final String INSERT_SUPER_SIGHTING
                 = "INSERT INTO super_sighting(superid, sightingid) VALUES(?,?)";
@@ -135,7 +135,8 @@ public class SightingDaoDb implements SightingDao {
         jdbc.update(UPDATE_SIGHTING,
                 Date.valueOf(sighting.getDate()),
                 sighting.getAddress().getId(),
-                sighting.getDescription());
+                sighting.getDescription(),
+                sighting.getId());
 
         jdbc.update(CLEAR_SUPER_SIGHTING, sighting.getId());
 

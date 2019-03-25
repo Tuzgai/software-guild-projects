@@ -101,6 +101,13 @@ public class HeroController {
 
         return "redirect:/heroes";
     }
+    
+    @GetMapping("/showSuper")
+    public String showSuper(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        
+        return "super";
+    }
 
     @PostMapping(value = {"/supers/new", "editSuper"})
     public String updateSuper(Superhero hero, HttpServletRequest request) {
