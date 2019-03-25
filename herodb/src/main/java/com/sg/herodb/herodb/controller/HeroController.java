@@ -2,9 +2,11 @@ package com.sg.herodb.herodb.controller;
 
 import com.sg.herodb.herodb.dao.OrganizationDao;
 import com.sg.herodb.herodb.dao.PowerDao;
+import com.sg.herodb.herodb.dao.SightingDao;
 import com.sg.herodb.herodb.dao.SuperheroDao;
 import com.sg.herodb.herodb.entity.Organization;
 import com.sg.herodb.herodb.entity.Power;
+import com.sg.herodb.herodb.entity.Sighting;
 import com.sg.herodb.herodb.entity.Superhero;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +33,9 @@ public class HeroController {
 
     @Autowired
     OrganizationDao organizationDao;
+    
+    @Autowired
+    SightingDao sightingDao;
 
     @GetMapping("/heroes")
     public String displayHeroes(Model model) {
@@ -90,6 +95,7 @@ public class HeroController {
 
         Superhero hero = superheroDao.getSupeheroById(id);
         model.addAttribute("super", hero);
+        model.addAttribute("isVillainPage", hero.isVillain());
 
         return "editSuper";
     }
@@ -103,8 +109,19 @@ public class HeroController {
     }
     
     @GetMapping("/showSuper")
-    public String showSuper(HttpServletRequest request) {
+    public String showSuper(HttpServletRequest request, Model model) {
         int id = Integer.parseInt(request.getParameter("id"));
+        
+        Superhero hero = superheroDao.getSupeheroById(id);
+        model.addAttribute("super", hero);
+        
+        model.addAttribute("isVillainPage", hero.isVillain());
+        
+        List<Sighting> sightings = sightingDao.getSightingsByHeroId(hero.getId());
+        model.addAttribute("sightings", sightings); 
+        
+        List<Organization> organizations = organizationDao.getOrganizationsByHeroId(hero.getId());
+        model.addAttribute("organizations", organizations);
         
         return "super";
     }

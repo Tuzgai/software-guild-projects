@@ -166,6 +166,17 @@ public class SightingDaoDb implements SightingDao {
 
         return sightings;
     }
+    
+    @Override
+    public List<Sighting> getSightingsByHeroId(int id) {
+        String sql = "SELECT s.* FROM sighting s " +
+                "JOIN super_sighting ss ON s.id = ss.sightingid " +
+                "WHERE ss.superid = ?";
+        List<Sighting> sightings = jdbc.query(sql, new SightingMapper(), id);
+        associateHeroesAndAddresses(sightings);
+
+        return sightings;
+     }
 
     private static final class SightingMapper implements RowMapper<Sighting> {
 

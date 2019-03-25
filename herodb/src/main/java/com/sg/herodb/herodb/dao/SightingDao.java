@@ -16,4 +16,5 @@ public interface SightingDao {
     void deleteSighting(int id);
     
     List<Sighting> getSightingsByDate(LocalDate date);
+    List<Sighting> getSightingsByHeroId(int id);
 }

@@ -89,7 +89,7 @@
                             </div>
                         </div>
                     </td>
-                    <td><a th:href="'/super/profile/' + ${hero.key.id}" th:text="${hero.key.name} + ' Sightings'">Froppy Sightings</a></td>
+                    <td><a th:href="@{/showSuper(id=${hero.key.id})}" th:text="${hero.key.name} + ' Sightings'">Froppy Sightings</a></td>
                     <td><a th:href="@{/editSuper(id=${hero.key.id})}">Edit</a></td>
                 </tr>
             </table>

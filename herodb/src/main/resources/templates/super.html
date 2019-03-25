@@ -1,0 +1,165 @@
+<!-- Header Material -->
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="/styles/stylesheet.css">
+    <title>HeroDB</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="/">HeroDB</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link nav-log-sighting" href="/sightings/new">Log a Sighting</a>
+                </li>
+                <li class="nav-item">
+                    <a th:classappend="${isVillainPage}? '' : 'active'" class="nav-link nav-heropedia"
+                        href="/heroes">Heropedia</a>
+                </li>
+                <li class="nav-item">
+                    <a th:classappend="${isVillainPage}? 'active' : ''" class="nav-link nav-villainpedia"
+                        href="/villains">Villainpedia</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-powers" href="/powers">Powers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-organizations" href="/organizations">Organizations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-locations" href="/locations">Locations</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-sightings" href="/sightings/">All Sightings</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container d-flex flex-column align-items-center" style="margin-top: 1em">
+        <header>
+            <h1 class="mx-auto">HeroDB</h1>
+            <h5 class="mx-auto">The latest, now.</h3>
+        </header>
+        <!-- End Header -->
+        <!-- Main Body of Page -->
+        <div class="align-self-start">
+            <h5>Name: <span th:text="${super.name}"></span></h5>
+            <h5>Description: <span th:text="${super.description}"></span></h5>
+            <h5>Power: <span th:text="${super.power.name}"></span></h5>
+            <h5>Power Description: <span th:text="${super.power.description}"></span></h5>
+        </div>
+        <h3>Sightings</h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Location</th>
+                    <th>Description</th>
+                    <th>Heroes/Villains Sighted</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tr class="expandable" th:each="sighting : ${sightings}">
+                <td th:text="${sighting.date}"></td>
+                <td>
+                    <span th:text="${sighting.address.name}" class="shortText">U.A. High School</span>
+                    <div class="longText selector">
+                        <p th:text="${sighting.address.name}">U.A. High School</p>
+                        <p th:text="${sighting.address.streetAddress}">123 Test Street</p>
+                        <p th:text="${sighting.address.city}"></p>
+                        <p th:text="${sighting.address.country}">Tokyo, Japan</p>
+                        <p th:text="${sighting.address.latitude}">Latitude: 100</p>
+                        <p th:text="${sighting.address.longitude}">Longitude: 100</p>
+                    </div>
+                </td>
+                <td th:text="${sighting.description}"></td>
+                <td>
+                    <span th:text="${sighting.heroes[0].name}" class="shortText">All Might</span>
+                    <div class="longText selector">
+                        <div th:each="hero : ${sighting.heroes}">
+                            <p th:text="${hero.name}">All Might</p>
+                        </div>
+                    </div>
+                </td>
+                <td><a th:href="@{/editSighting(id=${sighting.id})}">Edit</a></td>
+            </tr>
+        </table>
+        <h3>Known Organization Affiliations</h3>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Location</th>
+                    <th>Member List</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tr th:each="organization : ${organizations}" class="expandable">
+                <td th:text="${organization.name}">U.A. High School</td>
+                <td th:text="${organization.description}">The top superhero high school</td>
+                <td>
+                    <span th:text="${organization.address.name}" class="shortText">U.A. High School</span>
+                    <div class="longText selector">
+                        <p th:text="${organization.address.name}">U.A. High School</p>
+                        <p th:text="${organization.address.streetAddress}">123 Test Street</p>
+                        <p th:text="${organization.address.city}"></p>
+                        <p th:text="${organization.address.country}">Tokyo,
+                            Japan
+                        </p>
+                        <p th:text="${organization.address.latitude}">Latitude: 100</p>
+                        <p th:text="${organization.address.longitude}">Longitude: 100</p>
+                    </div>
+                </td>
+                <td>
+                    <span
+                        th:text="${organization.heroes != null and !organization.heroes.empty} ? ${organization.heroes[0].name} : 'None associated'"
+                        class="shortText">All Might</span>
+                    <div class="longText selector">
+                        <div th:each="hero : ${organization.heroes}">
+                            <p th:text="${hero.name}">All Might</p>
+                        </div>
+                        <p th:text="${organization.heroes == null or organization.heroes.empty} ? 'No Known Members'">
+                        </p>
+                    </div>
+                </td>
+                <td><a th:href="@{/editOrganization(id=${organization.id})}">Edit</a></td>
+            </tr>
+        </table>
+    </div> <!-- Close container -->
+    <!-- End Main Body -->
+
+
+
+    <!-- Footer Material -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script src="/scripts/scripts.js"></script>
+</body>
+
+</html>
+<!-- End footer -->

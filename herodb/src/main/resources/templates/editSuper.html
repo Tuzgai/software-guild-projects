@@ -30,10 +30,12 @@
                     <a class="nav-link nav-log-sighting" href="/sightings/new">Log a Sighting</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-heropedia" href="/heroes">Heropedia</a>
+                    <a th:classappend="${isVillainPage}? '' : 'active'" class="nav-link nav-heropedia"
+                        href="/heroes">Heropedia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-villainpedia" href="/villains">Villainpedia</a>
+                    <a th:classappend="${isVillainPage}? 'active' : ''" class="nav-link nav-villainpedia"
+                        href="/villains">Villainpedia</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link nav-powers" href="/powers">Powers</a>
@@ -45,7 +47,7 @@
                     <a class="nav-link nav-locations" href="/locations">Locations</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link nav-sightings" href="/sightings">All Sightings</a>
+                    <a class="nav-link nav-sightings" href="/sightings/">All Sightings</a>
                 </li>
             </ul>
         </div>
