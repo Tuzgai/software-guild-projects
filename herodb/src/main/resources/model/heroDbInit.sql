@@ -86,4 +86,41 @@ ALTER TABLE `super`
         
 INSERT INTO `address`(`name`, country, `description`) VALUES ("Location Unknown", "Location Unknown", "Placeholder Location");
 INSERT INTO `power`(`name`, `description`) VALUES ("Power Unknown", "Placeholder Power");
-	
+
+INSERT INTO `address`(`name`, city, country, `description`, latitude, longitude)
+	VALUES ("U.A. High School", "Tokyo", "Japan", "The top superhero high school.", "35.676200", "139.650300");
+    
+INSERT INTO `address`(`name`, country, `description`)
+	VALUES ("U.S.J", "Japan", "U.A.'s Secret Training Location");
+
+INSERT INTO `power`(`name`, `description`) 
+	VALUES 
+    ('All For One', 'Being real strong'),
+	('Frog', 'Pretty much anything a frog can do.'),
+	('Half-Cold Half-Hot', 'Strong Fire and Ice powers'),
+    ('All For One', 'Steal powers and combine them');
+
+INSERT INTO `super`(`name`, `description`, isVillain, powerId)
+	VALUES 
+    ('All Might', 'The Symbol of Peace', false, 2),
+    ('Shoto Todoroki', 'A student at U.A', false, 3),
+    ('Froppy', 'A student at U.A', false, 4),
+    ('All For One', 'The baddest dude around', true, 5);
+
+INSERT INTO `organization`(`name`, `description`, addressId)
+	VALUES
+    ('U.A High School', 'The top superhero high school', 2),
+    ('League of Villains', 'Some bad dudes and dudettes', 1);
+    
+INSERT INTO super_organization(superid, organizationid)
+	VALUES (1, 1), (2, 1), (3, 1), (4, 2);
+    
+INSERT INTO sighting(addressId, `date`, `description`)
+	VALUES
+		(2, '2019-03-25', 'A big fight!'),
+        (3, '2018-02-17', 'The league of villains attacked!');
+        
+INSERT INTO super_sighting(superid, sightingid)
+	VALUES (1, 1), (2, 1), (4,1), (2,2), (3,2), (4,2);
+    
+    

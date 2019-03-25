@@ -65,7 +65,8 @@
                     <tr>
                         <th>Date</th>
                         <th>Location</th>
-                        <th>Heroes</th>
+                        <th>Description</th>
+                        <th>Supers Sighted</th>
                     </tr>
                 </thead>
                 <tr class="expandable" th:each="sighting : ${sightings}">
@@ -75,13 +76,13 @@
                         <div class="longText selector">
                             <p th:text="${sighting.address.name}">U.A. High School</p>
                             <p th:text="${sighting.address.streetAddress}">123 Test Street</p>
-                            <p th:text="${sighting.address.city} + ', ' + ${sighting.address.country}">Tokyo, Japan</p>
+                            <p th:text="${sighting.address.city}"></p> 
+                            <p th:text="${sighting.address.country}">Tokyo, Japan</p>
                             <p th:text="${sighting.address.latitude}">Latitude: 100</p>
                             <p th:text="${sighting.address.longitude}">Longitude: 100</p>
-                            <hr>
-                            <p th:text="${sighting.description}">A big fight!</p>
                         </div>
                     </td>
+                    <td th:text="${sighting.description}"></td>
                     <td>
                         <span th:text="${sighting.heroes[0].name}" class="shortText">All Might</span>
                         <div class="longText selector">
