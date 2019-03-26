@@ -59,7 +59,6 @@ public class AddressController {
     @PostMapping(value = {"/locations/new"})
     public String createLocation(@Valid Address address, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            model.addAttribute("address", address);
             return "editLocation";
         }
 
